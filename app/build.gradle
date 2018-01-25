@@ -21,8 +21,18 @@ repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
 
+check.dependsOn 'checkstyle', 'findbugs', 'pmd', 'lint'
 
 android {
+    lintOptions {
+        abortOnError true
+        xmlReport false
+        htmlReport true
+
+        lintConfig rootProject.file('config/lint/lint.xml')
+        htmlOutput rootProject.file('report/lint/lint-result.html')
+        xmlOutput rootProject.file('report/lint/lint-result.xml')
+    }
     signingConfigs {
         config {
             keyAlias 'AndrewShkrob'
