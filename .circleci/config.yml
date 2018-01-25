@@ -54,10 +54,10 @@ jobs:
           command: ./gradlew check
   "Deploy App":
     <<: *defaults
-      steps:
-        - deploy:
-          name: Deploy APK To CrashLytics
-          command: ./gradlew crashlyticsUploadDistributionRelease
+    steps:
+      - deploy:
+        name: Deploy APK To CrashLytics
+        command: ./gradlew crashlyticsUploadDistributionRelease
 
 workflows:
   version: 2
