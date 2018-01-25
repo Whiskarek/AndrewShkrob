@@ -55,7 +55,7 @@ jobs:
 
 workflows:
   version: 2
-  build:
+  btd:
     jobs:
       - "Make Dependencies"
       - "Run Tests":
