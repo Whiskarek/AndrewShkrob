@@ -1,6 +1,18 @@
 apply plugin: 'com.android.application'
 
+def KeystorePropertiesFile = rootProject.file("/Keystore/keystore.properties")
+def KeystoreProperties = new Properties()
+KeystoreProperties.load(new FileInputStream(KeystorePropertiesFile))
+
 android {
+    signingConfigs {
+        config {
+            keyAlias KeystoreProperties['KeyAlias']
+            keyPassword KeystoreProperties['keyPassword']
+            storeFile rootProject.file(KeystoreProperties['storeFile'])
+            storePassword KeystoreProperties['storePassword']
+        }
+    }
     compileSdkVersion 26
     defaultConfig {
         applicationId "whiskarek.andrewshkrob"
@@ -14,12 +26,13 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.android.support:design:26.1.0'
