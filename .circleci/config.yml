@@ -54,7 +54,7 @@ jobs:
           command: ./gradlew check
   "Deploy App":
     <<: *defaults
-      steps:
+    steps:
       - deploy:
           name: Deploy APK To CrashLytics
           command: ./gradlew crashlyticsUploadDistributionRelease
