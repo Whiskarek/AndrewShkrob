@@ -8,47 +8,47 @@
     tools:context="whiskarek.andrewshkrob.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
+        <ImageView
+            android:id="@+id/ivMyPhoto"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/btChangePos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/rlWithText"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="16dp"
-                android:text="Replace Text"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:layout_editor_absoluteY="19dp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rlWithText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="240dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="103dp">
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginTop="0dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/my_photo"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="0dp" />
 
-            <TextView
-                android:id="@+id/tvToReplace"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:text="Text"
-                android:textSize="30sp" />
-        </RelativeLayout>
+        <ImageView
+            android:id="@+id/ivGitHubLogo"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/ivMyPhoto"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@mipmap/github_logo" />
 
-    </LinearLayout>
-
+        <TextView
+            android:id="@+id/tvURL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/ivGitHubLogo"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/ivGitHubLogo"
+            android:layout_marginLeft="20dp"
+            android:layout_toEndOf="@+id/ivGitHubLogo"
+            android:gravity="left|center"
+            android:text="github.com/Whiskarek/AndrewShkrob"
+            android:textColor="#000000"
+            android:textSize="15sp" />
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

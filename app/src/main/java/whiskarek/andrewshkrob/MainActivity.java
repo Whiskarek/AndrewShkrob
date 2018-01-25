@@ -1,5 +1,7 @@
 package whiskarek.andrewshkrob;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,13 +15,20 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
+
+import io.fabric.sdk.android.Fabric;
+
 import java.util.Random;
+
+import static android.net.Uri.parse;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -33,26 +42,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        final Button btChangePos = (Button) findViewById(R.id.btChangePos);
-        final TextView tvToReplace = (TextView) findViewById(R.id.tvToReplace);
-        final RelativeLayout rlWithText = (RelativeLayout) findViewById(R.id.rlWithText);
+        final TextView tv = (TextView) findViewById(R.id.tvURL);
 
-
-        btChangePos.setOnClickListener(new View.OnClickListener() {
+        tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int rlWithTextWidth = rlWithText.getWidth();
-                int rlWithTextHeight = rlWithText.getHeight();
-
-                Random rand = new Random();
-
-                int tvToReplaceNewPosX = rand.nextInt(rlWithTextWidth - tvToReplace.getWidth());
-                int tvToReplaceNewPosY = rand.nextInt(rlWithTextHeight - tvToReplace.getHeight());
-
-                tvToReplace.setX(tvToReplaceNewPosX);
-                tvToReplace.setY(tvToReplaceNewPosY);
-
-                Log.d("Replace", "Text replaced to " + tvToReplaceNewPosX + "x" + tvToReplaceNewPosY);
+                android.net.Uri parse = parse(tv.getText().toString());
+                Intent browser = new Intent(Intent.ACTION_VIEW, parse("http://www." + tv.getText().toString()));
+                startActivity(browser);
             }
         });
     }
