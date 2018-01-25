@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
+
 <!--
   ~ Copyright 2015 Vincent Brison.
   ~
@@ -15,21 +16,17 @@
   ~ limitations under the License.
   -->
 
-<FindBugsFilter>
-    <!-- http://stackoverflow.com/questions/7568579/eclipsefindbugs-exclude-filter-files-doesnt-work -->
-    <Match>
-        <Class name="~.*\.R\$.*"/>
-    </Match>
-    <Match>
-        <Class name="~.*\.Manifest\$.*"/>
-    </Match>
-    <!-- All bugs in test classes, except for JUnit-specific bugs -->
-    <Match>
-        <Class name="~.*\.*Test" />
-        <Not>
-            <Bug code="IJU" />
-        </Not>
-    </Match>
+<!DOCTYPE suppressions PUBLIC
+    "-//Puppy Crawl//DTD Suppressions 1.1//EN"
+    "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
 
+<suppressions>
+    <suppress checks="[a-zA-Z0-9]*" files="R.java" />
+    <suppress checks="[a-zA-Z0-9]*" files="BuildConfig.java" />
+    <suppress checks="[a-zA-Z0-9]*" files="Test" />
+    <suppress checks="[a-zA-Z0-9]*" files="Dagger*" />
+    <suppress checks="[a-zA-Z0-9]*" files=".*_.*Factory.java" />
+    <suppress checks="[a-zA-Z0-9]*" files=".*ViewInjector.java" />
+    <suppress checks="[a-zA-Z0-9]*" files=".*_MembersInjector.java" />
 
-</FindBugsFilter>
+</suppressions>

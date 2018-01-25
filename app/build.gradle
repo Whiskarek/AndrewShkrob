@@ -65,6 +65,7 @@ task checkstyle(type: Checkstyle) {
     group 'verification'
 
     configFile = rootProject.file('config/checkstyle/checkstyle.xml')
+    configProperties.checkstyleSuppressionsPath = rootProject.file('config/checkstyle/suppressions.xml')
 
     source 'src/main/java'
     include '**/*.java'
@@ -108,7 +109,7 @@ task pmd(type: Pmd) {
 
     ruleSetFiles = rootProject.files('config/pmd/pmd-ruleset.xml')
     ruleSets = []
-    ignoreFailures = true
+    ignoreFailures = false
 
     source 'src'
     include '**/*.java'
