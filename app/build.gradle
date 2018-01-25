@@ -50,6 +50,9 @@ android {
 }
 
 task checkstyle(type: Checkstyle) {
+    description 'Checks if the code is somewhat acceptable'
+    group 'verification'
+
     configFile = rootProject.file('config/checkstyle/checkstyle.xml')
 
     source 'src/main/java'
@@ -61,13 +64,16 @@ task checkstyle(type: Checkstyle) {
 }
 
 task findbugs(type: FindBugs) {
+    description 'Run FindBugs'
+    group 'verification'
+
     ignoreFailures = false
     effort = "max"
     reportLevel = "high"
-    excludeFilter = new File('../config/findbugs/findbugs-filter.xml')
-    classes = rootProject.files('app/build/classes')
+    excludeFilter = new File('../config/findbugs/findbugs-exclude-filter.xml')
+    classes = rootProject.files('app/build/intermediates/classes')
 
-    source 'src/main/java'
+    source 'src'
     include '**/*.java'
     exclude '**/gen/**'
 
