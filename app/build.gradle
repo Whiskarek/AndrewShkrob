@@ -10,6 +10,7 @@ buildscript {
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 apply plugin: 'checkstyle'
+apply plugin: 'findbugs'
 
 checkstyle {
     toolVersion = "8.7"
@@ -56,6 +57,31 @@ task checkstyle(type: Checkstyle) {
     exclude '**/gen/**'
 
     // empty classpath
+    classpath = files()
+}
+
+task findbugs(type: FindBugs) {
+    ignoreFailures = false
+    effort = "max"
+    reportLevel = "high"
+    excludeFilter = new File('../config/findbugs/findbugs-filter.xml')
+    classes = rootProject.files('app/build/classes')
+
+    source 'src/main/java'
+    include '**/*.java'
+    exclude '**/gen/**'
+
+    reports {
+        xml.enabled = false
+        html.enabled = true
+        xml {
+            destination rootProject.file('reports/findbugs/findbugs.xml')
+        }
+        html {
+            destination rootProject.file('reports/findbugs/findbugs.html')
+        }
+    }
+
     classpath = files()
 }
 
