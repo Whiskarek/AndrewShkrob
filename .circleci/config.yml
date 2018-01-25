@@ -45,4 +45,10 @@ jobs:
           command: ./gradlew crashlyticsUploadDistributionRelease
       - deploy:
           name: Deploy APK To HockeyApp
-          command: ipa distribute:hockeyapp -m "circleci build" --token $HOCKEYAPP_TOKEN
+          command: |
+          curl \
+          -F "status=2" \
+          -F "notify=0" \
+          -F "ipa=@AppName/build/outputs/apk/appname-dev-debug.apk" \
+          -H "X-HockeyAppToken: $HockeyAppToken" \
+          https://rink.hockeyapp.net/api/2/apps/$AndroidAppId_Dev/app_versions/upload
