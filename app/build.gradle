@@ -6,7 +6,7 @@ android {
             keyAlias 'AndrewShkrob'
             keyPassword 'AndrewShkrob'
             storeFile rootProject.file('Keystore/AndrewShkrobKeystore.jks')
-            storePassword 'AndrewShkrob'
+            storePassword 'AndrewShkrobKeystore'
         }
     }
     compileSdkVersion 26
