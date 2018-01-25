@@ -52,12 +52,6 @@ jobs:
       - run:
           name: Run Check
           command: ./gradlew check
-  "Deploy App":
-    <<: *defaults
-    steps:
-      - deploy:
-        name: Deploy APK To CrashLytics
-        command: ./gradlew crashlyticsUploadDistributionRelease
 
 workflows:
   version: 2
@@ -75,12 +69,3 @@ workflows:
         requires:
           - "Make Dependencies"
           - "Build App"
-      - "Deploy App":
-        requires:
-          - "Make Dependencies"
-          - "Run Tests"
-          - "Build App"
-          - "Run Static Program Analysis"
-        filters:
-          branches:
-            only: master
