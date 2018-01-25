@@ -45,4 +45,4 @@ jobs:
           command: ./gradlew crashlyticsUploadDistributionRelease
       - deploy:
           name: Deploy APK To HockeyApp
-          command: ./hockeyapp.sh
+          command: bash hockeyapp.sh
