@@ -11,6 +11,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
+apply plugin: 'pmd'
 
 checkstyle {
     toolVersion = "8.7"
@@ -89,6 +90,30 @@ task findbugs(type: FindBugs) {
     }
 
     classpath = files()
+}
+
+task pmd(type: Pmd) {
+    description 'Run PMD'
+    group 'verification'
+
+    ruleSetFiles = rootProject.files('config/pmd/pmd-ruleset.xml')
+    ruleSets = []
+    ignoreFailures = true
+
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+
+    reports {
+        xml.enabled = false
+        html.enabled = true
+        xml {
+            destination rootProject.file('reports/pmd/pmd.xml')
+        }
+        html {
+            destination rootProject.file('reports/pmd/pmd.html')
+        }
+    }
 }
 
 dependencies {

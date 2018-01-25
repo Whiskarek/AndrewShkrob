@@ -24,6 +24,9 @@ jobs:
           name: Run CheckStyle
           command: ./gradlew checkstyle
       - run:
+          name: Run PMD
+          command: ./gradlew pmd
+      - run:
           name: Run Tests
           command: ./gradlew lint test
       - run:
