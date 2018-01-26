@@ -24,6 +24,7 @@ jobs:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
   "Run Static Program Analysis":
+    <<: *defaults
     steps:
       - run:
           name: CheckStyle
