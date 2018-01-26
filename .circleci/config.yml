@@ -38,7 +38,9 @@ jobs:
 
 workflows:
   version: 2
-  btd:
+  build:
     jobs:
-      - "Run Static Program Analysis"
       - "Make Dependencies"
+      - "Run Static Program Analysis"
+        requires:
+          - "Make Dependencies"
