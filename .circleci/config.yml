@@ -21,15 +21,9 @@ jobs:
           paths:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-      - persist_to_workspace:
-          root: .
-          paths:
-            - ./*
   "Run Tests":
     <<: *defaults
     steps:
-      - attach_workspace:
-          at: .
       - run:
           name: Run Tests
           command: ./gradlew lint test
@@ -41,6 +35,30 @@ jobs:
           destination: reports
       - store_test_results:
           path: app/build/test-results
+  "Run CheckStyle":
+    <<: *defaults
+    steps:
+      - run:
+          name: Run CkeckStyle
+          command: ./gradlew checkstyle
+  "Run FindBugs":
+    <<: *defaults
+    steps:
+      - run:
+          name: Run FindBugs
+          command: ./gradlew findbugs
+  "Run PMD":
+    <<: *defaults
+    steps:
+      - run:
+          name: Run PMD
+          command: ./gradlew pmd
+  "Run Lint":
+    <<: *defaults
+    steps:
+      - run:
+          name: Run Lint
+          command: ./gradlew check
   "Build App":
     <<: *defaults
     steps:
@@ -58,12 +76,6 @@ jobs:
           root: .
           paths:
             - ./*
-  "Run Static Code Analysis":
-    <<: *defaults
-    steps:
-      - run:
-          name: Static Code Analysis
-          command: ./gradlew check
   "Deploy Release":
     <<: *defaults
     steps:
@@ -79,14 +91,26 @@ workflows:
   build:
     jobs:
       - "Make Dependencies"
+      - "Run CheckStyle":
+          requires:
+            - "Make Dependencies"
+      - "Run PMD":
+          requires:
+            - "Make Dependencies"
+      - "Run Lint":
+          requires:
+            - "Make Dependencies"
       - "Run Tests":
           requires:
             - "Make Dependencies"
       - "Build App":
           requires:
             - "Make Dependencies"
+            - "Run CheckStyle"
+            - "Run PMD"
+            - "Run Lint"
             - "Run Tests"
-      - "Run Static Code Analysis":
+      - "Run FindBugs":
           requires:
             - "Make Dependencies"
             - "Build App"
@@ -95,7 +119,10 @@ workflows:
             - "Make Dependencies"
             - "Build App"
             - "Run Tests"
-            - "Run Static Code Analysis"
+            - "Run CheckStyle"
+            - "Run PMD"
+            - "Run Lint"
+            - "Run FindBugs"
           filters:
             branches:
               only: master
