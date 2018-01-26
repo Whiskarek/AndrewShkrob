@@ -160,4 +160,4 @@ workflows:
             - "FindBugs"
           filters:
             branches:
-              only: dev
+              only: master
