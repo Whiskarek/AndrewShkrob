@@ -86,10 +86,11 @@ jobs:
           paths:
             - ./*
   deploy:
-    working_directory: ~/code
-    docker:
-      - image: circleci/android:api-27-alpha
+    <<: *defaults
     steps:
+      - deploy:
+          name: Deploy Fabrics
+          command: ./gradlew crashlyticsUploadDistributionRelease
       - deploy:
           name: Deploy HockeyApp
           command: |
