@@ -26,7 +26,7 @@ check.dependsOn 'lint'
 
 android {
     lintOptions {
-        abortOnError true
+        abortOnError false
         xmlReport false
         htmlReport true
 
