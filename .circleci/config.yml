@@ -88,8 +88,10 @@ jobs:
           root: .
           paths:
             - ./*
-  "Deploy Release":
-    <<: *defaults
+  deploy:
+    working_directory: ~/code
+    docker:
+      - image: circleci/android:api-27-alpha
     steps:
       - attach_workspace:
           at: .
@@ -133,7 +135,7 @@ workflows:
           requires:
             - "Make Dependencies"
             - "Build App"
-      - "Deploy Release":
+      - deploy:
           requires:
             - "Make Dependencies"
             - "Build App"
