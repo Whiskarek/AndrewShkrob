@@ -21,9 +21,15 @@ jobs:
           paths:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./*
   "Run Tests":
     <<: *defaults
     steps:
+      - attach_workspace:
+          at: .
       - run:
           name: Run Tests
           command: ./gradlew lint test
@@ -38,6 +44,8 @@ jobs:
   "Run CheckStyle":
     <<: *defaults
     steps:
+      - attach_workspace:
+          at: .
       - run:
           name: Run CkeckStyle
           command: ./gradlew checkstyle
