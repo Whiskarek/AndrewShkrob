@@ -88,6 +88,9 @@ jobs:
           path: app/build/outputs/apk/
       - run:
           name: Look Files
+          command: cd ~/code/app/build/outputs/apk/ci/
+      - run:
+          name: sss
           command: ls -a
       - persist_to_workspace:
           root: .
