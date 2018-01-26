@@ -7,49 +7,49 @@ defaults: &defaults
 
 version: 2
 jobs:
- build:
-  "Make Dependencies":
-    <<: *defaults
-    steps:
-      - checkout
-      - restore_cache:
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-      - run:
-          name: Gradlew init
-          command: sudo chmod +x ./gradlew
-      - run:
-          name: Download Dependencies
-          command: ./gradlew androidDependencies
-      - save_cache:
-          paths:
-            - ~/.gradle
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-  "Run Tests":
-    <<: *defaults
-    steps:
-      - run:
-          name: Run Tests
-          command: ./gradlew lint test
-      - run:
-          name: Run Unit Tests
-          command: ./gradlew test
-      - store_artifacts:
-          path: app/build/reports
-          destination: reports
-      - store_test_results:
-          path: app/build/test-results
-  "Build App":
-    <<: *defaults
-    steps:
-      - run:
-          name: Build
-          command: ./gradlew assembleRelease
-      - store_artifacts:
-          path: app/build/outputs/apk/
-          destination: apks
-  "Run Static Program Analysis":
-    <<: *defaults
-    steps:
-      - run:
-          name: Run Check
-          command: ./gradlew check
+  build:
+    "Make Dependencies":
+      <<: *defaults
+      steps:
+        - checkout
+        - restore_cache:
+            key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+        - run:
+            name: Gradlew init
+            command: sudo chmod +x ./gradlew
+        - run:
+            name: Download Dependencies
+            command: ./gradlew androidDependencies
+        - save_cache:
+            paths:
+              - ~/.gradle
+            key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+    "Run Tests":
+      <<: *defaults
+      steps:
+        - run:
+            name: Run Tests
+            command: ./gradlew lint test
+        - run:
+            name: Run Unit Tests
+            command: ./gradlew test
+        - store_artifacts:
+            path: app/build/reports
+            destination: reports
+        - store_test_results:
+            path: app/build/test-results
+    "Build App":
+      <<: *defaults
+      steps:
+        - run:
+            name: Build
+            command: ./gradlew assembleRelease
+        - store_artifacts:
+            path: app/build/outputs/apk/
+            destination: apks
+    "Run Static Program Analysis":
+      <<: *defaults
+      steps:
+        - run:
+            name: Run Check
+            command: ./gradlew check
