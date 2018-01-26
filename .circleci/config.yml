@@ -25,14 +25,11 @@ jobs:
           root: .
           paths:
             - ./*
-  "Run Tests":
+  "Run Unit Tests":
     <<: *defaults
     steps:
       - attach_workspace:
           at: .
-      - run:
-          name: Run Tests
-          command: ./gradlew lint test
       - run:
           name: Run Unit Tests
           command: ./gradlew test
@@ -72,7 +69,7 @@ jobs:
           at: .
       - run:
           name: Run Lint
-          command: ./gradlew check
+          command: ./gradlew lint test
   "Build App":
     <<: *defaults
     steps:
@@ -93,8 +90,6 @@ jobs:
     docker:
       - image: circleci/android:api-27-alpha
     steps:
-      - attach_workspace:
-          at: .
       - deploy:
           name: Deploy HockeyApp
           command: |
@@ -109,35 +104,10 @@ workflows:
   build:
     jobs:
       - "Make Dependencies"
-      - "Run CheckStyle":
-          requires:
-            - "Make Dependencies"
-      - "Run PMD":
-          requires:
-            - "Make Dependencies"
-      - "Run Lint":
-          requires:
-            - "Make Dependencies"
-      - "Run Tests":
-          requires:
-            - "Make Dependencies"
       - "Build App":
           requires:
             - "Make Dependencies"
-            - "Run CheckStyle"
-            - "Run PMD"
-            - "Run Lint"
-            - "Run Tests"
-      - "Run FindBugs":
-          requires:
-            - "Make Dependencies"
-            - "Build App"
       - deploy:
           requires:
             - "Make Dependencies"
             - "Build App"
-            - "Run Tests"
-            - "Run CheckStyle"
-            - "Run PMD"
-            - "Run Lint"
-            - "Run FindBugs"
