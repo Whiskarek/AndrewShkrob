@@ -21,15 +21,9 @@ jobs:
           paths:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-      - persist_to_workspace:
-          root: .
-          paths:
-            - ./*
   "Run Unit Tests":
     <<: *defaults
     steps:
-      - attach_workspace:
-          at: .
       - run:
           name: Run Unit Tests
           command: ./gradlew test
@@ -41,50 +35,36 @@ jobs:
   "Run CheckStyle":
     <<: *defaults
     steps:
-      - attach_workspace:
-          at: .
       - run:
           name: Run CkeckStyle
           command: ./gradlew checkstyle
   "Run FindBugs":
     <<: *defaults
     steps:
-      - attach_workspace:
-          at: .
       - run:
           name: Run FindBugs
           command: ./gradlew findbugs
   "Run PMD":
     <<: *defaults
     steps:
-      - attach_workspace:
-          at: .
       - run:
           name: Run PMD
           command: ./gradlew pmd
   "Run Lint":
     <<: *defaults
     steps:
-      - attach_workspace:
-          at: .
       - run:
           name: Run Lint
           command: ./gradlew lint test
   "Build App":
     <<: *defaults
     steps:
-      - attach_workspace:
-          at: .
       - run:
           name: Build
           command: ./gradlew assemble
       - store_artifacts:
           path: app/build/outputs/apk/
           destination: apks
-      - persist_to_workspace:
-          root: .
-          paths:
-            - ./*
   deploy:
     <<: *defaults
     steps:
