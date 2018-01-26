@@ -7,6 +7,7 @@ defaults: &defaults
 
 version: 2
 jobs:
+ build:
   "Make Dependencies":
     <<: *defaults
     steps:
