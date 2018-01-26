@@ -98,7 +98,7 @@ jobs:
       - deploy:
           name: Deploy APK.
           command: |
-              bash ./ci_scripts/deploy-hockey.sh
+              bash ./ci_scripts/deploy-hockeyapp.sh
               bash ./ci_scripts/deploy-fabric.sh
 workflows:
   version: 2
@@ -137,6 +137,3 @@ workflows:
             - "Run PMD"
             - "Run Lint"
             - "Run FindBugs"
-          filters:
-            branches:
-              only: master
