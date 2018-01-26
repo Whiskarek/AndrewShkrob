@@ -86,6 +86,8 @@ jobs:
           paths:
             - ./*
   deploy:
+    <<: *defaults
+    working_directory: ~/code
     steps:
       - attach_workspace:
           at: .
