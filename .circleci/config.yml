@@ -41,6 +41,30 @@ jobs:
           destination: reports
       - store_test_results:
           path: app/build/test-results
+  "Run CheckStyle":
+    <<: *defaults
+    steps:
+      - run:
+          name: Run CkeckStyle
+          command: ./gradlew checkstyle
+  "Run FindBugs":
+    <<: *defaults
+    steps:
+      - run:
+          name: Run FindBugs
+          command: ./gradlew findbugs
+  "Run PMD":
+    <<: *defaults
+    steps:
+      - run:
+          name: Run PMD
+          command: ./gradlew pmd
+  "Run Lint":
+    <<: *defaults
+    steps:
+      - run:
+          name: Run Lint
+          command: ./gradlew check
   "Build App":
     <<: *defaults
     steps:
@@ -68,41 +92,43 @@ jobs:
           command: |
               bash ./ci_scripts/deploy-hockey.sh
               bash ./ci_scripts/deploy-fabric.sh
-  "Deploy Debug":
-    <<: *defaults
-    steps:
-      - attach_workspace:
-          at: .
-      - run: |
-              if [ ! -f ~/code/app/build/outputs/apk/ci/app-ci.apk ]; then
-                  echo "File not found!"
-              else
-                  echo "GOT IT BITCH!";
-              fi
 workflows:
   version: 2
   build:
     jobs:
       - "Make Dependencies"
+      - "Run CheckStyle":
+          requires:
+            - "Make Dependencies"
+      - "Run PMD":
+          requires:
+            - "Make Dependencies"
+      - "Run Lint":
+          requires:
+            - "Make Dependencies"
       - "Run Tests":
           requires:
             - "Make Dependencies"
       - "Build App":
           requires:
             - "Make Dependencies"
-      - "Deploy Debug":
+            - "Run CheckStyle"
+            - "Run PMD"
+            - "Run Lint"
+            - "Run Tests"
+      - "Run FindBugs":
           requires:
             - "Make Dependencies"
             - "Build App"
-            - "Run Tests"
-          filters:
-            branches:
-              only: dev
       - "Deploy Release":
           requires:
             - "Make Dependencies"
             - "Build App"
             - "Run Tests"
+            - "Run CheckStyle"
+            - "Run PMD"
+            - "Run Lint"
+            - "Run FindBugs"
           filters:
             branches:
               only: master
