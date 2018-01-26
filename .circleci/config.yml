@@ -42,5 +42,3 @@ workflows:
     jobs:
       - "Make Dependencies"
       - "Run Static Program Analysis"
-        requires:
-          - "Make Dependencies"
