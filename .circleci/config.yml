@@ -96,9 +96,6 @@ jobs:
       - attach_workspace:
           at: .
       - deploy:
-          name: Deploy Fabric
-          command: ./gradlew crashlyticsUploadDistributionCi
-      - deploy:
           name: Deploy HockeyApp
           command: |
               curl \

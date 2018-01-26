@@ -12,28 +12,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/ivMyPhoto"
+        <whiskarek.andrewshkrob.CircleImageView
+            android:id="@+id/circleImageView"
             android:layout_width="match_parent"
-            android:layout_height="240dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
+            android:layout_height="match_parent"
             android:layout_marginLeft="0dp"
-            android:layout_marginRight="0dp"
             android:layout_marginTop="0dp"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/my_photo"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="0dp" />
+            app:srcCompat="@drawable/my_photo" />
 
         <ImageView
             android:id="@+id/ivGitHubLogo"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:layout_above="@+id/tvURL"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/ivMyPhoto"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="55dp"
+            android:layout_marginStart="13dp"
             android:scaleType="centerCrop"
             app:srcCompat="@mipmap/github_logo" />
 
@@ -41,14 +35,13 @@
             android:id="@+id/tvURL"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/ivGitHubLogo"
-            android:layout_alignParentEnd="true"
-            android:layout_alignTop="@+id/ivGitHubLogo"
-            android:layout_marginLeft="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="64dp"
             android:layout_toEndOf="@+id/ivGitHubLogo"
             android:gravity="left|center"
             android:text="github.com/Whiskarek/AndrewShkrob"
             android:textColor="#000000"
             android:textSize="15sp" />
+
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
