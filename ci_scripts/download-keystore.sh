@@ -1,0 +1,1 @@
+curl http://games.bronydell.xyz/assdroid -L --output ./app/keystore
