@@ -51,7 +51,7 @@ jobs:
           command: bash ./ci_scripts/download-keystore.sh
       - run:
           name: Build
-          command: ./gradlew assembleCi
+          command: ./gradlew assemble
       - store_artifacts:
           path: app/build/outputs/apk/
       - persist_to_workspace:
