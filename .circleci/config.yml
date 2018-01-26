@@ -52,18 +52,24 @@ jobs:
   "Run FindBugs":
     <<: *defaults
     steps:
+      - attach_workspace:
+          at: .
       - run:
           name: Run FindBugs
           command: ./gradlew findbugs
   "Run PMD":
     <<: *defaults
     steps:
+      - attach_workspace:
+          at: .
       - run:
           name: Run PMD
           command: ./gradlew pmd
   "Run Lint":
     <<: *defaults
     steps:
+      - attach_workspace:
+          at: .
       - run:
           name: Run Lint
           command: ./gradlew check
