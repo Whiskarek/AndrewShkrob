@@ -95,10 +95,16 @@ jobs:
           at: .
       - deploy:
           name: Deploy Fabric
-          command: bash ./ci_scripts/deploy-fabric.sh
+          command: ./gradlew crashlyticsUploadDistributionCi
       - deploy:
           name: Deploy HockeyApp
-          command: bash ./ci_scripts/deploy-hockeyapp.sh
+          command: |
+              curl \
+              -F "status=2" \
+              -F "notify=0" \
+              -F "ipa=@app/build/outputs/apk/release/app-release.apk" \
+              -H "X-HockeyAppToken: $HOCKEY_APP_TOKEN" \
+              https://rink.hockeyapp.net/api/2/apps/$HOCKEY_APP_ID/app_versions/upload
 workflows:
   version: 2
   build:
