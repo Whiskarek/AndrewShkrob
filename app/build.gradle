@@ -9,13 +9,31 @@ buildscript {
 }
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
+apply plugin: 'checkstyle'
+apply plugin: 'findbugs'
+apply plugin: 'pmd'
+
+checkstyle {
+    toolVersion = "8.7"
+}
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
+    jcenter()
 }
 
+check.dependsOn 'lint'
 
 android {
+    lintOptions {
+        abortOnError false
+        xmlReport false
+        htmlReport true
+
+        lintConfig rootProject.file('config/lint/lint.xml')
+        htmlOutput rootProject.file('report/lint/lint-result.html')
+        xmlOutput rootProject.file('report/lint/lint-result.xml')
+    }
     signingConfigs {
         config {
             keyAlias 'AndrewShkrob'
@@ -32,6 +50,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        manifestPlaceholders = [HOCKEYAPP_APP_ID: "8a4807f5389f43e793a953995c85ae32"]
     }
     buildTypes {
         release {
@@ -39,6 +58,73 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
             ext.betaDistributionGroupAliases = 'andrew-shkrob'
+        }
+    }
+}
+
+task checkstyle(type: Checkstyle) {
+    description 'Checks if the code is somewhat acceptable'
+    group 'verification'
+
+    configFile = rootProject.file('config/checkstyle/checkstyle.xml')
+    configProperties.checkstyleSuppressionsPath = rootProject.file('config/checkstyle/suppressions.xml')
+
+    source 'src/main/java'
+    include '**/*.java'
+    exclude '**/gen/**'
+
+    // empty classpath
+    classpath = files()
+}
+
+task findbugs(type: FindBugs) {
+    description 'Run FindBugs'
+    group 'verification'
+
+    ignoreFailures = false
+    effort = "max"
+    reportLevel = "high"
+    excludeFilter = new File('../config/findbugs/findbugs-exclude-filter.xml')
+    classes = rootProject.files('app/build/intermediates/classes')
+
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+
+    reports {
+        xml.enabled = false
+        html.enabled = true
+        xml {
+            destination rootProject.file('reports/findbugs/findbugs.xml')
+        }
+        html {
+            destination rootProject.file('reports/findbugs/findbugs.html')
+        }
+    }
+
+    classpath = files()
+}
+
+task pmd(type: Pmd) {
+    description 'Run PMD'
+    group 'verification'
+
+    ruleSetFiles = rootProject.files('config/pmd/pmd-ruleset.xml')
+    ruleSets = []
+    ignoreFailures = false
+
+    source 'src'
+    include '**/*.java'
+    exclude '**/gen/**'
+
+    reports {
+        xml.enabled = false
+        html.enabled = true
+        xml {
+            destination rootProject.file('reports/pmd/pmd.xml')
+        }
+        html {
+            destination rootProject.file('reports/pmd/pmd.html')
         }
     }
 }
@@ -54,4 +140,5 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.8.0@aar') {
         transitive = true;
     }
+    compile 'net.hockeyapp.android:HockeySDK:5.1.0'
 }
