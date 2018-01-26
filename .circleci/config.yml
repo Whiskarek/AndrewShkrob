@@ -38,8 +38,6 @@ jobs:
   "Run CheckStyle":
     <<: *defaults
     steps:
-      - attach_workspace:
-          at: ~/code/
       - run:
           name: Run CkeckStyle
           command: ./gradlew checkstyle
