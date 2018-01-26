@@ -79,16 +79,13 @@ jobs:
       - attach_workspace:
           at: .
       - run:
-          name: Download Keystore
-          command: bash ./ci_scripts/download-keystore.sh
-      - run:
           name: Build
           command: ./gradlew assemble
       - store_artifacts:
           path: app/build/outputs/apk/
       - run:
           name: Look Files
-          command: cd ~/code/app/build/outputs/apk/ci/
+          command: cd ~/code/app/build/outputs/apk/
       - run:
           name: sss
           command: ls -a
