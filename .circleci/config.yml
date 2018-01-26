@@ -25,7 +25,7 @@ jobs:
           root: .
           paths:
             - ./*
-  "Run Unit Tests":
+  "Unit Tests":
     <<: *defaults
     steps:
       - attach_workspace:
@@ -38,7 +38,7 @@ jobs:
           destination: reports
       - store_test_results:
           path: app/build/test-results
-  "Run CheckStyle":
+  "CheckStyle":
     <<: *defaults
     steps:
       - attach_workspace:
@@ -46,7 +46,7 @@ jobs:
       - run:
           name: Run CkeckStyle
           command: ./gradlew checkstyle
-  "Run FindBugs":
+  "FindBugs":
     <<: *defaults
     steps:
       - attach_workspace:
@@ -54,7 +54,7 @@ jobs:
       - run:
           name: Run FindBugs
           command: ./gradlew findbugs
-  "Run PMD":
+  "PMD":
     <<: *defaults
     steps:
       - attach_workspace:
@@ -62,7 +62,7 @@ jobs:
       - run:
           name: Run PMD
           command: ./gradlew pmd
-  "Run Lint":
+  "Lint":
     <<: *defaults
     steps:
       - attach_workspace:
@@ -85,7 +85,7 @@ jobs:
           root: .
           paths:
             - ./*
-  deploy:
+  "Deploy Fabric":
     <<: *defaults
     working_directory: ~/code
     steps:
@@ -94,6 +94,12 @@ jobs:
       - deploy:
           name: Deploy Fabric
           command: ./gradlew crashlyticsUploadDistributionRelease
+  "Deploy HockeyApp":
+    <<: *defaults
+    working_directory: ~/code
+    steps:
+      - attach_workspace:
+          at: .
       - deploy:
           name: Deploy HockeyApp
           command: |
@@ -108,35 +114,50 @@ workflows:
   build:
     jobs:
       - "Make Dependencies"
-      - "Run CheckStyle":
+      - "CheckStyle":
           requires:
             - "Make Dependencies"
-      - "Run PMD":
+      - "PMD":
           requires:
             - "Make Dependencies"
-      - "Run Lint":
+      - "Lint":
           requires:
             - "Make Dependencies"
-      - "Run Unit Tests":
+      - "Unit Tests":
           requires:
             - "Make Dependencies"
       - "Build App":
           requires:
             - "Make Dependencies"
-            - "Run CheckStyle"
-            - "Run PMD"
-            - "Run Lint"
-            - "Run Unit Tests"
-      - "Run FindBugs":
+            - "CheckStyle"
+            - "PMD"
+            - "Lint"
+            - "Unit Tests"
+      - "FindBugs":
           requires:
             - "Make Dependencies"
             - "Build App"
-      - deploy:
+      - "Deploy Fabric":
           requires:
             - "Make Dependencies"
             - "Build App"
-            - "Run Unit Tests"
-            - "Run CheckStyle"
-            - "Run PMD"
-            - "Run Lint"
-            - "Run FindBugs"
+            - "Unit Tests"
+            - "CheckStyle"
+            - "PMD"
+            - "Lint"
+            - "FindBugs"
+          filters:
+            branches:
+              only: master
+      - "Deploy HockeyApp":
+          requires:
+            - "Make Dependencies"
+            - "Build App"
+            - "Unit Tests"
+            - "CheckStyle"
+            - "PMD"
+            - "Lint"
+            - "FindBugs"
+          filters:
+            branches:
+              only: dev
