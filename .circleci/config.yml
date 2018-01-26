@@ -23,9 +23,21 @@ jobs:
           paths:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+  "Run Static Program Analysis":
+    steps:
+      - run:
+          name: CheckStyle
+          command: ./gradlew checkstyle
+      - run:
+          name: PMD
+          command: ./gradlew pmd
+      - run:
+          name: Lint
+          command: ./gradlew check
 
 workflows:
   version: 2
   btd:
     jobs:
+      - "Run Static Program Analysis"
       - "Make Dependencies"
