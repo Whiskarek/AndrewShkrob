@@ -21,9 +21,15 @@ jobs:
           paths:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./*
   "Run Unit Tests":
     <<: *defaults
     steps:
+      - attach_workspace:
+          at: .
       - run:
           name: Run Unit Tests
           command: ./gradlew test
@@ -35,60 +41,91 @@ jobs:
   "Run CheckStyle":
     <<: *defaults
     steps:
+      - attach_workspace:
+          at: .
       - run:
           name: Run CkeckStyle
           command: ./gradlew checkstyle
   "Run FindBugs":
     <<: *defaults
     steps:
+      - attach_workspace:
+          at: .
       - run:
           name: Run FindBugs
           command: ./gradlew findbugs
   "Run PMD":
     <<: *defaults
     steps:
+      - attach_workspace:
+          at: .
       - run:
           name: Run PMD
           command: ./gradlew pmd
   "Run Lint":
     <<: *defaults
     steps:
+      - attach_workspace:
+          at: .
       - run:
           name: Run Lint
           command: ./gradlew lint test
   "Build App":
     <<: *defaults
     steps:
+      - attach_workspace:
+          at: .
       - run:
           name: Build
           command: ./gradlew assemble
       - store_artifacts:
           path: app/build/outputs/apk/
           destination: apks
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./*
   deploy:
-    <<: *defaults
     steps:
+      - attach_workspace:
+          at: .
       - deploy:
-          name: Deploy Fabrics
+          name: Deploy Fabric
           command: ./gradlew crashlyticsUploadDistributionRelease
-      - deploy:
-          name: Deploy HockeyApp
-          command: |
-              curl \
-              -F "status=2" \
-              -F "notify=0" \
-              -F "ipa=@app/build/outputs/apk/release/app-release.apk" \
-              -H "X-HockeyAppToken: $HOCKEY_APP_TOKEN" \
-              https://rink.hockeyapp.net/api/2/apps/$HOCKEY_APP_ID/app_versions/upload
 workflows:
   version: 2
   build:
     jobs:
       - "Make Dependencies"
+      - "Run CheckStyle":
+          requires:
+            - "Make Dependencies"
+      - "Run PMD":
+          requires:
+            - "Make Dependencies"
+      - "Run Lint":
+          requires:
+            - "Make Dependencies"
+      - "Run Unit Tests":
+          requires:
+            - "Make Dependencies"
       - "Build App":
           requires:
             - "Make Dependencies"
+            - "Run CheckStyle"
+            - "Run PMD"
+            - "Run Lint"
+            - "Run Unit Tests"
+      - "Run FindBugs":
+          requires:
+            - "Make Dependencies"
+            - "Build App"
       - deploy:
           requires:
             - "Make Dependencies"
             - "Build App"
+            - "Run Unit Tests"
+            - "Run CheckStyle"
+            - "Run PMD"
+            - "Run Lint"
+            - "Run FindBugs"
