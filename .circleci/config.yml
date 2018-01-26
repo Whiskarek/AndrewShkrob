@@ -41,30 +41,6 @@ jobs:
           destination: reports
       - store_test_results:
           path: app/build/test-results
-  "Run CheckStyle":
-    <<: *defaults
-    steps:
-      - run:
-          name: Run CkeckStyle
-          command: ./gradlew checkstyle
-  "Run FindBugs":
-    <<: *defaults
-    steps:
-      - run:
-          name: Run FindBugs
-          command: ./gradlew findbugs
-  "Run PMD":
-    <<: *defaults
-    steps:
-      - run:
-          name: Run PMD
-          command: ./gradlew pmd
-  "Run Lint":
-    <<: *defaults
-    steps:
-      - run:
-          name: Run Lint
-          command: ./gradlew check
   "Build App":
     <<: *defaults
     steps:
@@ -82,6 +58,12 @@ jobs:
           root: .
           paths:
             - ./*
+  "Run Static Code Analysis":
+    <<: *defaults
+    steps:
+      - run:
+          name: Static Code Analysis
+          command: ./gradlew check
   "Deploy Release":
     <<: *defaults
     steps:
@@ -97,26 +79,14 @@ workflows:
   build:
     jobs:
       - "Make Dependencies"
-      - "Run CheckStyle":
-          requires:
-            - "Make Dependencies"
-      - "Run PMD":
-          requires:
-            - "Make Dependencies"
-      - "Run Lint":
-          requires:
-            - "Make Dependencies"
       - "Run Tests":
           requires:
             - "Make Dependencies"
       - "Build App":
           requires:
             - "Make Dependencies"
-            - "Run CheckStyle"
-            - "Run PMD"
-            - "Run Lint"
             - "Run Tests"
-      - "Run FindBugs":
+      - "Run Static Code Analysis":
           requires:
             - "Make Dependencies"
             - "Build App"
@@ -125,10 +95,7 @@ workflows:
             - "Make Dependencies"
             - "Build App"
             - "Run Tests"
-            - "Run CheckStyle"
-            - "Run PMD"
-            - "Run Lint"
-            - "Run FindBugs"
+            - "Run Static Code Analysis"
           filters:
             branches:
               only: master

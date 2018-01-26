@@ -22,7 +22,7 @@ repositories {
     jcenter()
 }
 
-check.dependsOn 'lint'
+check.dependsOn 'chackstyle', 'findbugs', 'pmd', 'lint'
 
 android {
     lintOptions {
