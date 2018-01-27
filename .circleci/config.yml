@@ -28,8 +28,8 @@ jobs:
   "Unit Tests":
     <<: *defaults
     steps:
-      - attach_workspace:
-          at: ~/code
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
           name: Run Unit Tests
           command: ./gradlew test
@@ -41,24 +41,24 @@ jobs:
   "CheckStyle":
     <<: *defaults
     steps:
-      - attach_workspace:
-          at: ~/code
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
           name: Run CkeckStyle
           command: ./gradlew checkstyle
   "FindBugs":
     <<: *defaults
     steps:
-      - attach_workspace:
-          at: ~/code
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
           name: Run FindBugs
           command: ./gradlew findbugs
   "PMD":
     <<: *defaults
     steps:
-      - attach_workspace:
-          at: ~/code
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
           name: Run PMD
           command: ./gradlew pmd
