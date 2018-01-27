@@ -109,7 +109,7 @@ jobs:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - deploy:
           name: Deploy Fabric
-          command: bash ~code/scripts-ci/deploy-fabric.sh
+          command: bash ~/code/scripts-ci/deploy-fabric.sh
   "Deploy HockeyApp":
     <<: *defaults
     working_directory: ~/code
@@ -120,7 +120,7 @@ jobs:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - deploy:
           name: Deploy HockeyApp
-          command: bash ~code/scripts-ci/deploy-hockey.sh
+          command: bash ~/code/scripts-ci/deploy-hockey.sh
 workflows:
   version: 2
   build:
