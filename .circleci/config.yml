@@ -22,14 +22,14 @@ jobs:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - persist_to_workspace:
-          root: .
+          root: ~/code
           paths:
             - ./*
   "Unit Tests":
     <<: *defaults
     steps:
       - attach_workspace:
-          at: .
+          at: ~/code
       - run:
           name: Run Unit Tests
           command: ./gradlew test
@@ -42,7 +42,7 @@ jobs:
     <<: *defaults
     steps:
       - attach_workspace:
-          at: .
+          at: ~/code
       - run:
           name: Run CkeckStyle
           command: ./gradlew checkstyle
@@ -50,7 +50,7 @@ jobs:
     <<: *defaults
     steps:
       - attach_workspace:
-          at: .
+          at: ~/code
       - run:
           name: Run FindBugs
           command: ./gradlew findbugs
@@ -58,7 +58,7 @@ jobs:
     <<: *defaults
     steps:
       - attach_workspace:
-          at: .
+          at: ~/code
       - run:
           name: Run PMD
           command: ./gradlew pmd
@@ -66,7 +66,7 @@ jobs:
     <<: *defaults
     steps:
       - attach_workspace:
-          at: .
+          at: ~/code
       - run:
           name: Run Lint
           command: ./gradlew lint test
@@ -74,15 +74,15 @@ jobs:
     <<: *defaults
     steps:
       - attach_workspace:
-          at: .
+          at: ~/code
       - run:
           name: Build
-          command: ./gradlew assemble
+          command: ./gradlew clean assembleRelease
       - store_artifacts:
           path: app/build/outputs/apk/
           destination: apks
       - persist_to_workspace:
-          root: .
+          root: ~/code
           paths:
             - ./*
   "Deploy Fabric":
@@ -90,7 +90,7 @@ jobs:
     working_directory: ~/code
     steps:
       - attach_workspace:
-          at: .
+          at: ~/code
       - deploy:
           name: Deploy Fabric
           command: ./gradlew crashlyticsUploadDistributionRelease
@@ -99,7 +99,7 @@ jobs:
     working_directory: ~/code
     steps:
       - attach_workspace:
-          at: .
+          at: ~/code
       - deploy:
           name: Deploy HockeyApp
           command: |
