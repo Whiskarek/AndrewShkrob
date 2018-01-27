@@ -116,8 +116,6 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/code
-      - restore_cache:
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - deploy:
           name: Deploy HockeyApp
           command: bash ~/code/scripts-ci/deploy-hockey.sh

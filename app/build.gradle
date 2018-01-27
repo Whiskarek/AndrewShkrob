@@ -31,8 +31,8 @@ android {
         htmlReport true
 
         lintConfig rootProject.file('config/lint/lint.xml')
-        htmlOutput rootProject.file('report/lint/lint-result.html')
-        xmlOutput rootProject.file('report/lint/lint-result.xml')
+        htmlOutput rootProject.file('reports/lint/lint-result.html')
+        xmlOutput rootProject.file('reports/lint/lint-result.xml')
     }
     signingConfigs {
         config {
@@ -48,7 +48,7 @@ android {
         minSdkVersion 22
         targetSdkVersion 26
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [HOCKEYAPP_APP_ID: "8a4807f5389f43e793a953995c85ae32"]
     }

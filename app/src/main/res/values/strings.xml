@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">Андрей Шкроб</string>
     <string name="action_settings">Settings</string>
+    <string name="name">Андрей Шкроб</string>
+    <string name="contentDescriptionMyPhoto">My Photo</string>
+    <string name="contentDescriptionGitHubLogo">GitHub Logo</string>
+    <string name="contentDescriptionVKLogo">VK Logo</string>
+    <string name="gitHubURL">Whiskarek/AndrewShkrob</string>
+    <string name="vkURL">https://vk.com/andrew_shkrob</string>
 </resources>
