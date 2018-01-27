@@ -28,6 +28,8 @@ jobs:
   "Unit Tests":
     <<: *defaults
     steps:
+      - attach_workspace:
+          at: ~/code
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
@@ -41,6 +43,8 @@ jobs:
   "CheckStyle":
     <<: *defaults
     steps:
+      - attach_workspace:
+          at: ~/code
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
@@ -49,6 +53,8 @@ jobs:
   "FindBugs":
     <<: *defaults
     steps:
+      - attach_workspace:
+          at: ~/code
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
@@ -57,6 +63,8 @@ jobs:
   "PMD":
     <<: *defaults
     steps:
+      - attach_workspace:
+          at: ~/code
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
@@ -67,6 +75,8 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/code
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
       - run:
           name: Run Lint
           command: ./gradlew lint test
