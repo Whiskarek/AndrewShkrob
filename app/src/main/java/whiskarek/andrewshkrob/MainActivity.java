@@ -1,24 +1,20 @@
 package whiskarek.andrewshkrob;
 
-import static android.net.Uri.parse;
-
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 
 import net.hockeyapp.android.CrashManager;
 import net.hockeyapp.android.UpdateManager;
-
-import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,27 +26,28 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        final TextView tv = (TextView) findViewById(R.id.tvURL);
-
-        tv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                android.net.Uri parse = parse(tv.getText().toString());
-                Intent browser = new Intent(Intent.ACTION_VIEW, parse("http://www." + tv.getText().toString()));
-                startActivity(browser);
-            }
-        });
-
         checkForUpdates();
+    }
+
+    /**
+     * OnClickListener to open VK.
+     */
+    public void vkClick(View view) {
+        Log.d("Click", "VK");
+        Intent intent = new Intent(Intent.ACTION_VIEW,
+                Uri.parse(getResources().getString(R.string.vkURL)));
+
+        startActivity(intent);
+    }
+
+    /**
+     * OnClickListener to open GitHub.
+     */
+    public void gitClick(View view) {
+        Log.d("Click", "Git");
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/" + getResources().getString(R.string.gitHubURL)));
+
+        startActivity(intent);
     }
 
     @Override
