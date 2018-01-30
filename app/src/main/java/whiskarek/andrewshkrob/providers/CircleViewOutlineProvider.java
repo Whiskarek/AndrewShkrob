@@ -1,4 +1,4 @@
-package whiskarek.andrewshkrob;
+package whiskarek.andrewshkrob.providers;
 
 import android.graphics.Outline;
 import android.view.View;
