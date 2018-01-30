@@ -14,12 +14,12 @@ import android.util.AttributeSet;
 
 import whiskarek.andrewshkrob.providers.CircleViewOutlineProvider;
 
-public class CircledImageView extends android.support.v7.widget.AppCompatImageView {
+public class CircleImageView extends android.support.v7.widget.AppCompatImageView {
 
     /**
      * Default constructor.
      */
-    public CircledImageView(Context context) {
+    public CircleImageView(Context context) {
         super(context);
 
         setOutlineProvider(new CircleViewOutlineProvider());
@@ -29,7 +29,7 @@ public class CircledImageView extends android.support.v7.widget.AppCompatImageVi
     /**
      * Default constructor.
      */
-    public CircledImageView(Context context, AttributeSet attrs) {
+    public CircleImageView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
         setOutlineProvider(new CircleViewOutlineProvider());
@@ -39,7 +39,7 @@ public class CircledImageView extends android.support.v7.widget.AppCompatImageVi
     /**
      * Default constructor.
      */
-    public CircledImageView(Context context, AttributeSet attrs, int defStyle) {
+    public CircleImageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
         setOutlineProvider(new CircleViewOutlineProvider());

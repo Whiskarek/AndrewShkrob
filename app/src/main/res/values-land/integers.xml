@@ -1,0 +1,4 @@
+<resources>
+    <integer name="modelDefault">6</integer>
+    <integer name="modelSolid">7</integer>
+</resources>

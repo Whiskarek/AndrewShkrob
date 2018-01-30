@@ -5,26 +5,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="whiskarek.andrewshkrob.MainActivity"
+    tools:context="whiskarek.andrewshkrob.activity.MainActivity"
     tools:showIn="@layout/activity_main">
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <whiskarek.andrewshkrob.CircledImageView
+        <whiskarek.andrewshkrob.views.CircleImageView
             android:id="@+id/civPhoto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="30dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
+            android:layout_marginBottom="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginStart="50dp"
             android:layout_marginTop="50dp"
             android:contentDescription="@string/contentDescriptionMyPhoto"
             android:elevation="6dp"
@@ -32,61 +32,69 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/photo" />
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:onClick="vkClick">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/ivVKLogo"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="30dp"
-                android:contentDescription="@string/contentDescriptionVKLogo"
-                app:srcCompat="@drawable/vk_logo" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="50dp"
+                android:onClick="vkClick">
 
-            <TextView
-                android:id="@+id/tvName"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:gravity="center"
-                android:text="@string/name"
-                android:textAlignment="center"
-                android:textColor="@android:color/black"
-                android:textSize="18sp" />
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/ivVKLogo"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignTop="@+id/tvAppName"
+                    android:layout_marginStart="10dp"
+                    android:contentDescription="@string/contentDescriptionVKLogo"
+                    app:srcCompat="@drawable/vk_logo" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="gitClick">
+                <TextView
+                    android:id="@+id/tvAppName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="@string/name"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
 
-            <ImageView
-                android:id="@+id/ivGitHubLogo"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="30dp"
-                android:contentDescription="@string/contentDescriptionGitHubLogo"
-                app:srcCompat="@drawable/github_logo" />
+            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tvGitHubURL"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="20dp"
-                android:gravity="center"
-                android:text="@string/gitHubURL"
-                android:textColor="@android:color/black" />
-        </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="gitClick">
+
+                <ImageView
+                    android:id="@+id/ivGitHubLogo"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignTop="@+id/tvHello"
+                    android:layout_marginStart="10dp"
+                    android:contentDescription="@string/contentDescriptionGitHubLogo"
+                    app:srcCompat="@drawable/github_logo" />
+
+                <TextView
+                    android:id="@+id/tvHello"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="@string/gitHubURL"
+                    android:textColor="@android:color/black" />
+            </RelativeLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 

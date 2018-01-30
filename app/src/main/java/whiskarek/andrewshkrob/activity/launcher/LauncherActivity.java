@@ -1,8 +1,8 @@
-package whiskarek.andrewshkrob.activity;
+package whiskarek.andrewshkrob.activity.launcher;
 
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -12,8 +12,6 @@ import java.util.Random;
 
 import whiskarek.andrewshkrob.R;
 import whiskarek.andrewshkrob.Settings;
-import whiskarek.andrewshkrob.views.recyclerView.LauncherAdapter;
-import whiskarek.andrewshkrob.views.recyclerView.OffsetItemDecoration;
 
 public class LauncherActivity extends AppCompatActivity {
 
