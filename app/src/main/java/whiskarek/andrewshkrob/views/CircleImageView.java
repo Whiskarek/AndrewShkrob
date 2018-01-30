@@ -1,4 +1,4 @@
-package whiskarek.andrewshkrob;
+package whiskarek.andrewshkrob.views;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -11,6 +11,8 @@ import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+
+import whiskarek.andrewshkrob.providers.CircleViewOutlineProvider;
 
 public class CircledImageView extends android.support.v7.widget.AppCompatImageView {
 
@@ -42,34 +44,6 @@ public class CircledImageView extends android.support.v7.widget.AppCompatImageVi
 
         setOutlineProvider(new CircleViewOutlineProvider());
         setClipToOutline(true);
-    }
-
-    @Override
-    public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(Math.min(widthMeasureSpec, heightMeasureSpec),
-                Math.min(widthMeasureSpec, heightMeasureSpec));
-    }
-
-    @Override
-    protected void onDraw(Canvas canvas) {
-
-        Drawable drawable = getDrawable();
-
-        if (drawable == null) {
-            return;
-        }
-
-        if (getWidth() == 0 || getHeight() == 0) {
-            return;
-        }
-        Bitmap b = ((BitmapDrawable) drawable).getBitmap();
-        Bitmap bitmap = Bitmap.createBitmap(b);
-
-        int w = getWidth();
-        int h = getHeight();
-
-        Bitmap roundBitmap = getCircledBitmap(bitmap, Math.min(w, h));
-        canvas.drawBitmap(roundBitmap, 0, 0, null);
     }
 
     /**
@@ -108,6 +82,34 @@ public class CircledImageView extends android.support.v7.widget.AppCompatImageVi
         canvas.drawBitmap(sbmp, rect, rect, paint);
 
         return output;
+    }
+
+    @Override
+    public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(Math.min(widthMeasureSpec, heightMeasureSpec),
+                Math.min(widthMeasureSpec, heightMeasureSpec));
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+
+        Drawable drawable = getDrawable();
+
+        if (drawable == null) {
+            return;
+        }
+
+        if (getWidth() == 0 || getHeight() == 0) {
+            return;
+        }
+        Bitmap b = ((BitmapDrawable) drawable).getBitmap();
+        Bitmap bitmap = Bitmap.createBitmap(b);
+
+        int w = getWidth();
+        int h = getHeight();
+
+        Bitmap roundBitmap = getCircledBitmap(bitmap, Math.min(w, h));
+        canvas.drawBitmap(roundBitmap, 0, 0, null);
     }
 
 }
