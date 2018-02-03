@@ -11,23 +11,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeLight">
-        <activity
-            android:name=".activity.MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppThemeLight.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.ABOUT" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".activity.WelcomeActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppThemeLight.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.WELCOME" />
-            </intent-filter>
-        </activity>
-
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="6cf5ad29e988c308b4c4f9e63b998d629b942347" />
@@ -36,17 +19,15 @@
             android:value="${HOCKEYAPP_APP_ID}" />
 
         <activity
-            android:name=".activity.StartActivity"
-            android:label="@string/title_activity_start"
-            android:theme="@style/AppThemeLight.NoActionBar">
+            android:name=".activity.main.MainActivity"
+            android:theme="@style/AppThemeLight">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.launcher.LauncherActivity" />
-        <activity android:name=".activity.list.ListActivity"></activity>
+        <activity android:name=".activity.welcomepage.WelcomePageActivity"></activity>
     </application>
 
 </manifest>

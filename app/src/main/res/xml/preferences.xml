@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/pref_title_theme">
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/pref_key_theme_dark"
+            android:title="@string/pref_theme_dark" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_title_model">
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/pref_key_model_solid"
+            android:title="@string/pref_model_solid"
+            android:summary="@string/model_solid_description"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_title_sort">
+        <ListPreference
+            android:defaultValue="0"
+            android:entries="@array/pref_sort_entries"
+            android:entryValues="@array/pref_sort_entry_values"
+            android:key="@string/pref_key_sort_type"
+            android:title="@string/pref_sort_type" />
+    </PreferenceCategory>
+
+    <SwitchPreference
+        android:defaultValue="false"
+        android:key="@string/pref_key_show_welcome_page_on_next_load"
+        android:title="@string/pref_show_welcome_page_on_next_load"
+        android:summary="@string/pref_show_welcome_page_on_next_load_summary"/>
+</PreferenceScreen>

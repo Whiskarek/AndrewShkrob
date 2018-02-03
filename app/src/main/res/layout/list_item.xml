@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/offset"
+    android:orientation="horizontal">
+
+    <whiskarek.andrewshkrob.view.CircleView
+        android:id="@+id/list_item_color_view"
+        android:layout_width="@dimen/fragment_list_icon_size"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:layout_marginEnd="@dimen/offset"
+        tools:background="@color/colorAccent"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/offset"
+        android:orientation="vertical"
+        android:layout_gravity="left">
+
+        <TextView
+            android:id="@+id/list_item_color_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/offset"
+            android:textSize="@dimen/text_size_header"
+            android:lines="@integer/text_lines_default"
+            tools:text="Hello"/>
+
+        <TextView
+            android:id="@+id/list_item_random_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/offset"
+            android:textSize="@dimen/text_size_default"
+            android:lines="@integer/fragment_list_text_lines_body"
+            tools:text="Hello"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/fragment_strip_detach_thickness"
+            android:background="@android:color/darker_gray"/>
+    </LinearLayout>
+
+</LinearLayout>

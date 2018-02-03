@@ -1,45 +1,72 @@
 <resources>
     <string name="app_name">Андрей Шкроб</string>
-    <string name="action_settings">Settings</string>
-    <string name="settings">whiskarek.andrewshkrob.settings</string>
 
-    <string name="name">Андрей Шкроб</string>
-    <string name="greeting">Привет</string>
-    <string name="about">Описание приложения</string>
+    <string name="developer_name">Андрей Шкроб</string>
 
-    <string name="contentDescriptionMyPhoto">My Photo</string>
-    <string name="contentDescriptionGitHubLogo">GitHub Logo</string>
-    <string name="contentDescriptionVKLogo">VK Logo</string>
-    <string name="contentDescriptionAppLogo">App Logo</string>
+    <!-- Dialog delete element -->
+    <string name="dialog_delete_element">Вы хотите удалить элемент?</string>
+    <string name="dialog_delete_element_yes">Да</string>
 
-    <string name="gitHubURL">Whiskarek/AndrewShkrob</string>
-    <string name="vkURL">https://vk.com/andrew_shkrob</string>
+    <!-- Context menu -->
+    <string name="context_menu_app_delete">Удалить</string>
 
-    <!-- Buttons -->
-    <string name="btNext">Далее</string>
-    <string name="btBack">Назад</string>
-
-    <!-- RadioButtons -->
-    <string name="rbLight">Светлая тема</string>
-    <string name="rbDark">Темная тема</string>
-    <string name="rbDefaultModel">Стандартный макет</string>
-    <string name="rbSolidModel">Плотный макет</string>
-    <string name="rbDefaultModelDescription">Портретная: 4 иконки в ряд \nЛандшафтная: 6 иконок в ряд</string>
-    <string name="rbSolidModelDescription">Портретная: 5 иконок в ряд \nЛандшафтная: 7 иконок в ряд</string>
-    <string name="title_activity_launcher">LauncherActivity</string>
-
+    <!-- Navigation Drawer Menu -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_drawer_recycler_view_grid">RecyclerView Сетка</string>
+    <string name="nav_drawer_recycler_view_list">RecyclerView Список</string>
+    <string name="nav_drawer_launcher">Лаунчер</string>
+    <string name="nav_drawer_title_options">Параметры</string>
+    <string name="nav_drawer_settings">Настройки</string>
+    <string name="nav_drawer_welcome_page">Страница привествия</string>
 
-    <!-- Menu -->
-    <string name="menu_title_options">Параметры</string>
-    <string name="menu_launcher_activity">Лаунчер</string>
-    <string name="menu_list_activity">Список</string>
-    <string name="menu_settings_activity">Настройки</string>
-    <string name="title_activity_start">StartActivity</string>
+    <!-- Preferences -->
+    <string name="pref_title_theme">Тема</string>
+    <string name="pref_theme_dark">Темная тема</string>
+    <string name="pref_title_model">Макет</string>
+    <string name="pref_model_solid">Плотный макет</string>
+    <string name="pref_title_sort">Сортировка</string>
+    <string name="pref_sort_type">Сортировка</string>
+    <string-array name="pref_sort_entries">
+        <item>Отсутствует</item>
+        <item>По дате установки +</item>
+        <item>По дате установки -</item>
+        <item>В алфавитном порядке A-Z</item>
+        <item>В алфавитном порядке Z-A</item>
+        <item>По количеству запусков +</item>
+        <item>По количеству запусков -</item>
+    </string-array>
+    <string-array name="pref_sort_entry_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </string-array>
+    <string name="pref_show_welcome_page_on_next_load">Показать страницу приветствия</string>
+    <string name="pref_show_welcome_page_on_next_load_summary">При следующей загрузке</string>
 
+    <!-- Preference Keys -->
+    <string name="pref_key_theme_dark">pref_theme_dark</string>
+    <string name="pref_key_model_solid">pref_model_solid</string>
+    <string name="pref_key_sort_type">pref_sort_type</string>
+    <string name="pref_key_show_welcome_page_on_next_load">pref_show_welcome_page_on_next_load</string>
+
+    <!-- Solid Model -->
+    <string name="model_solid_description">В портретном режиме: 5 иконок в ряд\nВ ландшафтном режиме: 7 иконок в ряд</string>
+
+    <!-- Log Tags -->
+    <string name="log_tag_preferences">PREFERENCES</string>
+    <string name="log_tag_button_click">BUTTON_CLICK</string>
+    <string name="log_tag_error">ERROR</string>
+    <string name="log_tag_launcher">LAUNCHER</string>
+    <string name="log_tag_broadcast">BROADCAST</string>
+
+    <!-- Fragment List Random Text -->
     <!-- List second text -->
-    <string-array name="array_list_second_text">
+    <string-array name="fragment_list_random_text">
         <item>"A material metaphor is the unifying theory of a rationalized space and a system of motion."
         "The material is grounded in tactile reality, inspired by the study of paper and ink, yet "
         "technologically advanced and open to imagination and magic.\n"
@@ -102,5 +129,4 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"</item>
     </string-array>
-
 </resources>

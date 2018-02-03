@@ -1,18 +1,19 @@
 <resources>
-    <dimen name="fab_margin">16dp</dimen>
-    <dimen name="indent">16dp</dimen>
-    <dimen name="app_ico">168dp</dimen>
+
     <dimen name="offset">8dp</dimen>
 
-    <dimen name="app_name">24sp</dimen>
-    <dimen name="greeting">16sp</dimen>
-    <dimen name="app_description">16sp</dimen>
-    <dimen name="theme">24sp</dimen>
-    <dimen name="model">24sp</dimen>
-    <dimen name="model_description">16sp</dimen>
+    <!-- List Fragment -->
+    <dimen name="fragment_list_icon_size">56dp</dimen>
+    <dimen name="fragment_strip_detach_thickness">1px</dimen>
+
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">176dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <!-- Text Size -->
+    <dimen name="text_size_default">12sp</dimen>
+    <dimen name="text_size_header">14sp</dimen>
 </resources>
