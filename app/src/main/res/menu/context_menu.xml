@@ -3,4 +3,10 @@
     <item
         android:id="@+id/context_menu_app_delete"
         android:title="@string/context_menu_app_delete" />
+    <item
+        android:id="@+id/context_menu_app_frequency"
+        android:title="@string/context_menu_app_frequency" />
+    <item
+        android:id="@+id/context_menu_app_info"
+        android:title="@string/context_menu_app_info" />
 </menu>

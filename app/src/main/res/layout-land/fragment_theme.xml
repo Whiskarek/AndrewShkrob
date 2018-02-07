@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RadioGroup
+        android:id="@+id/radio_group_theme"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/offset"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/radio_button_theme_light"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/offset"
+            android:background="@drawable/radio_button_background"
+            android:textSize="@dimen/text_size_choose_theme"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/radio_button_theme_light" />
+
+        <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/radio_button_theme_dark"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/offset"
+            android:background="@drawable/radio_button_background"
+            android:textSize="@dimen/text_size_choose_theme"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/radio_button_theme_dark" />
+    </RadioGroup>
+</android.support.constraint.ConstraintLayout>

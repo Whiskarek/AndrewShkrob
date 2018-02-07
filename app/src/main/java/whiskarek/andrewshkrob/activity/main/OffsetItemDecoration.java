@@ -1,10 +1,10 @@
-package whiskarek.andrewshkrob.activity.main.fragments.launcher;
+package whiskarek.andrewshkrob.activity.main;
 
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-public class OffsetItemDecoration extends RecyclerView.ItemDecoration {
+public class OffsetItemDecoration extends RecyclerView.ItemDecoration{
 
     private final int mOffset;
 
@@ -18,4 +18,5 @@ public class OffsetItemDecoration extends RecyclerView.ItemDecoration {
         super.getItemOffsets(outRect, view, parent, state);
         outRect.set(mOffset, mOffset, mOffset, mOffset);
     }
+
 }

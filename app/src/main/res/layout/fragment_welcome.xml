@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_gravity="center">
+
+        <whiskarek.andrewshkrob.view.CircleImageView
+            android:layout_width="@dimen/welcome_page_photo"
+            android:layout_height="@dimen/welcome_page_photo"
+            android:layout_margin="@dimen/offset"
+            android:layout_gravity="center"
+            android:elevation="2dp"
+            android:src="@drawable/photo1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/offset"
+            android:gravity="center"
+            android:lines="@integer/text_lines_default"
+            android:textSize="@dimen/text_size_app_name"
+            android:text="@string/app_name"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/offset"
+            android:gravity="center"
+            android:lines="@integer/text_lines_default"
+            android:textSize="@dimen/text_size_welcome_words"
+            android:text="@string/welcome_words"/>
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

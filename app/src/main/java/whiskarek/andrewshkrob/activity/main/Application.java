@@ -1,4 +1,4 @@
-package whiskarek.andrewshkrob.activity.main.fragments.launcher;
+package whiskarek.andrewshkrob.activity.main;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;

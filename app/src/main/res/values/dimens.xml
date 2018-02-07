@@ -2,8 +2,11 @@
 
     <dimen name="offset">8dp</dimen>
 
+    <!-- Welcome Page -->
+    <dimen name="welcome_page_photo">168dp</dimen>
+
     <!-- List Fragment -->
-    <dimen name="fragment_list_icon_size">56dp</dimen>
+    <dimen name="fragment_icon_size">56dp</dimen>
     <dimen name="fragment_strip_detach_thickness">1px</dimen>
 
     <!-- Default screen margins, per the Android Design guidelines. -->
@@ -14,6 +17,12 @@
     <dimen name="fab_margin">16dp</dimen>
 
     <!-- Text Size -->
-    <dimen name="text_size_default">12sp</dimen>
+    <dimen name="text_size_choose_theme">26sp</dimen>
+    <dimen name="text_size_app_name">22sp</dimen>
+    <dimen name="text_size_welcome_words">16sp</dimen>
     <dimen name="text_size_header">14sp</dimen>
+    <dimen name="text_size_default">12sp</dimen>
+    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+
 </resources>

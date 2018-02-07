@@ -6,23 +6,23 @@
     android:padding="@dimen/offset"
     android:orientation="horizontal">
 
-    <whiskarek.andrewshkrob.view.CircleView
-        android:id="@+id/list_item_color_view"
-        android:layout_width="@dimen/fragment_list_icon_size"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/launcher_app_icon"
+        android:layout_width="@dimen/fragment_icon_size"
+        android:layout_height="@dimen/fragment_icon_size"
         android:gravity="left"
-        android:layout_marginEnd="@dimen/offset"
+        android:layout_marginRight="@dimen/offset"
         tools:background="@color/colorAccent"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/offset"
+        android:layout_marginLeft="@dimen/offset"
         android:orientation="vertical"
         android:layout_gravity="left">
 
         <TextView
-            android:id="@+id/list_item_color_name"
+            android:id="@+id/launcher_app_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/offset"
@@ -31,7 +31,7 @@
             tools:text="Hello"/>
 
         <TextView
-            android:id="@+id/list_item_random_text"
+            android:id="@+id/launcher_app_package_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/offset"

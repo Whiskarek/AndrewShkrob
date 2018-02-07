@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <RadioGroup
+        android:id="@+id/radio_group_model_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/offset"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+
+        <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/radio_button_model_default"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/offset"
+            android:layout_weight="1"
+            android:background="@drawable/radio_button_background"
+            android:gravity="center"
+            android:text="@string/model_type_default"
+            android:textSize="@dimen/text_size_app_name" />
+
+        <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/radio_button_model_solid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/offset"
+            android:layout_weight="1"
+            android:background="@drawable/radio_button_background"
+            android:gravity="center"
+            android:text="@string/model_type_solid"
+            android:textSize="@dimen/text_size_app_name" />
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/offset">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/offset"
+            android:layout_weight="1"
+            android:text="@string/model_type_default_description" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/offset"
+            android:layout_weight="1"
+            android:text="@string/model_type_solid_description" />
+    </LinearLayout>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

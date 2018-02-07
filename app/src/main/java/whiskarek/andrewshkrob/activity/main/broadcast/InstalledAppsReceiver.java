@@ -1,4 +1,4 @@
-package whiskarek.andrewshkrob.activity.main.fragments.launcher.broadcast;
+package whiskarek.andrewshkrob.activity.main.broadcast;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
 
-import whiskarek.andrewshkrob.activity.main.fragments.launcher.ApplicationsLoader;
+import whiskarek.andrewshkrob.activity.main.ApplicationsLoader;
 
 public class InstalledAppsReceiver extends BroadcastReceiver {
 

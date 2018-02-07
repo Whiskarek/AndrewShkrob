@@ -1,42 +1,47 @@
 package whiskarek.andrewshkrob.activity.main.fragments.grid;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import whiskarek.andrewshkrob.R;
+import whiskarek.andrewshkrob.activity.main.Application;
+import whiskarek.andrewshkrob.activity.main.OffsetItemDecoration;
+import whiskarek.andrewshkrob.activity.main.fragments.LauncherFragment;
 
-public class GridFragment extends Fragment {
+public class GridFragment extends LauncherFragment {
 
-    private static final int mDataSize = 1000;
+    private RecyclerView mRecyclerView;
+    private boolean mViewCreated = false;
 
     @Nullable
     @Override
-    public View onCreateView(final LayoutInflater inflater,
-                             @Nullable final ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container,
                              @Nullable final Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_grid, container, false );
+        final View view = inflater.inflate(R.layout.fragment_launcher, container,
+                false);
 
         // SET UP RECYCLER VIEW
         //------------------------------------------------------------------------------------------
-        final RecyclerView recyclerView =
-                (RecyclerView) view.findViewById(R.id.fragment_recycler_view_grid);
+        mRecyclerView =
+                (RecyclerView) view.findViewById(R.id.fragment_recycler_view_launcher);
         final int offset = getResources().getDimensionPixelOffset(R.dimen.offset);
-        recyclerView.addItemDecoration(new OffsetItemDecoration(offset));
+        mRecyclerView.addItemDecoration(new OffsetItemDecoration(offset));
         // Get Model Type
         final SharedPreferences sharedPreferences =
                 PreferenceManager.getDefaultSharedPreferences(getContext());
@@ -47,44 +52,57 @@ public class GridFragment extends Fragment {
                 : getResources().getInteger(R.integer.model_default));
         // Create GridLayoutManager
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), spanCount);
-        recyclerView.setLayoutManager(gridLayoutManager);
+        mRecyclerView.setLayoutManager(gridLayoutManager);
         // Generate Data
-        final List<Integer> data = generateData();
+        final List<Application> data = new ArrayList<>();
         // Create GridAdapter
         final GridAdapter gridAdapter = new GridAdapter(getContext(), data);
-        recyclerView.setAdapter(gridAdapter);
+        mRecyclerView.setAdapter(gridAdapter);
         //------------------------------------------------------------------------------------------
 
-        final FloatingActionButton fab =
-                (FloatingActionButton) view.findViewById(R.id.fragment_grid_fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i(getContext().getResources().getString(R.string.log_tag_button_click),
-                        "Floating Action Button in GridFragment was clicked");
-                final Random rand = new Random();
-                gridAdapter.addItem(Color.rgb(rand.nextInt(256),
-                        rand.nextInt(256), rand.nextInt(256)));
-                recyclerView.scrollToPosition(0);
-                Log.i(getContext().getResources().getString(R.string.log_tag_button_click),
-                        "New item was inserted into RecyclerView in GridFragment");
-            }
-        });
-
+        mViewCreated = true;
         return view;
     }
 
-    /**
-     *  This method is used to generate data for recycler view.
-     */
-    private List<Integer> generateData() {
-        final List<Integer> colors = new ArrayList<>();
-        final Random rand = new Random();
-        for (int i = 0; i < mDataSize; i++) {
-            final int color = Color.rgb(rand.nextInt(256), rand.nextInt(256), rand.nextInt(256));
-            colors.add(color);
+    @Override
+    public boolean onContextItemSelected(final MenuItem item) {
+        final int position = ((GridAdapter) mRecyclerView.getAdapter()).getPosition();
+
+        switch (item.getItemId()) {
+            case R.id.context_menu_app_delete: {
+                Log.i(getContext().getResources().getString(R.string.log_tag_launcher),
+                        "Delete app, position: " + position);
+                final Intent intent = new Intent(Intent.ACTION_DELETE);
+                intent.setData(Uri.parse("package:" + ((GridAdapter)
+                        mRecyclerView.getAdapter()).getApplication(position).getPackageName()));
+                startActivity(intent);
+                break;
+            }
+            case R.id.context_menu_app_frequency: {
+                Log.i(getContext().getResources().getString(R.string.log_tag_launcher),
+                        "Frequency app, position: " + position);
+
+                Toast.makeText(getContext(), getString(R.string.context_menu_app_launch_amount) + ": " + ((GridAdapter)
+                        mRecyclerView.getAdapter()).getApplication(position).getLaunchAmount(), Toast.LENGTH_SHORT).show();
+
+                break;
+            }
+            case R.id.context_menu_app_info: {
+                Log.i(getContext().getResources().getString(R.string.log_tag_launcher),
+                        "Info app, position: " + position);
+
+                //final Intent intent = new Intent(Intent.ACTION_)
+                break;
+            }
         }
-        return colors;
+
+        return super.onContextItemSelected(item);
     }
 
+    @Override
+    public void setData(List<Application> data) {
+        if (mViewCreated) {
+            ((GridAdapter) mRecyclerView.getAdapter()).setData(data);
+        }
+    }
 }

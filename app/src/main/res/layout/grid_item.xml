@@ -6,14 +6,14 @@
     android:orientation="vertical"
     android:layout_gravity="center">
 
-    <whiskarek.andrewshkrob.view.SquareView
-        android:id="@+id/grid_item_color_view"
-        android:layout_width="wrap_content"
+    <whiskarek.andrewshkrob.view.SquareImageView
+        android:id="@+id/launcher_app_icon"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:background="@color/colorAccent" />
 
     <TextView
-        android:id="@+id/grid_item_color_name"
+        android:id="@+id/launcher_app_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_size_default"

@@ -5,17 +5,13 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_drawer_recycler_view_grid"
-            android:icon="@drawable/ic_nav_drawer_recycler_view_grid"
-            android:title="@string/nav_drawer_recycler_view_grid" />
+            android:id="@+id/nav_drawer_launcher_grid"
+            android:icon="@drawable/ic_nav_drawer_launcher_grid"
+            android:title="@string/nav_drawer_launcher_grid" />
         <item
-            android:id="@+id/nav_drawer_recycler_view_list"
-            android:icon="@drawable/ic_nav_drawer_recycler_view_list"
-            android:title="@string/nav_drawer_recycler_view_list" />
-        <item
-            android:id="@+id/nav_drawer_launcher"
-            android:icon="@drawable/ic_nav_drawer_launcher"
-            android:title="@string/nav_drawer_launcher" />
+            android:id="@+id/nav_drawer_launcher_list"
+            android:icon="@drawable/ic_nav_drawer_launcher_list"
+            android:title="@string/nav_drawer_launcher_list" />
     </group>
 
 
@@ -26,10 +22,6 @@
                     android:id="@+id/nav_drawer_settings"
                     android:icon="@drawable/ic_nav_drawer_settings"
                     android:title="@string/nav_drawer_settings" />
-                <item
-                    android:id="@+id/nav_drawer_welcome_page"
-                    android:icon="@drawable/ic_nav_drawer_welcome_page"
-                    android:title="@string/nav_drawer_welcome_page" />
             </group>
         </menu>
     </item>

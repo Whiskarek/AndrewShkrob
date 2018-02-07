@@ -1,15 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="whiskarek.andrewshkrob.activity.welcomepage.WelcomePageActivity">
-
+    tools:context=".activity.welcomepage.WelcomePageActivity">
+<!--
     <FrameLayout
         android:id="@+id/welcome_page_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </FrameLayout>
+-->
 
-</android.support.constraint.ConstraintLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/welcome_page_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/welcome_page_fab_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/ic_welcome_page_fab_next" />
+
+</android.support.design.widget.CoordinatorLayout>

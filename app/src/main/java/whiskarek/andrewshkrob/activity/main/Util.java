@@ -1,8 +1,10 @@
-package whiskarek.andrewshkrob.activity.main.fragments.launcher;
+package whiskarek.andrewshkrob.activity.main;
 
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 
 import java.util.Collections;
@@ -86,6 +88,18 @@ public final class Util {
         }
 
         return apps;
+    }
+
+    public static boolean isSystemApp(final Context context, final String packageName) {
+        final ApplicationInfo info;
+        try {
+            info = context.getPackageManager().getApplicationInfo(packageName, 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+        int mask = ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP;
+        return (info.flags & mask) != 0;
     }
 
 }

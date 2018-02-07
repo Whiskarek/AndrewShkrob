@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.main.fragments.launcher.LauncherFragment">
+    tools:context=".activity.main.fragments.grid.GridFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/fragment_recycler_view_launcher"
@@ -13,7 +13,7 @@
         android:clipToPadding="false"
         android:padding="@dimen/offset"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".activity.main.fragments.launcher.LauncherFragment">
+        tools:context=".activity.main.fragments.grid.GridFragment">
 
     </android.support.v7.widget.RecyclerView>
 

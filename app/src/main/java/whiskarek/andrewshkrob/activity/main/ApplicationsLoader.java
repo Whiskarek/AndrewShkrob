@@ -1,4 +1,4 @@
-package whiskarek.andrewshkrob.activity.main.fragments.launcher;
+package whiskarek.andrewshkrob.activity.main;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,9 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import whiskarek.andrewshkrob.R;
-import whiskarek.andrewshkrob.activity.main.fragments.launcher.broadcast.InstalledAppsReceiver;
+import whiskarek.andrewshkrob.activity.main.broadcast.InstalledAppsReceiver;
 
 public class ApplicationsLoader extends AsyncTaskLoader<List<Application>> {
+
+    public static List<Application> applications;
 
     private final PackageManager mPackageManager;
 
@@ -152,10 +154,15 @@ public class ApplicationsLoader extends AsyncTaskLoader<List<Application>> {
                 return;
             }
         }
+        List<Application> oldApps = apps;
         mApps = apps;
 
         if (isStarted()) {
             super.deliverResult(apps);
+        }
+
+        if (oldApps != null) {
+            releaseResources(oldApps);
         }
     }
 

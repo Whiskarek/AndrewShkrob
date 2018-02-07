@@ -11,6 +11,7 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
         <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:clipToPadding">false</item>
 
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
@@ -29,6 +30,7 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
         <item name="android:windowTranslucentStatus">false</item>
+        <item name="android:clipToPadding">false</item>
 
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
@@ -36,7 +38,12 @@
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
 
-    <style name="AppThemeLight.NoActionBar">
+    <style name="AppThemeLight.NoActionBar" >
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppThemeDark.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>

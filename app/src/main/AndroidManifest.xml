@@ -20,14 +20,32 @@
 
         <activity
             android:name=".activity.main.MainActivity"
+            android:launchMode="singleTask"
+            android:stateNotNeeded="true"
             android:theme="@style/AppThemeLight">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.HOME" />
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.welcomepage.WelcomePageActivity"></activity>
+        <activity
+            android:name=".activity.welcomepage.WelcomePageActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/AppThemeLight" />
+        <activity
+            android:name=".activity.SettingsActivity"
+            android:label="@string/nav_drawer_settings"
+            android:launchMode="singleTask"
+            android:parentActivityName=".activity.main.MainActivity"
+            android:stateNotNeeded="true"
+            android:theme="@style/AppThemeLight" />
+        <activity
+            android:name=".activity.ProfileActivity"
+            android:label="@string/title_activity_profile"
+            android:theme="@style/AppThemeLight.NoActionBar"></activity>
     </application>
 
 </manifest>

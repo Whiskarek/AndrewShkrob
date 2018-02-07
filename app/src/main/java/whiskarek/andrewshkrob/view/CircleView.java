@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -16,31 +17,37 @@ public class CircleView extends View {
     /**
      * Default constructor.
      */
-    public CircleView(Context context) {
+    public CircleView(final Context context) {
         super(context);
 
-        setOutlineProvider(new CircleViewOutlineProvider());
-        setClipToOutline(true);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setOutlineProvider(new CircleViewOutlineProvider());
+            setClipToOutline(true);
+        }
     }
 
     /**
      * Default constructor.
      */
-    public CircleView(Context context, AttributeSet attrs) {
+    public CircleView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
 
-        setOutlineProvider(new CircleViewOutlineProvider());
-        setClipToOutline(true);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setOutlineProvider(new CircleViewOutlineProvider());
+            setClipToOutline(true);
+        }
     }
 
     /**
      * Default constructor.
      */
-    public CircleView(Context context, AttributeSet attrs, int defStyle) {
+    public CircleView(final Context context, final  AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
 
-        setOutlineProvider(new CircleViewOutlineProvider());
-        setClipToOutline(true);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            setOutlineProvider(new CircleViewOutlineProvider());
+            setClipToOutline(true);
+        }
     }
 
     @Override

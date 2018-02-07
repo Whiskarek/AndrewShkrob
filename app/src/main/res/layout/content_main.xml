@@ -8,14 +8,16 @@
     tools:context="whiskarek.andrewshkrob.activity.main.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-    <FrameLayout
+    <android.support.v4.view.ViewPager
         android:id="@+id/fragment_holder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clipToPadding="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    </FrameLayout>
+
+    </android.support.v4.view.ViewPager>
 </android.support.constraint.ConstraintLayout>
