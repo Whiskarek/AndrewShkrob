@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">Andrew Shkrob</string>
+
+    <string name="developer_name">Andrew Shkrob</string>
+
+    <!-- Welcome Page -->
+    <string name="welcome_words">ברכות</string>
+    <string name="app_description">תיאור הבקשה</string>
+    <string name="radio_button_theme_light">נושא קל</string>
+    <string name="radio_button_theme_dark">נושא כהה</string>
+
+    <!-- Context menu -->
+    <string name="context_menu_app_delete">הסר</string>
+    <string name="context_menu_app_frequency">תדירות</string>
+    <string name="context_menu_app_launch_amount">מספר ההשקות</string>
+    <string name="context_menu_app_info">מידע</string>
+
+    <!-- Navigation Drawer Menu -->
+    <string name="nav_drawer_launcher_grid">רשת</string>
+    <string name="nav_drawer_launcher_list">רשימה של</string>
+    <string name="nav_drawer_title_options">פרמטרים</string>
+    <string name="nav_drawer_settings">הגדרות</string>
+
+    <!-- Preferences -->
+    <string name="pref_title_theme">נושא</string>
+    <string name="pref_theme_dark">נושא כהה</string>
+    <string name="pref_title_model">פריסה</string>
+    <string name="pref_model_solid">פריסה צפופה</string>
+    <string name="pref_title_sort">מיון</string>
+    <string name="pref_sort_type">מיון</string>
+    <string-array name="pref_sort_entries">
+        <item>חסר</item>
+        <item>לפי תאריך ההתקנה +</item>
+        <item>לפי תאריך ההתקנה -</item>
+        <item>בסדר אלפביתי A-Z</item>
+        <item>בסדר אלפביתי Z-A</item>
+        <item>לפי מספר שיגורים +</item>
+        <item>לפי מספר שיגורים -</item>
+    </string-array>
+    <string name="pref_show_welcome_page_on_next_load">הצג את דף הפתיחה</string>
+    <string name="pref_show_welcome_page_on_next_load_summary">בפעם הבאה שתבצע אתחול</string>
+
+    <!-- Model -->
+    <string name="model_type_default">פריסה רגילה</string>
+    <string name="model_type_solid">פריסה צפופה</string>
+    <string name="model_type_solid_description">במצב דיוקן: 5 סמלים בשורה\nבמצב נוף: 7 סמלים ברצף</string>
+    <string name="model_type_default_description">במצב דיוקן: 4 סמלים בשורה\nבמצב נוף: 6 סמלים בשורה</string>
+
+    <string name="title_activity_profile">פרופיל</string>
+</resources>

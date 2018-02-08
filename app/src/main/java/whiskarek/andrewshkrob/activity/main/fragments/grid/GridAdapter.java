@@ -12,20 +12,19 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import whiskarek.andrewshkrob.ContextMenuListener;
 import whiskarek.andrewshkrob.R;
-import whiskarek.andrewshkrob.activity.main.Application;
+import whiskarek.andrewshkrob.Application;
+import whiskarek.andrewshkrob.Utils;
+import whiskarek.andrewshkrob.activity.main.MainActivity;
 
 public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @NonNull
     private final Context mContext;
-    @NonNull
-    private final List<Application> mData;
-    private int mPosition = -1;
 
-    public GridAdapter(@NonNull final Context context, @NonNull final List<Application> data) {
+    GridAdapter(@NonNull final Context context) {
         mContext = context;
-        mData = data;
     }
 
     @Override
@@ -33,6 +32,7 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         final View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.grid_item, parent, false);
         final Holder.GridHolder viewHolder = new Holder.GridHolder(view);
+
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,22 +40,10 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 if (adapterPosition != RecyclerView.NO_POSITION) {
                     Log.i(mContext.getResources().getString(R.string.log_tag_button_click),
                             "Click in Launcher Recycler View in position " + adapterPosition);
-                    mData.get(adapterPosition).addLaunch();
-                    mContext.startActivity(mData.get(adapterPosition).getLaunchIntent());
+                    MainActivity.getApps().get(adapterPosition).addLaunch();
+                    Utils.addLaunch(MainActivity.getDatabase(), MainActivity.getApps().get(adapterPosition));
+                    mContext.startActivity(MainActivity.getApps().get(adapterPosition).getLaunchIntent());
                 }
-            }
-        });
-        view.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                final int adapterPosition = viewHolder.getAdapterPosition();
-                if (adapterPosition != RecyclerView.NO_POSITION) {
-                    Log.i(mContext.getResources().getString(R.string.log_tag_button_click),
-                            "Long click in Launcher Recycler View in position "
-                                    + adapterPosition);
-                    setPosition(adapterPosition);
-                }
-                return false;
             }
         });
 
@@ -64,49 +52,30 @@ public class GridAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
-        bindGridView((Holder.GridHolder) holder, position);
+        bindGridView((Holder.GridHolder) holder);
     }
 
-    private void bindGridView(@NonNull final Holder.GridHolder gridHolder, final int position) {
+    private void bindGridView(@NonNull final Holder.GridHolder gridHolder) {
+        final int pos = gridHolder.getAdapterPosition();
+
+        final ContextMenuListener listener = new ContextMenuListener(
+                mContext,
+                MainActivity.getApps().get(pos)
+        );
+
+        gridHolder.itemView.setOnCreateContextMenuListener(listener);
+
         final ImageView appIcon = gridHolder.getAppIcon();
-        appIcon.setBackground(mData.get(position).getAppIcon());
+        appIcon.setBackground(MainActivity.getApps().get(pos).getAppIcon());
 
         final TextView appName = gridHolder.getAppName();
-        appName.setText(mData.get(position).getAppName());
+        appName.setText(MainActivity.getApps().get(pos).getAppName());
     }
 
     @Override
     public int getItemCount() {
-        return (mData == null ? 0 : mData.size());
+        final List<Application> apps = MainActivity.getApps();
+        return apps.size();
     }
 
-    public void setData(final List<Application> apps) {
-        clearData();
-        if (apps != null) {
-            mData.addAll(apps);
-            notifyItemRangeChanged(0, mData.size());
-        }
-    }
-
-    private void clearData() {
-        final int size = mData.size();
-        if (size > 0) {
-            for (int i = 0; i < size; i++) {
-                mData.remove(0);
-            }
-            notifyItemRangeRemoved(0, size);
-        }
-    }
-
-    public Application getApplication(final int position) {
-        return mData.get(position);
-    }
-
-    public void setPosition(final int position) {
-        mPosition = position;
-    }
-
-    public int getPosition() {
-        return mPosition;
-    }
 }

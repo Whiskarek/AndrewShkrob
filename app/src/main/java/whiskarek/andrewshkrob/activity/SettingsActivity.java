@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import whiskarek.andrewshkrob.R;
+import whiskarek.andrewshkrob.Utils;
 import whiskarek.andrewshkrob.activity.main.MainActivity;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -97,6 +98,10 @@ public class SettingsActivity extends AppCompatActivity {
                 final int sortTypePos = Integer.parseInt(sharedPreferences.getString(key, "0"));
                 final String sortTypeName = sortArray[sortTypePos];
                 listPreferenceSortType.setSummary(sortTypeName);
+
+                if (Utils.mApps != null) {
+                    Utils.mApps = Utils.sortApps(Utils.mApps, getContext());
+                }
             } else if (key.equals(getString(R.string.pref_key_show_welcome_page_on_next_load))) {
                 Log.i(getString(R.string.log_tag_preferences),
                         "Preference \"Show Welcome Page\" was changed to "

@@ -1,4 +1,4 @@
-package whiskarek.andrewshkrob.activity.main;
+package whiskarek.andrewshkrob;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -12,18 +12,20 @@ public class Application {
     @Nullable
     private final Drawable mAppIcon;
     private final Intent mLaunchIntent;
-    private final long mAppInstalled;
+    private final long mInstallTime;
     private int mLaunchAmount;
+    private final boolean mSystemApp;
 
     public Application(@NonNull final String packageName, @NonNull final String appName,
-                       @Nullable Drawable appIcon, final Intent launchIntent, final long appInstalled,
-                       final int launchAmount) {
+                       @Nullable Drawable appIcon, final Intent launchIntent, final long installTime,
+                       final int launchAmount, boolean systemApp) {
         mAppName = appName;
         mPackageName = packageName;
         mAppIcon = appIcon;
         mLaunchIntent = launchIntent;
-        mAppInstalled = appInstalled;
+        mInstallTime = installTime;
         mLaunchAmount = launchAmount;
+        mSystemApp = systemApp;
     }
 
     public String getAppName() {
@@ -47,8 +49,8 @@ public class Application {
         return mLaunchAmount;
     }
 
-    public long getAppInstalled() {
-        return mAppInstalled;
+    public long getInstallTime() {
+        return mInstallTime;
     }
 
     public void setLaunchAmount(int launchNumber) {
@@ -57,5 +59,9 @@ public class Application {
 
     public void addLaunch() {
         mLaunchAmount++;
+    }
+
+    public boolean isSystemApp() {
+        return mSystemApp;
     }
 }

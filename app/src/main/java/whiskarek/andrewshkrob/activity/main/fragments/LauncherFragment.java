@@ -1,13 +1,17 @@
 package whiskarek.andrewshkrob.activity.main.fragments;
 
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 
 import java.util.List;
 
-import whiskarek.andrewshkrob.activity.main.Application;
+import whiskarek.andrewshkrob.Application;
 
 public abstract class LauncherFragment extends Fragment{
 
-    public abstract void setData(final List<Application> data);
+    protected RecyclerView mRecyclerView = null;
 
+    public RecyclerView getRecyclerView() {
+        return mRecyclerView;
+    }
 }
