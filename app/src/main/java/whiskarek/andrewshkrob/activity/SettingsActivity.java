@@ -82,16 +82,16 @@ public class SettingsActivity extends AppCompatActivity {
             if (key.equals(getString(R.string.pref_key_theme_dark))) {
                 Log.i(getString(R.string.log_tag_preferences),
                         "Preference \"Theme\" was changed to "
-                                + String.valueOf(sharedPreferences.getBoolean(key, false)));
+                                + sharedPreferences.getBoolean(key, false));
                 getActivity().recreate();
             } else if (key.equals(getString(R.string.pref_key_model_solid))) {
                 Log.i(getString(R.string.log_tag_preferences),
                         "Preference \"Model\" was changed to "
-                                + String.valueOf(sharedPreferences.getBoolean(key, false)));
+                                + sharedPreferences.getBoolean(key, false));
             } else if (key.equals(getString(R.string.pref_key_sort_type))) {
                 Log.i(getString(R.string.log_tag_preferences),
                         "Preference \"Sort\" was changed to "
-                                + String.valueOf(sharedPreferences.getString(key, "0")));
+                                + sharedPreferences.getString(key, "0"));
                 final ListPreference listPreferenceSortType = (ListPreference)
                         findPreference(getString(R.string.pref_key_sort_type));
                 final String sortArray[] = getResources().getStringArray(R.array.pref_sort_entries);
@@ -105,7 +105,7 @@ public class SettingsActivity extends AppCompatActivity {
             } else if (key.equals(getString(R.string.pref_key_show_welcome_page_on_next_load))) {
                 Log.i(getString(R.string.log_tag_preferences),
                         "Preference \"Show Welcome Page\" was changed to "
-                                + String.valueOf(sharedPreferences.getBoolean(key, false)));
+                                + sharedPreferences.getBoolean(key, false));
             }
         }
 

@@ -82,7 +82,7 @@ task findbugs(type: FindBugs) {
     description 'Run FindBugs'
     group 'verification'
 
-    ignoreFailures = false
+    ignoreFailures = true
     effort = "max"
     reportLevel = "high"
     excludeFilter = new File('../config/findbugs/findbugs-exclude-filter.xml')
@@ -112,7 +112,7 @@ task pmd(type: Pmd) {
 
     ruleSetFiles = rootProject.files('config/pmd/pmd-ruleset.xml')
     ruleSets = []
-    ignoreFailures = false
+    ignoreFailures = true
 
     source 'src'
     include '**/*.java'

@@ -108,7 +108,7 @@ public final class Utils {
         try {
             info = context.getPackageManager().getApplicationInfo(packageName, 0);
         } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+            Log.e("UTIL", e.toString());
             return false;
         }
         int mask = ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP;
@@ -173,7 +173,7 @@ public final class Utils {
                     .getPackageInfo(info.activityInfo.packageName, 0)
                     .firstInstallTime;
         } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
+            Log.e("UTIL", e.toString());
         }
         final boolean systemApp = isSystemApp(context, info.activityInfo.packageName);
         final ActivityInfo activity = info.activityInfo;

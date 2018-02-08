@@ -3,12 +3,13 @@
     package="whiskarek.andrewshkrob">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/photo_circle"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/photo_circle"
         android:supportsRtl="true"
         android:theme="@style/AppThemeLight">
         <meta-data
@@ -44,8 +45,9 @@
             android:theme="@style/AppThemeLight" />
         <activity
             android:name=".activity.ProfileActivity"
-            android:label="@string/title_activity_profile"
-            android:theme="@style/AppThemeLight.NoActionBar"></activity>
+            android:label="@string/developer_name"
+            android:parentActivityName=".activity.main.MainActivity"
+            android:theme="@style/AppThemeLight.NoActionBar"/>
     </application>
 
 </manifest>

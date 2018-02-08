@@ -1,23 +1,15 @@
 package whiskarek.andrewshkrob.activity.main.fragments.grid;
 
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import whiskarek.andrewshkrob.R;
-import whiskarek.andrewshkrob.activity.main.MainActivity;
 import whiskarek.andrewshkrob.activity.main.OffsetItemDecoration;
 import whiskarek.andrewshkrob.activity.main.fragments.LauncherFragment;
 
@@ -32,8 +24,7 @@ public class GridFragment extends LauncherFragment {
 
         // SET UP RECYCLER VIEW
         //------------------------------------------------------------------------------------------
-        mRecyclerView =
-                (RecyclerView) view.findViewById(R.id.fragment_recycler_view_launcher);
+        mRecyclerView = view.findViewById(R.id.fragment_recycler_view_launcher);
         final int offset = getResources().getDimensionPixelOffset(R.dimen.offset);
         mRecyclerView.addItemDecoration(new OffsetItemDecoration(offset));
         // Get Model Type
@@ -41,7 +32,7 @@ public class GridFragment extends LauncherFragment {
                 PreferenceManager.getDefaultSharedPreferences(getContext());
         final boolean modelSolid = sharedPreferences
                 .getBoolean(getString(R.string.pref_key_model_solid), false);
-        final int spanCount = (modelSolid == true ?
+        final int spanCount = (modelSolid ?
                 getResources().getInteger(R.integer.model_solid)
                 : getResources().getInteger(R.integer.model_default));
         // Create GridLayoutManager

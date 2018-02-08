@@ -26,8 +26,8 @@ public class ThemeFragment extends PreferenceFragmentCompat implements SharedPre
                              @Nullable final Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_theme, container, false);
 
-        final RadioButton rbLight = (RadioButton) view.findViewById(R.id.radio_button_theme_light);
-        final RadioButton rbDark = (RadioButton) view.findViewById(R.id.radio_button_theme_dark);
+        final RadioButton rbLight = view.findViewById(R.id.radio_button_theme_light);
+        final RadioButton rbDark = view.findViewById(R.id.radio_button_theme_dark);
 
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 
@@ -42,7 +42,7 @@ public class ThemeFragment extends PreferenceFragmentCompat implements SharedPre
             rbLight.setChecked(true);
         }
 
-        final RadioGroup rgTheme = (RadioGroup) view.findViewById(R.id.radio_group_theme);
+        final RadioGroup rgTheme = view.findViewById(R.id.radio_group_theme);
         rgTheme.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -74,7 +74,7 @@ public class ThemeFragment extends PreferenceFragmentCompat implements SharedPre
         if (key.equals(getString(R.string.pref_key_theme_dark))) {
             Log.i(getString(R.string.log_tag_preferences),
                     "Preference \"Theme\" was changed to "
-                            + String.valueOf(sharedPreferences.getBoolean(key, false)));
+                            + sharedPreferences.getBoolean(key, false));
             getActivity().recreate();
         }
     }

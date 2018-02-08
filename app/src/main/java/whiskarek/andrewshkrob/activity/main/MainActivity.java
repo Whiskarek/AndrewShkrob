@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -32,6 +33,7 @@ import io.fabric.sdk.android.Fabric;
 import whiskarek.andrewshkrob.Application;
 import whiskarek.andrewshkrob.R;
 import whiskarek.andrewshkrob.Utils;
+import whiskarek.andrewshkrob.activity.ProfileActivity;
 import whiskarek.andrewshkrob.activity.SettingsActivity;
 import whiskarek.andrewshkrob.activity.database.ApplicationDatabaseHelper;
 import whiskarek.andrewshkrob.activity.main.fragments.LauncherFragment;
@@ -99,6 +101,12 @@ public class MainActivity extends AppCompatActivity
 
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.getHeaderView(0).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+            }
+        });
 
         mDatabase = new ApplicationDatabaseHelper(this);
 

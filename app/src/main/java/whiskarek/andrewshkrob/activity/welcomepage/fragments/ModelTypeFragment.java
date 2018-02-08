@@ -26,8 +26,8 @@ public class ModelTypeFragment extends PreferenceFragmentCompat implements Share
                              @Nullable final Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_model_type, container, false);
 
-        final RadioButton modelTypeDefault = (RadioButton) view.findViewById(R.id.radio_button_model_default);
-        final RadioButton modelTypeSolid = (RadioButton) view.findViewById(R.id.radio_button_model_solid);
+        final RadioButton modelTypeDefault = view.findViewById(R.id.radio_button_model_default);
+        final RadioButton modelTypeSolid = view.findViewById(R.id.radio_button_model_solid);
 
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
 
@@ -42,7 +42,7 @@ public class ModelTypeFragment extends PreferenceFragmentCompat implements Share
             modelTypeDefault.setChecked(true);
         }
 
-        final RadioGroup rgModel = (RadioGroup) view.findViewById(R.id.radio_group_model_type);
+        final RadioGroup rgModel = view.findViewById(R.id.radio_group_model_type);
         rgModel.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -75,7 +75,7 @@ public class ModelTypeFragment extends PreferenceFragmentCompat implements Share
         if (key.equals(getString(R.string.pref_key_theme_dark))) {
             Log.i(getString(R.string.log_tag_preferences),
                     "Preference \"Theme\" was changed to "
-                            + String.valueOf(sharedPreferences.getBoolean(key, false)));
+                            + sharedPreferences.getBoolean(key, false));
             getActivity().recreate();
         }
     }

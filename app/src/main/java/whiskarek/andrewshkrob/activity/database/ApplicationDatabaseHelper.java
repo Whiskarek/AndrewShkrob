@@ -59,7 +59,7 @@ public class ApplicationDatabaseHelper extends SQLiteOpenHelper {
             }
 
         } catch (SQLException e) {
-            Log.e("SQLite", e.toString());
+            Log.e("SQLITE", e.toString());
         }
     }
 
@@ -114,9 +114,9 @@ public class ApplicationDatabaseHelper extends SQLiteOpenHelper {
             }
             cursor.close();
         } catch (SQLException e) {
-            Log.e("SQLite", e.toString());
+            Log.e("SQLITE", e.toString());
         } catch (URISyntaxException e) {
-            Log.e("SQLite", e.toString());
+            Log.e("SQLITE", e.toString());
         }
         return apps;
     }
@@ -127,10 +127,12 @@ public class ApplicationDatabaseHelper extends SQLiteOpenHelper {
             final Cursor cursor = db.rawQuery("SELECT * FROM " + Database.TABLE_NAME + ";",
                     null);
 
-            if (cursor.getCount() == 0)
+            if (cursor.getCount() == 0) {
                 return true;
+            }
+            cursor.close();
         } catch (SQLException e) {
-            Log.e("SQLite", e.toString());
+            Log.e("SQLITE", e.toString());
         }
         return false;
     }
@@ -141,7 +143,7 @@ public class ApplicationDatabaseHelper extends SQLiteOpenHelper {
             db.delete(Database.TABLE_NAME, null, null);
             db.close();
         } catch (SQLiteException e) {
-            Log.e("SQLite", e.toString());
+            Log.e("SQLITE", e.toString());
         }
     }
 }
