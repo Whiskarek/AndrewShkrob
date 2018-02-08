@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_drawer_launcher_grid"
+            android:icon="@drawable/ic_nav_drawer_launcher_grid"
+            android:title="@string/nav_drawer_launcher_grid" />
+        <item
+            android:id="@+id/nav_drawer_launcher_list"
+            android:icon="@drawable/ic_nav_drawer_launcher_list"
+            android:title="@string/nav_drawer_launcher_list" />
+    </group>
+
+
+    <item android:title="@string/nav_drawer_title_options">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_drawer_settings"
+                    android:icon="@drawable/ic_nav_drawer_settings"
+                    android:title="@string/nav_drawer_settings" />
+            </group>
+        </menu>
+    </item>
+</menu>

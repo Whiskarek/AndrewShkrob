@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">Andrew Shkrob</string>
+
+    <string name="developer_name">Andrew Shkrob</string>
+
+    <!-- Welcome Page -->
+    <string name="welcome_words">Sveikinimai</string>
+    <string name="app_description">Paraiškos apibūdinimas</string>
+    <string name="radio_button_theme_light">Šviesos tema</string>
+    <string name="radio_button_theme_dark">Tamsi tema</string>
+
+    <!-- Context menu -->
+    <string name="context_menu_app_delete">Pašalinti</string>
+    <string name="context_menu_app_frequency">Dažnumas</string>
+    <string name="context_menu_app_launch_amount">Paleidimų skaičius</string>
+    <string name="context_menu_app_info">Informacija</string>
+
+    <!-- Navigation Drawer Menu -->
+    <string name="nav_drawer_launcher_grid">Tinklelis</string>
+    <string name="nav_drawer_launcher_list">Sąrašas</string>
+    <string name="nav_drawer_title_options">Parametrai</string>
+    <string name="nav_drawer_settings">Nustatymai</string>
+
+    <!-- Preferences -->
+    <string name="pref_title_theme">Tema</string>
+    <string name="pref_theme_dark">Tamsi tema</string>
+    <string name="pref_title_model">Maketas</string>
+    <string name="pref_model_solid">Tankus išdėstymas</string>
+    <string name="pref_title_sort">Rūšiavimas</string>
+    <string name="pref_sort_type">Rūšiavimas</string>
+    <string-array name="pref_sort_entries">
+        <item>Trūksta</item>
+        <item>Pristatymo data +</item>
+        <item>Pristatymo data -</item>
+        <item>Abėcėlės tvarka A-Z</item>
+        <item>Abėcėlės tvarka Z-A</item>
+        <item>Pagal paleidimo skaičių +</item>
+        <item>Pagal paleidimo skaičių -</item>
+    </string-array>
+    <string name="pref_show_welcome_page_on_next_load">Rodyti pasveikinimo puslapį</string>
+    <string name="pref_show_welcome_page_on_next_load_summary">Kitą kartą paleiskite</string>
+
+    <!-- Model -->
+    <string name="model_type_default">Normalus išdėstymas</string>
+    <string name="model_type_solid">Tankus išdėstymas</string>
+    <string name="model_type_solid_description">Portreto režime: 5 piktogramos iš eilės\nPeizažo režime: 7 piktogramos iš eilės</string>
+    <string name="model_type_default_description">Portreto režime: 4 piktogramos iš eilės\nPeizažo režime: 6 piktogramos iš eilės</string>
+
+    <string name="title_activity_profile">Profilis</string>
+</resources>

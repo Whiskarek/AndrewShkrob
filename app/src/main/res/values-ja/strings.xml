@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">Andrew Shkrob</string>
+
+    <string name="developer_name">Andrew Shkrob</string>
+
+    <!-- Welcome Page -->
+    <string name="welcome_words">ご挨拶</string>
+    <string name="app_description">アプリケーションの説明</string>
+    <string name="radio_button_theme_light">ライトテーマ</string>
+    <string name="radio_button_theme_dark">暗いテーマ</string>
+
+    <!-- Context menu -->
+    <string name="context_menu_app_delete">削除する</string>
+    <string name="context_menu_app_frequency">周波数</string>
+    <string name="context_menu_app_launch_amount">打ち上げ回数</string>
+    <string name="context_menu_app_info">情報</string>
+
+    <!-- Navigation Drawer Menu -->
+    <string name="nav_drawer_launcher_grid">グリッド</string>
+    <string name="nav_drawer_launcher_list">リスト</string>
+    <string name="nav_drawer_title_options">パラメータ</string>
+    <string name="nav_drawer_settings">設定</string>
+
+    <!-- Preferences -->
+    <string name="pref_title_theme">テーマ</string>
+    <string name="pref_theme_dark">暗いテーマ</string>
+    <string name="pref_title_model">レイアウト</string>
+    <string name="pref_model_solid">高密度レイアウト</string>
+    <string name="pref_title_sort">並べ替え</string>
+    <string name="pref_sort_type">並べ替え</string>
+    <string-array name="pref_sort_entries">
+        <item>行方不明</item>
+        <item>インストール日までに +</item>
+        <item>インストール日までに -</item>
+        <item>アルファベット順 A-Z</item>
+        <item>アルファベット順 Z-A</item>
+        <item>打ち上げ回数 +</item>
+        <item>打ち上げ回数 -</item>
+    </string-array>
+    <string name="pref_show_welcome_page_on_next_load">ウェルカムページを表示</string>
+    <string name="pref_show_welcome_page_on_next_load_summary">次回起動時</string>
+
+    <!-- Model -->
+    <string name="model_type_default">通常のレイアウト</string>
+    <string name="model_type_solid">高密度レイアウト</string>
+    <string name="model_type_solid_description">ポートレートモードでは、5つのアイコンが連続して表示されます\nランドスケープモード：7つのアイコンが連続して表示されます</string>
+    <string name="model_type_default_description">ポートレートモードでは、4つのアイコンが連続して表示されます\nランドスケープモードでは、6つのアイコンが連続して表示されます</string>
+
+    <string name="title_activity_profile">プロフィール</string>
+</resources>

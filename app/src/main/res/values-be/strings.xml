@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">Андрэй Шкроб</string>
+
+    <string name="developer_name">Андрэй Шкроб</string>
+
+    <!-- Welcome Page -->
+    <string name="welcome_words">Прывітанне</string>
+    <string name="app_description">Апісанне прыкладання</string>
+    <string name="radio_button_theme_light">Светлая тэма</string>
+    <string name="radio_button_theme_dark">Цёмная тэма</string>
+
+    <!-- Context menu -->
+    <string name="context_menu_app_delete">Выдаліць</string>
+    <string name="context_menu_app_frequency">Частата</string>
+    <string name="context_menu_app_launch_amount">Колькасць запускаў</string>
+    <string name="context_menu_app_info">Інфармацыя</string>
+
+    <!-- Navigation Drawer Menu -->
+    <string name="nav_drawer_launcher_grid">Сетка</string>
+    <string name="nav_drawer_launcher_list">Спіс</string>
+    <string name="nav_drawer_title_options">Параметры</string>
+    <string name="nav_drawer_settings">Налады</string>
+
+    <!-- Preferences -->
+    <string name="pref_title_theme">Тэма</string>
+    <string name="pref_theme_dark">Цёмная тэма</string>
+    <string name="pref_title_model">Макет</string>
+    <string name="pref_model_solid">Шчыльны макет</string>
+    <string name="pref_title_sort">Сартаванне</string>
+    <string name="pref_sort_type">Сартаванне</string>
+    <string-array name="pref_sort_entries">
+        <item>Адсутнічае</item>
+        <item>Па даце ўстаноўкі +</item>
+        <item>Па даце ўстаноўкі -</item>
+        <item>У алфавітным парадку A-Z</item>
+        <item>У алфавітным парадку Z-A</item>
+        <item>Па колькасці запускаў +</item>
+        <item>Па колькасці запускаў -</item>
+    </string-array>
+    <string name="pref_show_welcome_page_on_next_load">Паказаць старонку прывітання</string>
+    <string name="pref_show_welcome_page_on_next_load_summary">Пры наступнай загрузцы</string>
+
+    <!-- Model -->
+    <string name="model_type_default">Звычайны макет</string>
+    <string name="model_type_solid">Шчыльны макет</string>
+    <string name="model_type_solid_description">У партрэтным рэжыме: 5 абразкоў ў шэраг\nУ ландшафтным рэжыме: 7 абразкоў ў шэраг</string>
+    <string name="model_type_default_description">У партрэтным рэжыме: 4 абразкі ў шэраг\nУ ландшафтным рэжыме: 6 абразкоў ў шэраг</string>
+    
+    <string name="title_activity_profile">Профіль</string>
+</resources>

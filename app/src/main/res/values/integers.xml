@@ -1,4 +1,9 @@
 <resources>
-    <integer name="modelDefault">4</integer>
-    <integer name="modelSolid">5</integer>
+    <!-- Model Type -->
+    <integer name="model_default">4</integer>
+    <integer name="model_solid">5</integer>
+
+    <!-- Text Lines -->
+    <integer name="text_lines_default">1</integer>
+    <integer name="fragment_list_text_lines_body">2</integer>
 </resources>

@@ -5,56 +5,51 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/offset"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_gravity="center">
 
         <ImageView
-            android:id="@+id/civPhoto"
-            android:layout_width="@dimen/app_ico"
-            android:layout_height="@dimen/app_ico"
-            android:layout_gravity="center_vertical"
-            android:layout_marginEnd="@dimen/indent"
-            android:layout_marginStart="@dimen/indent"
-            android:contentDescription="@string/contentDescriptionMyPhoto"
-            android:elevation="4dp"
-            android:gravity="center_vertical"
+            android:layout_width="@dimen/welcome_page_photo"
+            android:layout_height="@dimen/welcome_page_photo"
+            android:layout_margin="@dimen/offset"
+            android:layout_gravity="center"
+            android:elevation="2dp"
+            android:src="@drawable/ic_launcher_round"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_launcher_round" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
-
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/offset"
+            android:orientation="vertical"
+            android:layout_gravity="center">
             <TextView
-                android:id="@+id/tvAppName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/indent"
-                android:gravity="center"
-                android:text="@string/app_name"
-                android:textAlignment="textStart"
-                android:textSize="@dimen/app_name" />
-
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/offset"
+                android:gravity="start"
+                android:lines="@integer/text_lines_default"
+                android:textSize="@dimen/text_size_app_name"
+                android:text="@string/app_name"/>
             <TextView
-                android:id="@+id/tvHello"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/about"
-                android:textAlignment="textStart"
-                android:textSize="@dimen/app_description" />
-
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/offset"
+                android:gravity="start"
+                android:lines="@integer/text_lines_default"
+                android:textSize="@dimen/text_size_welcome_words"
+                android:text="@string/app_description"/>
         </LinearLayout>
 
     </LinearLayout>
-
 </android.support.constraint.ConstraintLayout>

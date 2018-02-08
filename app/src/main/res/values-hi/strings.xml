@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">Andrew Shkrob</string>
+
+    <string name="developer_name">Andrew Shkrob</string>
+
+    <!-- Welcome Page -->
+    <string name="welcome_words">शुभकामना</string>
+    <string name="app_description">आवेदन का विवरण</string>
+    <string name="radio_button_theme_light">लाइट थीम</string>
+    <string name="radio_button_theme_dark">डार्क थीम</string>
+
+    <!-- Context menu -->
+    <string name="context_menu_app_delete">हटाना</string>
+    <string name="context_menu_app_frequency">आवृत्ति</string>
+    <string name="context_menu_app_launch_amount">लॉन्च की संख्या</string>
+    <string name="context_menu_app_info">सूचना</string>
+
+    <!-- Navigation Drawer Menu -->
+    <string name="nav_drawer_launcher_grid">जाल</string>
+    <string name="nav_drawer_launcher_list">की सूची</string>
+    <string name="nav_drawer_title_options">मापदंडों</string>
+    <string name="nav_drawer_settings">सेटिंग्स</string>
+
+    <!-- Preferences -->
+    <string name="pref_title_theme">विषय</string>
+    <string name="pref_theme_dark">डार्क थीम</string>
+    <string name="pref_title_model">ख़ाका</string>
+    <string name="pref_model_solid">घने लेआउट</string>
+    <string name="pref_title_sort">छँटाई</string>
+    <string name="pref_sort_type">छँटाई</string>
+    <string-array name="pref_sort_entries">
+        <item>नहीं</item>
+        <item>स्थापना दिनांक तक +</item>
+        <item>स्थापना दिनांक तक -</item>
+        <item>वर्णमाला क्रम में A-Z</item>
+        <item>वर्णमाला क्रम में Z-A</item>
+        <item>लॉन्च की संख्या के अनुसार +</item>
+        <item>लॉन्च की संख्या के अनुसार -</item>
+    </string-array>
+    <string name="pref_show_welcome_page_on_next_load">स्वागत पृष्ठ दिखाएं</string>
+    <string name="pref_show_welcome_page_on_next_load_summary">अगली बार जब आप बूट करेंगे</string>
+
+    <!-- Model -->
+    <string name="model_type_default">सामान्य लेआउट</string>
+    <string name="model_type_solid">घने लेआउट</string>
+    <string name="model_type_solid_description">पोर्ट्रेट मोड में: एक पंक्ति में 5 आइकन\nपरिदृश्य मोड में: एक पंक्ति में 7 आइकन</string>
+    <string name="model_type_default_description">पोर्ट्रेट मोड में: एक पंक्ति में 4 आइकन\nपरिदृश्य मोड में: एक पंक्ति में 6 आइकन</string>
+
+    <string name="title_activity_profile">प्रोफ़ाइल</string>
+</resources>

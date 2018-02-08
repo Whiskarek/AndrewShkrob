@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">Андрей Шкроб</string>
+
+    <string name="developer_name">Андрей Шкроб</string>
+
+    <!-- Welcome Page -->
+    <string name="welcome_words">Приветствие</string>
+    <string name="app_description">Описание приложения</string>
+    <string name="radio_button_theme_light">Светлая тема</string>
+    <string name="radio_button_theme_dark">Темная тема</string>
+
+    <!-- Context menu -->
+    <string name="context_menu_app_delete">Удалить</string>
+    <string name="context_menu_app_frequency">Частота</string>
+    <string name="context_menu_app_launch_amount">Количество запусков</string>
+    <string name="context_menu_app_info">Информация</string>
+
+    <!-- Navigation Drawer Menu -->
+    <string name="nav_drawer_launcher_grid">Сетка</string>
+    <string name="nav_drawer_launcher_list">Список</string>
+    <string name="nav_drawer_title_options">Параметры</string>
+    <string name="nav_drawer_settings">Настройки</string>
+
+    <!-- Preferences -->
+    <string name="pref_title_theme">Тема</string>
+    <string name="pref_theme_dark">Темная тема</string>
+    <string name="pref_title_model">Макет</string>
+    <string name="pref_model_solid">Плотный макет</string>
+    <string name="pref_title_sort">Сортировка</string>
+    <string name="pref_sort_type">Сортировка</string>
+    <string-array name="pref_sort_entries">
+        <item>Отсутствует</item>
+        <item>По дате установки +</item>
+        <item>По дате установки -</item>
+        <item>В алфавитном порядке A-Z</item>
+        <item>В алфавитном порядке Z-A</item>
+        <item>По количеству запусков +</item>
+        <item>По количеству запусков -</item>
+    </string-array>
+    <string name="pref_show_welcome_page_on_next_load">Показать страницу приветствия</string>
+    <string name="pref_show_welcome_page_on_next_load_summary">При следующей загрузке</string>
+	
+    <!-- Model -->
+    <string name="model_type_default">Обычный макет</string>
+    <string name="model_type_solid">Плотный макет</string>
+    <string name="model_type_solid_description">В портретном режиме: 5 иконок в ряд\nВ ландшафтном режиме: 7 иконок в ряд</string>
+    <string name="model_type_default_description">В портретном режиме: 4 иконки в ряд\nВ ландшафтном режиме: 6 иконок в ряд</string>
+
+    <string name="title_activity_profile">Профиль</string>
+</resources>

@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">Андрей Шкроб</string>
+
+    <string name="developer_name">Андрей Шкроб</string>
+
+    <!-- Welcome Page -->
+    <string name="welcome_words">Привітання</string>
+    <string name="app_description">Опис програми</string>
+    <string name="radio_button_theme_light">Світла тема</string>
+    <string name="radio_button_theme_dark">Темна тема</string>
+
+    <!-- Context menu -->
+    <string name="context_menu_app_delete">Видалити</string>
+    <string name="context_menu_app_frequency">Частота</string>
+    <string name="context_menu_app_launch_amount">Кількість запусків</string>
+    <string name="context_menu_app_info">Iнформація</string>
+
+    <!-- Navigation Drawer Menu -->
+    <string name="nav_drawer_launcher_grid">Сітка</string>
+    <string name="nav_drawer_launcher_list">Перелік</string>
+    <string name="nav_drawer_title_options">Параметри</string>
+    <string name="nav_drawer_settings">Налаштування</string>
+
+    <!-- Preferences -->
+    <string name="pref_title_theme">Тема</string>
+    <string name="pref_theme_dark">Темна тема</string>
+    <string name="pref_title_model">Макет</string>
+    <string name="pref_model_solid">Щільний макет</string>
+    <string name="pref_title_sort">Сортування</string>
+    <string name="pref_sort_type">Сортування</string>
+    <string-array name="pref_sort_entries">
+        <item>Відсутнє</item>
+        <item>За датою установки +</item>
+        <item>За датою установки -</item>
+        <item>В алфавітному порядку A-Z</item>
+        <item>В алфавітному порядку Z-A</item>
+        <item>За кількістю запусків +</item>
+        <item>За кількістю запусків -</item>
+    </string-array>
+    <string name="pref_show_welcome_page_on_next_load">Показати сторінку вітання</string>
+    <string name="pref_show_welcome_page_on_next_load_summary">При наступному завантаженні</string>
+
+    <!-- Model -->
+    <string name="model_type_default">Звичайний макет</string>
+    <string name="model_type_solid">Щільний макет</string>
+    <string name="model_type_solid_description">В портретному режимі: 5 іконок в ряд\nУ ландшафтному режимі: 7 іконок в ряд</string>
+    <string name="model_type_default_description">В портретному режимі: 4 іконки в ряд\nУ ландшафтному режимі: 6 іконок в ряд</string>
+
+    <string name="title_activity_profile">Профіль</string>
+</resources>

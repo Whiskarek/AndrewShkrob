@@ -5,89 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="whiskarek.andrewshkrob.activity.MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:context="whiskarek.andrewshkrob.activity.main.MainActivity"
+    tools:showIn="@layout/app_bar_main">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:orientation="vertical"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/fragment_holder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <whiskarek.andrewshkrob.views.CircleImageView
-            android:id="@+id/civPhoto"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="30dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginRight="50dp"
-            android:layout_marginTop="50dp"
-            android:contentDescription="@string/contentDescriptionMyPhoto"
-            android:elevation="6dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/photo" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:onClick="vkClick">
-
-            <ImageView
-                android:id="@+id/ivVKLogo"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="30dp"
-                android:contentDescription="@string/contentDescriptionVKLogo"
-                app:srcCompat="@drawable/vk_logo" />
-
-            <TextView
-                android:id="@+id/tvAppName"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:gravity="center"
-                android:text="@string/name"
-                android:textAlignment="center"
-                android:textColor="@android:color/black"
-                android:textSize="18sp" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:onClick="gitClick">
-
-            <ImageView
-                android:id="@+id/ivGitHubLogo"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="30dp"
-                android:contentDescription="@string/contentDescriptionGitHubLogo"
-                app:srcCompat="@drawable/github_logo" />
-
-            <TextView
-                android:id="@+id/tvHello"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="20dp"
-                android:gravity="center"
-                android:text="@string/gitHubURL"
-                android:textColor="@android:color/black" />
-        </RelativeLayout>
-
-    </LinearLayout>
-
+    </android.support.v4.view.ViewPager>
 </android.support.constraint.ConstraintLayout>

@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">Andrew Shkrob</string>
+
+    <string name="developer_name">Andrew Shkrob</string>
+
+    <!-- Welcome Page -->
+    <string name="welcome_words">歡迎</string>
+    <string name="app_description">應用程序的描述</string>
+    <string name="radio_button_theme_light">輕的主題</string>
+    <string name="radio_button_theme_dark">黑暗的主題</string>
+
+    <!-- Context menu -->
+    <string name="context_menu_app_delete">刪除</string>
+    <string name="context_menu_app_frequency">頻率</string>
+    <string name="context_menu_app_launch_amount">發射次數</string>
+    <string name="context_menu_app_info">信息</string>
+
+    <!-- Navigation Drawer Menu -->
+    <string name="nav_drawer_launcher_grid">網</string>
+    <string name="nav_drawer_launcher_list">清單</string>
+    <string name="nav_drawer_title_options">參數</string>
+    <string name="nav_drawer_settings">設置</string>
+
+    <!-- Preferences -->
+    <string name="pref_title_theme">主題</string>
+    <string name="pref_theme_dark">黑暗的主題</string>
+    <string name="pref_title_model">佈局</string>
+    <string name="pref_model_solid">密集的佈局</string>
+    <string name="pref_title_sort">排序</string>
+    <string name="pref_sort_type">排序</string>
+    <string-array name="pref_sort_entries">
+        <item>沒有</item>
+        <item>按安裝日期 +</item>
+        <item>按安裝日期 -</item>
+        <item>按字母順序 A-Z</item>
+        <item>按字母順序 Z-A</item>
+        <item>按發射次數 +</item>
+        <item>按發射次數 -</item>
+    </string-array>
+    <string name="pref_show_welcome_page_on_next_load">顯示歡迎頁面</string>
+    <string name="pref_show_welcome_page_on_next_load_summary">下次啟動</string>
+
+    <!-- Model -->
+    <string name="model_type_default">正常佈局</string>
+    <string name="model_type_solid">密集的佈局</string>
+    <string name="model_type_solid_description">在肖像模式下：連續5個圖標\n在橫向模式下：連續7個圖標</string>
+    <string name="model_type_default_description">在肖像模式下：連續4個圖標\n在橫向模式下：連續6個圖標</string>
+	
+    <string name="title_activity_profile">輪廓</string>
+</resources>
