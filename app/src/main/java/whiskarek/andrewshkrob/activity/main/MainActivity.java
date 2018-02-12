@@ -1,12 +1,15 @@
 package whiskarek.andrewshkrob.activity.main;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.os.Build;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -16,19 +19,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import whiskarek.andrewshkrob.R;
 import whiskarek.andrewshkrob.activity.ProfileActivity;
-import whiskarek.andrewshkrob.activity.SettingsActivity;
 import whiskarek.andrewshkrob.activity.main.fragments.LauncherFragment;
 import whiskarek.andrewshkrob.activity.main.fragments.grid.GridFragment;
 import whiskarek.andrewshkrob.activity.main.fragments.list.ListFragment;
+import whiskarek.andrewshkrob.activity.settings.SettingsActivity;
 import whiskarek.andrewshkrob.activity.welcomepage.WelcomePageActivity;
+import whiskarek.andrewshkrob.viewmodel.BackgroundViewModel;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -100,6 +102,27 @@ public class MainActivity extends AppCompatActivity
         mViewPager.addOnPageChangeListener(mOnPageChangeListener);
         setTitle(R.string.nav_drawer_launcher_grid);
         navigationView.getMenu().getItem(0).setChecked(true);
+        final BackgroundViewModel viewModel =
+                ViewModelProviders.of(this).get(BackgroundViewModel.class);
+
+        subscribeUI(viewModel);
+    }
+
+    private void subscribeUI(final BackgroundViewModel viewModel) {
+        viewModel.getBackgroundImages().observe(this, new Observer<List<Drawable>>() {
+            @Override
+            public void onChanged(@Nullable List<Drawable> drawables) {
+                if (drawables != null) {
+                    if (drawables.size() == 1) {
+                        mViewPager.setBackground(drawables.get(0));
+                    } else {
+                        mViewPager.setBackground(null);
+                    }
+                } else {
+                    mViewPager.setBackground(null);
+                }
+            }
+        });
     }
 
     @Override
@@ -169,5 +192,4 @@ public class MainActivity extends AppCompatActivity
 
         return theme;
     }
-
 }

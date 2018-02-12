@@ -12,7 +12,6 @@ import android.view.View;
 
 import com.yandex.metrica.YandexMetrica;
 
-import whiskarek.andrewshkrob.LauncherApplication;
 import whiskarek.andrewshkrob.R;
 import whiskarek.andrewshkrob.activity.main.MainActivity;
 
@@ -25,7 +24,7 @@ public class WelcomePageActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_page);
 
-        YandexMetrica.reportEvent("WelcomePageActivity","onCreate");
+        YandexMetrica.reportEvent("WelcomePageActivity", "onCreate");
 
         mViewPager = findViewById(R.id.welcome_page_view_pager);
         mViewPager.setAdapter(new WelcomePageFragmentAdapter(getSupportFragmentManager()));

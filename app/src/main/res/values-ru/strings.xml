@@ -37,6 +37,15 @@
         <item>По количеству запусков +</item>
         <item>По количеству запусков -</item>
     </string-array>
+    <string name="pref_background">Обои</string>
+    <string name="pref_background_unique_for_every_fragment">Уникальный фон для каждого окна</string>
+    <string name="pref_background_change_frequency">Частота смены фона</string>
+    <string-array name="pref_background_change_frequency_entries">
+        <item>15 минут</item>
+        <item>1 час</item>
+        <item>8 часов</item>
+        <item>24 часа</item>
+    </string-array>
     <string name="pref_show_welcome_page_on_next_load">Показать страницу приветствия</string>
     <string name="pref_show_welcome_page_on_next_load_summary">При следующей загрузке</string>
 	

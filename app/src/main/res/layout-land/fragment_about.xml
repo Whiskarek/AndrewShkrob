@@ -48,7 +48,7 @@
                 android:gravity="start"
                 android:lines="@integer/text_lines_default"
                 android:textSize="@dimen/text_size_welcome_words"
-                android:text="@string/app_description"/>
+                android:text="Android 4.1+\n10 Языков\nУправление жестами\n6 видов сортировок"/>
         </LinearLayout>
 
     </LinearLayout>

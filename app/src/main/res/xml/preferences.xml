@@ -14,8 +14,8 @@
         <SwitchPreference
             android:defaultValue="false"
             android:key="@string/pref_key_model_solid"
-            android:title="@string/pref_model_solid"
-            android:summary="@string/model_type_solid_description"/>
+            android:summary="@string/model_type_solid_description"
+            android:title="@string/pref_model_solid" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_title_sort">
@@ -27,10 +27,30 @@
             android:title="@string/pref_sort_type" />
     </PreferenceCategory>
 
+    <PreferenceScreen
+        android:key="pref_background_screen"
+        android:title="@string/pref_background">
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="@string/pref_key_unique_background_photos"
+            android:summary="@string/pref_background_unique_for_every_fragment" />
+
+
+        <ListPreference
+            android:defaultValue="15"
+            android:entries="@array/pref_background_change_frequency_entries"
+            android:entryValues="@array/pref_background_change_frequency_entry_values"
+            android:key="@string/pref_key_background_change_frequency"
+            android:title="@string/pref_background_change_frequency" />
+
+
+    </PreferenceScreen>
+
     <SwitchPreference
         android:defaultValue="true"
         android:key="@string/pref_key_show_welcome_page_on_next_load"
-        android:title="@string/pref_show_welcome_page_on_next_load"
-        android:summary="@string/pref_show_welcome_page_on_next_load_summary"/>
+        android:summary="@string/pref_show_welcome_page_on_next_load_summary"
+        android:title="@string/pref_show_welcome_page_on_next_load" />
 
 </PreferenceScreen>

@@ -38,7 +38,7 @@
             android:launchMode="singleTask"
             android:theme="@style/AppThemeLight" />
         <activity
-            android:name=".activity.SettingsActivity"
+            android:name=".activity.settings.SettingsActivity"
             android:label="@string/nav_drawer_settings"
             android:launchMode="singleTask"
             android:parentActivityName=".activity.main.MainActivity"
@@ -49,6 +49,8 @@
             android:label="@string/developer_name"
             android:parentActivityName=".activity.main.MainActivity"
             android:theme="@style/AppThemeLight.NoActionBar"/>
+
+        <service android:name=".background.ImageService" />
 
     </application>
 

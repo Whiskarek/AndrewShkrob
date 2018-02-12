@@ -1,5 +1,6 @@
 package whiskarek.andrewshkrob;
 
+import android.arch.lifecycle.MutableLiveData;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +21,8 @@ import java.util.Comparator;
 import java.util.List;
 
 public final class Utils {
+
+    public static volatile MutableLiveData<List<Drawable>> images = new MutableLiveData<>();
 
     public static List<Application> sortApps(final List<Application> apps, final Context context) {
         SharedPreferences sharedPreferences =
