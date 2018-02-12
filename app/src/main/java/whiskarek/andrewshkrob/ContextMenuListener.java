@@ -34,8 +34,8 @@ public class ContextMenuListener implements
         }
         final String launchAmountText =
                 mContext.getString(R.string.context_menu_app_launch_amount) +
-                ": " +
-                mApplication.getLaunchAmount();
+                        ": " +
+                        mApplication.getLaunchAmount();
         MenuItem launchAmount =
                 menu.add(Menu.NONE, R.id.context_menu_app_frequency, Menu.NONE, launchAmountText);
 

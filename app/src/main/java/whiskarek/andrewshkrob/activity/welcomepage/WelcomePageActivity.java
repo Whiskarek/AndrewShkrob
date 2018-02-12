@@ -10,22 +10,26 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.yandex.metrica.YandexMetrica;
+
 import whiskarek.andrewshkrob.R;
 import whiskarek.andrewshkrob.activity.main.MainActivity;
 
 public class WelcomePageActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ViewPager mViewPager;
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_page);
 
-        mViewPager = (ViewPager) findViewById(R.id.welcome_page_view_pager);
+        YandexMetrica.reportEvent("WelcomePageActivity", "onCreate");
+
+        mViewPager = findViewById(R.id.welcome_page_view_pager);
         mViewPager.setAdapter(new WelcomePageFragmentAdapter(getSupportFragmentManager()));
 
-        final FloatingActionButton fab = (FloatingActionButton)
-                findViewById(R.id.welcome_page_fab_next);
+        final FloatingActionButton fab = findViewById(R.id.welcome_page_fab_next);
         fab.setOnClickListener(this);
     }
 
@@ -61,7 +65,7 @@ public class WelcomePageActivity extends AppCompatActivity implements View.OnCli
                 PreferenceManager.getDefaultSharedPreferences(this);
         final boolean themeDark =
                 sharedPreferences.getBoolean(getString(R.string.pref_key_theme_dark), false);
-        if (themeDark == true) {
+        if (themeDark) {
             theme.applyStyle(R.style.AppThemeDark, true);
         } else {
             theme.applyStyle(R.style.AppThemeLight, true);
@@ -69,5 +73,4 @@ public class WelcomePageActivity extends AppCompatActivity implements View.OnCli
 
         return theme;
     }
-
 }
