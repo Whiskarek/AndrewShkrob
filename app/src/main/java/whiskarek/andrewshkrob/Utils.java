@@ -1,7 +1,6 @@
 package whiskarek.andrewshkrob;
 
 import android.content.ComponentName;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,10 +8,9 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
@@ -21,12 +19,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import whiskarek.andrewshkrob.activity.database.ApplicationDatabaseHelper;
-import whiskarek.andrewshkrob.activity.database.Database;
-
 public final class Utils {
-
-    public static List<Application> mApps = null;
 
     public static List<Application> sortApps(final List<Application> apps, final Context context) {
         SharedPreferences sharedPreferences =
@@ -116,25 +109,10 @@ public final class Utils {
     }
 
     @Nullable
-    public static List<Application> loadApplications(final Context context,
-                                                     final ApplicationDatabaseHelper appDatabaseHelper) {
-        try {
-            List<Application> applications;
-            if (appDatabaseHelper.isEmpty()) {
-                Log.i("SQLite", "Set Up database");
-                applications = readFromSystem(context);
-                applications = sortApps(applications, context);
-                appDatabaseHelper.addToDatabase(applications);
-            } else {
-                applications = sortApps(appDatabaseHelper.getFromDatabase(context), context);
-
-            }
-
-            return applications;
-        } catch (Exception e) {
-            Log.e("SQLite", e.toString());
-        }
-        return null;
+    public static List<Application> loadApplications(final Context context) {
+        List<Application> applications = readFromSystem(context);
+        applications = sortApps(applications, context);
+        return applications;
     }
 
     private static List<Application> readFromSystem(final Context context) {
@@ -154,13 +132,13 @@ public final class Utils {
         apps.remove(my);
 
         for (ResolveInfo info : apps) {
-
             applications.add(getApp(info, context));
         }
 
         return applications;
     }
 
+    @NonNull
     public static Application getApp(final ResolveInfo info, final Context context) {
         final PackageManager manager = context.getPackageManager();
 
@@ -197,47 +175,37 @@ public final class Utils {
         );
     }
 
+    @Nullable
     public static Drawable getAppIcon(final Context context, final String packageName) {
-        final PackageManager packageManager = context.getPackageManager();
-        final Intent intent = new Intent();
-        intent.setPackage(packageName);
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        final ResolveInfo resolveInfo = packageManager.resolveActivity(intent, 0);
-
-        return resolveInfo.loadIcon(packageManager);
-    }
-
-    public static String getAppName(final Context context, final String packageName) {
-        final PackageManager packageManager = context.getPackageManager();
-        final Intent intent = new Intent();
-        intent.setPackage(packageName);
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        final ResolveInfo resolveInfo = packageManager.resolveActivity(intent, 0);
-
-        return resolveInfo.loadLabel(packageManager).toString();
-    }
-
-    public static void addLaunch(final ApplicationDatabaseHelper applicationDatabaseHelper,
-                                 final Application app) {
         try {
-            SQLiteDatabase sqLiteDatabase = applicationDatabaseHelper.getWritableDatabase();
 
-            final String selection = Database.Columns.FIELD_APP_PACKAGE_NAME + " LIKE ?";
-            final String[] selectionArgs = {app.getPackageName()};
+            final PackageManager packageManager = context.getPackageManager();
+            final Intent intent = new Intent();
+            intent.setPackage(packageName);
+            intent.addCategory(Intent.CATEGORY_LAUNCHER);
+            final ResolveInfo resolveInfo = packageManager.resolveActivity(intent, 0);
 
-            final ContentValues contentValues = new ContentValues();
-            contentValues.put(Database.Columns.FIELD_APP_LAUNCH_AMOUNT, app.getLaunchAmount());
-
-            sqLiteDatabase.update(
-                    Database.TABLE_NAME,
-                    contentValues,
-                    selection,
-                    selectionArgs
-            );
-
-        } catch (SQLException e) {
-            Log.e("SQLite", e.toString());
+            return resolveInfo.loadIcon(packageManager);
+        } catch (Exception e) {
+            Log.e("SQL", e.toString());
         }
-
+        return null;
     }
+
+    @Nullable
+    public static String getAppName(final Context context, final String packageName) {
+        try {
+            final PackageManager packageManager = context.getPackageManager();
+            final Intent intent = new Intent();
+            intent.setPackage(packageName);
+            intent.addCategory(Intent.CATEGORY_LAUNCHER);
+            final ResolveInfo resolveInfo = packageManager.resolveActivity(intent, 0);
+
+            return resolveInfo.loadLabel(packageManager).toString();
+        } catch (Exception e) {
+            Log.e("SQL", e.toString());
+        }
+        return null;
+    }
+
 }

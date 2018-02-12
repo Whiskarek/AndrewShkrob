@@ -14,8 +14,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.yandex.metrica.YandexMetrica;
+
 import whiskarek.andrewshkrob.R;
-import whiskarek.andrewshkrob.Utils;
 import whiskarek.andrewshkrob.activity.main.MainActivity;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -25,7 +26,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
 
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -47,13 +48,19 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this, MainActivity.class));
+        finish();
+    }
+
+    @Override
     public Resources.Theme getTheme() {
         final Resources.Theme theme = super.getTheme();
         final SharedPreferences sharedPreferences =
                 PreferenceManager.getDefaultSharedPreferences(this);
         final boolean themeDark =
                 sharedPreferences.getBoolean(getString(R.string.pref_key_theme_dark), false);
-        if (themeDark == true) {
+        if (themeDark) {
             theme.applyStyle(R.style.AppThemeDark, true);
         } else {
             theme.applyStyle(R.style.AppThemeLight, true);
@@ -80,16 +87,16 @@ public class SettingsActivity extends AppCompatActivity {
         @Override
         public void onSharedPreferenceChanged(final SharedPreferences sharedPreferences, final String key) {
             if (key.equals(getString(R.string.pref_key_theme_dark))) {
-                Log.i(getString(R.string.log_tag_preferences),
+                YandexMetrica.reportEvent(getString(R.string.log_tag_preferences),
                         "Preference \"Theme\" was changed to "
                                 + sharedPreferences.getBoolean(key, false));
                 getActivity().recreate();
             } else if (key.equals(getString(R.string.pref_key_model_solid))) {
-                Log.i(getString(R.string.log_tag_preferences),
+                YandexMetrica.reportEvent(getString(R.string.log_tag_preferences),
                         "Preference \"Model\" was changed to "
                                 + sharedPreferences.getBoolean(key, false));
             } else if (key.equals(getString(R.string.pref_key_sort_type))) {
-                Log.i(getString(R.string.log_tag_preferences),
+                YandexMetrica.reportEvent(getString(R.string.log_tag_preferences),
                         "Preference \"Sort\" was changed to "
                                 + sharedPreferences.getString(key, "0"));
                 final ListPreference listPreferenceSortType = (ListPreference)
@@ -99,11 +106,8 @@ public class SettingsActivity extends AppCompatActivity {
                 final String sortTypeName = sortArray[sortTypePos];
                 listPreferenceSortType.setSummary(sortTypeName);
 
-                if (Utils.mApps != null) {
-                    Utils.mApps = Utils.sortApps(Utils.mApps, getContext());
-                }
             } else if (key.equals(getString(R.string.pref_key_show_welcome_page_on_next_load))) {
-                Log.i(getString(R.string.log_tag_preferences),
+                YandexMetrica.reportEvent(getString(R.string.log_tag_preferences),
                         "Preference \"Show Welcome Page\" was changed to "
                                 + sharedPreferences.getBoolean(key, false));
             }
@@ -118,13 +122,15 @@ public class SettingsActivity extends AppCompatActivity {
         @Override
         public void onResume() {
             super.onResume();
-            getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+            getPreferenceScreen().getSharedPreferences()
+                    .registerOnSharedPreferenceChangeListener(this);
         }
 
         @Override
         public void onPause() {
             super.onPause();
-            getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
+            getPreferenceScreen().getSharedPreferences()
+                    .unregisterOnSharedPreferenceChangeListener(this);
         }
     }
 }

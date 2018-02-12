@@ -19,6 +19,7 @@
         android:textSize="@dimen/text_size_default"
         android:gravity="center"
         android:lines="@integer/text_lines_default"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title.Inverse"
         android:text="Color"/>
 
 </LinearLayout>

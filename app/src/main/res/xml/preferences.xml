@@ -32,4 +32,5 @@
         android:key="@string/pref_key_show_welcome_page_on_next_load"
         android:title="@string/pref_show_welcome_page_on_next_load"
         android:summary="@string/pref_show_welcome_page_on_next_load_summary"/>
+
 </PreferenceScreen>

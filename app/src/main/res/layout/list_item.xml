@@ -28,6 +28,7 @@
             android:layout_marginBottom="@dimen/offset"
             android:textSize="@dimen/text_size_header"
             android:lines="@integer/text_lines_default"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title.Inverse"
             tools:text="Hello"/>
 
         <TextView
@@ -37,6 +38,7 @@
             android:layout_marginBottom="@dimen/offset"
             android:textSize="@dimen/text_size_default"
             android:lines="@integer/fragment_list_text_lines_body"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title.Inverse"
             tools:text="Hello"/>
 
         <View

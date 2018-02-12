@@ -24,7 +24,7 @@ public class CircleImageView extends AppCompatImageView {
     public CircleImageView(final Context context) {
         super(context);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             setOutlineProvider(new CircleViewOutlineProvider());
             setClipToOutline(true);
         }
@@ -36,7 +36,7 @@ public class CircleImageView extends AppCompatImageView {
     public CircleImageView(final Context context, final AttributeSet attrs) {
         super(context, attrs);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             setOutlineProvider(new CircleViewOutlineProvider());
             setClipToOutline(true);
         }
@@ -48,7 +48,7 @@ public class CircleImageView extends AppCompatImageView {
     public CircleImageView(final Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             setOutlineProvider(new CircleViewOutlineProvider());
             setClipToOutline(true);
         }

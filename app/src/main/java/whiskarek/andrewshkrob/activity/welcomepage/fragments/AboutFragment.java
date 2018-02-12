@@ -11,15 +11,15 @@ import whiskarek.andrewshkrob.R;
 
 public class AboutFragment extends Fragment {
 
-        @Nullable
-        @Override
-        public View onCreateView(final LayoutInflater inflater,
-                                 @Nullable final ViewGroup container,
-                                 @Nullable final Bundle savedInstanceState) {
-            final View view = inflater.inflate(R.layout.fragment_about, container, false);
+    @Nullable
+    @Override
+    public View onCreateView(final LayoutInflater inflater,
+                             @Nullable final ViewGroup container,
+                             @Nullable final Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_about, container, false);
 
-            return view;
+        return view;
 
-        }
+    }
 
 }

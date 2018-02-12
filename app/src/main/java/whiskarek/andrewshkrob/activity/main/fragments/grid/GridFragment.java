@@ -1,5 +1,7 @@
 package whiskarek.andrewshkrob.activity.main.fragments.grid;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -9,9 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
+import whiskarek.andrewshkrob.Application;
+import whiskarek.andrewshkrob.LauncherApplication;
 import whiskarek.andrewshkrob.R;
+import whiskarek.andrewshkrob.Utils;
 import whiskarek.andrewshkrob.activity.main.OffsetItemDecoration;
 import whiskarek.andrewshkrob.activity.main.fragments.LauncherFragment;
+import whiskarek.andrewshkrob.viewmodel.ApplicationListViewModel;
 
 public class GridFragment extends LauncherFragment {
 
@@ -39,12 +47,31 @@ public class GridFragment extends LauncherFragment {
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), spanCount);
         mRecyclerView.setLayoutManager(gridLayoutManager);
         // Create GridAdapter
-        final GridAdapter gridAdapter = new GridAdapter(
-                getContext());
+        GridAdapter gridAdapter = new GridAdapter((LauncherApplication) getActivity().getApplication());
         mRecyclerView.setAdapter(gridAdapter);
         //------------------------------------------------------------------------------------------
 
         return view;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable final Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        final ApplicationListViewModel viewModel =
+                ViewModelProviders.of(this).get(ApplicationListViewModel.class);
+
+        subscribeUI(viewModel);
+    }
+
+    private void subscribeUI(final ApplicationListViewModel viewModel) {
+        viewModel.getApplications().observe(this, new Observer<List<Application>>() {
+            @Override
+            public void onChanged(@Nullable final List<Application> applications) {
+                if (applications != null) {
+                    Utils.sortApps(applications, getContext());
+                    ((GridAdapter) getRecyclerView().getAdapter()).setApplicationList(applications);
+                }
+            }
+        });
+    }
 }

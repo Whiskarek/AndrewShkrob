@@ -5,7 +5,9 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-public class Application {
+import whiskarek.andrewshkrob.model.ApplicationModel;
+
+public class Application implements ApplicationModel {
 
     private final String mPackageName;
     private final String mAppName;
@@ -13,8 +15,8 @@ public class Application {
     private final Drawable mAppIcon;
     private final Intent mLaunchIntent;
     private final long mInstallTime;
-    private int mLaunchAmount;
     private final boolean mSystemApp;
+    private int mLaunchAmount;
 
     public Application(@NonNull final String packageName, @NonNull final String appName,
                        @Nullable Drawable appIcon, final Intent launchIntent, final long installTime,
@@ -28,40 +30,44 @@ public class Application {
         mSystemApp = systemApp;
     }
 
+    @Override
     public String getAppName() {
         return mAppName;
     }
 
+    @Override
     public String getPackageName() {
         return mPackageName;
     }
 
+    @Override
     public @Nullable
     Drawable getAppIcon() {
         return mAppIcon;
     }
 
+    @Override
     public Intent getLaunchIntent() {
         return mLaunchIntent;
     }
 
+    @Override
     public int getLaunchAmount() {
         return mLaunchAmount;
     }
 
+    @Override
     public long getInstallTime() {
         return mInstallTime;
-    }
-
-    public void setLaunchAmount(int launchNumber) {
-        mLaunchAmount = launchNumber;
     }
 
     public void addLaunch() {
         mLaunchAmount++;
     }
 
+    @Override
     public boolean isSystemApp() {
         return mSystemApp;
     }
+
 }

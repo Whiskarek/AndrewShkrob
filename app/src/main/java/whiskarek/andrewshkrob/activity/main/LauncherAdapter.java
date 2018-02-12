@@ -1,6 +1,5 @@
 package whiskarek.andrewshkrob.activity.main;
 
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
@@ -23,7 +22,7 @@ public class LauncherAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public Fragment getItem(final int position) {
+    public LauncherFragment getItem(final int position) {
         if (position >= 0 && position < mFragments.size()) {
             return mFragments.get(position);
         }
