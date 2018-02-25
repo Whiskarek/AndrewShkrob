@@ -1,16 +1,12 @@
-package whiskarek.andrewshkrob.activity;
+package whiskarek.andrewshkrob.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;

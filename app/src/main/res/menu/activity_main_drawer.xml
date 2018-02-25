@@ -5,6 +5,10 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_drawer_launcher_desktop"
+            android:icon="@drawable/ic_nav_drawer_launcher_desktop"
+            android:title="@string/nav_drawer_launcher_desktop" />
+        <item
             android:id="@+id/nav_drawer_launcher_grid"
             android:icon="@drawable/ic_nav_drawer_launcher_grid"
             android:title="@string/nav_drawer_launcher_grid" />

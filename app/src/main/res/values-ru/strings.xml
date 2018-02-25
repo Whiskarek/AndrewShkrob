@@ -14,8 +14,10 @@
     <string name="context_menu_app_frequency">Частота</string>
     <string name="context_menu_app_launch_amount">Количество запусков</string>
     <string name="context_menu_app_info">Информация</string>
+    <string name="context_menu_app_add_to_desktop">Добавить на рабочий стол</string>
 
     <!-- Navigation Drawer Menu -->
+    <string name="nav_drawer_launcher_desktop">Рабочий стол</string>
     <string name="nav_drawer_launcher_grid">Сетка</string>
     <string name="nav_drawer_launcher_list">Список</string>
     <string name="nav_drawer_title_options">Параметры</string>

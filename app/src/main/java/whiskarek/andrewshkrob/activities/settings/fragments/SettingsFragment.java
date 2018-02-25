@@ -1,4 +1,4 @@
-package whiskarek.andrewshkrob.activity.settings.fragments;
+package whiskarek.andrewshkrob.activities.settings.fragments;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;

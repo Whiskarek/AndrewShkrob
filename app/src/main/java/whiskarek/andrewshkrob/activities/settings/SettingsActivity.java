@@ -1,4 +1,4 @@
-package whiskarek.andrewshkrob.activity.settings;
+package whiskarek.andrewshkrob.activities.settings;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,8 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import whiskarek.andrewshkrob.R;
-import whiskarek.andrewshkrob.activity.BaseActivity;
-import whiskarek.andrewshkrob.activity.settings.fragments.SettingsFragment;
+import whiskarek.andrewshkrob.activities.BaseActivity;
+import whiskarek.andrewshkrob.activities.settings.fragments.SettingsFragment;
 
 public class SettingsActivity extends BaseActivity implements PreferenceFragmentCompat.OnPreferenceStartScreenCallback {
 

@@ -1,4 +1,4 @@
-package whiskarek.andrewshkrob.activity.welcomepage.fragments;
+package whiskarek.andrewshkrob.activities.welcomepage.fragments;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;

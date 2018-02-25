@@ -1,4 +1,4 @@
-package whiskarek.andrewshkrob.activity.welcomepage;
+package whiskarek.andrewshkrob.activities.welcomepage;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,11 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import whiskarek.andrewshkrob.R;
-import whiskarek.andrewshkrob.activity.BaseActivity;
-import whiskarek.andrewshkrob.activity.welcomepage.fragments.AboutFragment;
-import whiskarek.andrewshkrob.activity.welcomepage.fragments.ModelTypeFragment;
-import whiskarek.andrewshkrob.activity.welcomepage.fragments.ThemeFragment;
-import whiskarek.andrewshkrob.activity.welcomepage.fragments.WelcomeFragment;
+import whiskarek.andrewshkrob.activities.BaseActivity;
+import whiskarek.andrewshkrob.activities.welcomepage.fragments.AboutFragment;
+import whiskarek.andrewshkrob.activities.welcomepage.fragments.ModelTypeFragment;
+import whiskarek.andrewshkrob.activities.welcomepage.fragments.ThemeFragment;
+import whiskarek.andrewshkrob.activities.welcomepage.fragments.WelcomeFragment;
+import whiskarek.andrewshkrob.view.adapter.WelcomePageFragmentAdapter;
 
 public class WelcomePageActivity extends BaseActivity implements View.OnClickListener {
 
