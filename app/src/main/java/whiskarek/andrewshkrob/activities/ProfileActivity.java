@@ -19,7 +19,7 @@ import android.view.WindowManager;
 
 import whiskarek.andrewshkrob.R;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends BaseActivity {
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -95,21 +95,5 @@ public class ProfileActivity extends AppCompatActivity {
         } else {
             NavUtils.navigateUpTo(this, upIntent);
         }
-    }
-
-    @Override
-    public Resources.Theme getTheme() {
-        final Resources.Theme theme = super.getTheme();
-        final SharedPreferences sharedPreferences =
-                PreferenceManager.getDefaultSharedPreferences(this);
-        final boolean themeDark =
-                sharedPreferences.getBoolean(getString(R.string.pref_key_theme_dark), false);
-        if (themeDark) {
-            theme.applyStyle(R.style.AppThemeDark, true);
-        } else {
-            theme.applyStyle(R.style.AppThemeLight, true);
-        }
-
-        return theme;
     }
 }

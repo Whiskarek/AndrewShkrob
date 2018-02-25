@@ -11,8 +11,6 @@ import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.yandex.metrica.YandexMetrica;
-
 import whiskarek.andrewshkrob.R;
 
 public class ThemeFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -74,9 +72,6 @@ public class ThemeFragment extends PreferenceFragmentCompat implements SharedPre
     @Override
     public void onSharedPreferenceChanged(final SharedPreferences sharedPreferences, final String key) {
         if (key.equals(getString(R.string.pref_key_theme_dark))) {
-            YandexMetrica.reportEvent(getString(R.string.log_tag_preferences),
-                    "Preference \"Theme\" was changed to "
-                            + sharedPreferences.getBoolean(key, false));
             getActivity().recreate();
         }
     }

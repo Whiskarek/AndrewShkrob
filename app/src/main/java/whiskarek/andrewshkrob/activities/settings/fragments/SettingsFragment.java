@@ -5,9 +5,6 @@ import android.os.Bundle;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
-import com.yandex.metrica.YandexMetrica;
-
-import whiskarek.andrewshkrob.LauncherApplication;
 import whiskarek.andrewshkrob.R;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -63,18 +60,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     @Override
     public void onSharedPreferenceChanged(final SharedPreferences sharedPreferences, final String key) {
         if (key.equals(getString(R.string.pref_key_theme_dark))) {
-            YandexMetrica.reportEvent(getString(R.string.log_tag_preferences),
-                    "Preference \"Theme\" was changed to "
-                            + sharedPreferences.getBoolean(key, false));
             getActivity().recreate();
         } else if (key.equals(getString(R.string.pref_key_model_solid))) {
-            YandexMetrica.reportEvent(getString(R.string.log_tag_preferences),
-                    "Preference \"Model\" was changed to "
-                            + sharedPreferences.getBoolean(key, false));
         } else if (key.equals(getString(R.string.pref_key_sort_type))) {
-            YandexMetrica.reportEvent(getString(R.string.log_tag_preferences),
-                    "Preference \"Sort\" was changed to "
-                            + sharedPreferences.getString(key, "0"));
             final ListPreference listPreferenceSortType = (ListPreference)
                     findPreference(key);
             if (listPreferenceSortType != null) {
@@ -84,9 +72,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                 listPreferenceSortType.setSummary(sortTypeName);
             }
         } else if (key.equals(getString(R.string.pref_key_show_welcome_page_on_next_load))) {
-            YandexMetrica.reportEvent(getString(R.string.log_tag_preferences),
-                    "Preference \"Show Welcome Page\" was changed to "
-                            + sharedPreferences.getBoolean(key, false));
         } else if (key.equals(getString(R.string.pref_key_background_change_frequency))) {
             final ListPreference listPreferenceBackgroundChangeFrequency = (ListPreference)
                     findPreference(key);
@@ -98,13 +83,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                         updateFrequencyPos == -1 ? "" : updateFrequency[updateFrequencyPos]
                 );
             }
-
-            YandexMetrica.reportEvent(getString(R.string.log_tag_preferences),
-                    "Preference \"Change background frequency\" was changed to "
-                            + sharedPreferences.getString(key, "0"));
-            ((LauncherApplication) getActivity().getApplication()).updateTimer();
+            //((LauncherApplication) getActivity().getApplication()).updateTimer();
         } else if (key.equals(getString(R.string.pref_key_unique_background_photos))) {
-            ((LauncherApplication) getActivity().getApplication()).updateTimer();
+            //((LauncherApplication) getActivity().getApplication()).updateTimer();
         }
     }
 

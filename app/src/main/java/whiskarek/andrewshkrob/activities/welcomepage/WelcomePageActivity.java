@@ -1,21 +1,24 @@
 package whiskarek.andrewshkrob.activity.welcomepage;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.yandex.metrica.YandexMetrica;
+import java.util.ArrayList;
+import java.util.List;
 
 import whiskarek.andrewshkrob.R;
-import whiskarek.andrewshkrob.activity.main.MainActivity;
+import whiskarek.andrewshkrob.activity.BaseActivity;
+import whiskarek.andrewshkrob.activity.welcomepage.fragments.AboutFragment;
+import whiskarek.andrewshkrob.activity.welcomepage.fragments.ModelTypeFragment;
+import whiskarek.andrewshkrob.activity.welcomepage.fragments.ThemeFragment;
+import whiskarek.andrewshkrob.activity.welcomepage.fragments.WelcomeFragment;
 
-public class WelcomePageActivity extends AppCompatActivity implements View.OnClickListener {
+public class WelcomePageActivity extends BaseActivity implements View.OnClickListener {
 
     private ViewPager mViewPager;
 
@@ -24,10 +27,14 @@ public class WelcomePageActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_page);
 
-        YandexMetrica.reportEvent("WelcomePageActivity", "onCreate");
+        final List<Fragment> pages = new ArrayList<>();
+        pages.add(new WelcomeFragment());
+        pages.add(new AboutFragment());
+        pages.add(new ThemeFragment());
+        pages.add(new ModelTypeFragment());
 
         mViewPager = findViewById(R.id.welcome_page_view_pager);
-        mViewPager.setAdapter(new WelcomePageFragmentAdapter(getSupportFragmentManager()));
+        mViewPager.setAdapter(new WelcomePageFragmentAdapter(getSupportFragmentManager(), pages));
 
         final FloatingActionButton fab = findViewById(R.id.welcome_page_fab_next);
         fab.setOnClickListener(this);
@@ -45,7 +52,7 @@ public class WelcomePageActivity extends AppCompatActivity implements View.OnCli
             sharedPreferences.edit()
                     .putBoolean(getString(R.string.pref_key_show_welcome_page_on_next_load), false)
                     .apply();
-            startActivity(new Intent(this, MainActivity.class));
+            //startActivity(new Intent(this, MainActivity.class));
             finish();
         }
     }
@@ -56,21 +63,5 @@ public class WelcomePageActivity extends AppCompatActivity implements View.OnCli
         if (viewPagerTabNum > 0) {
             mViewPager.setCurrentItem(viewPagerTabNum - 1);
         }
-    }
-
-    @Override
-    public Resources.Theme getTheme() {
-        final Resources.Theme theme = super.getTheme();
-        final SharedPreferences sharedPreferences =
-                PreferenceManager.getDefaultSharedPreferences(this);
-        final boolean themeDark =
-                sharedPreferences.getBoolean(getString(R.string.pref_key_theme_dark), false);
-        if (themeDark) {
-            theme.applyStyle(R.style.AppThemeDark, true);
-        } else {
-            theme.applyStyle(R.style.AppThemeLight, true);
-        }
-
-        return theme;
     }
 }
