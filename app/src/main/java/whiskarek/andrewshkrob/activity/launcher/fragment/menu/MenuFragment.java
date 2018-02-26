@@ -21,8 +21,8 @@ import whiskarek.andrewshkrob.view.adapter.MenuFragmentAdapter;
 
 public class MenuFragment extends Fragment {
 
-    private List<Fragment> mMenuScreenFragments = new ArrayList<>();
-    private ViewPager mViewPager;
+    private static List<Fragment> mMenuScreenFragments = new ArrayList<>();
+    private ViewPager mViewPager = null;
 
     private final ViewPager.SimpleOnPageChangeListener mOnPageChangeListener =
             new ViewPager.SimpleOnPageChangeListener() {
@@ -58,14 +58,12 @@ public class MenuFragment extends Fragment {
 
         Log.d("111", "onCreateView");
         mViewPager = view.findViewById(R.id.fragment_holder);
-
         mViewPager.setAdapter(new MenuFragmentAdapter(
-                getChildFragmentManager(),
+                getFragmentManager(),
                 mMenuScreenFragments
         ));
         mViewPager.addOnPageChangeListener(mOnPageChangeListener);
-        mViewPager.setOffscreenPageLimit(2);
-        Log.d("111", "ViewPager created");
+        Log.d("111", "ViewPager created: " + (mViewPager == null ? "null" : "not null"));
         return view;
     }
 
@@ -86,6 +84,7 @@ public class MenuFragment extends Fragment {
     }
 
     public ViewPager getViewPager() {
+        Log.d("111", "getViewPager()");
         return mViewPager;
     }
 

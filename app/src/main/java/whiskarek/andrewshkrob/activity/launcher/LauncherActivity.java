@@ -53,7 +53,7 @@ public class LauncherActivity extends BaseActivity {
                         case 1: {
                             setTitle("");
                             // TODO
-                            /*final MenuFragment menuFragment =
+                            final MenuFragment menuFragment =
                                     (MenuFragment) verticalViewPagerAdapter.getItem(1);
                             switch (menuFragment.getViewPager().getCurrentItem()) {
                                 case 0: {
@@ -71,7 +71,7 @@ public class LauncherActivity extends BaseActivity {
                                     mNavigationView.setCheckedItem(R.id.nav_drawer_settings);
                                     break;
                                 }
-                            }*/
+                            }
                         }
                     }
                 }
