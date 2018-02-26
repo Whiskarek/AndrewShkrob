@@ -20,7 +20,7 @@
             android:value="${HOCKEYAPP_APP_ID}" />
 
         <activity
-            android:name=".activities.launcher.LauncherActivity"
+            android:name=".activity.launcher.LauncherActivity"
             android:launchMode="singleTask"
             android:stateNotNeeded="true"
             android:theme="@style/AppThemeLight">
@@ -33,13 +33,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.welcomepage.WelcomePageActivity"
+            android:name=".activity.welcomepage.WelcomePageActivity"
             android:launchMode="singleTask"
             android:theme="@style/AppThemeLight" />
         <activity
-            android:name=".activities.ProfileActivity"
+            android:name=".activity.ProfileActivity"
             android:launchMode="singleTask"
-            android:parentActivityName=".activities.launcher.LauncherActivity"
+            android:parentActivityName=".activity.launcher.LauncherActivity"
             android:theme="@style/AppThemeLight" />
 
     </application>

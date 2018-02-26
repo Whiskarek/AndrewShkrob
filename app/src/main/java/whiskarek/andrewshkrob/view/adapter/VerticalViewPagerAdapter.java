@@ -23,11 +23,7 @@ public class VerticalViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(final int position) {
-        if (position >= 0 && position < mFragments.size()) {
-            return mFragments.get(position);
-        }
-
-        return null;
+        return mFragments.get(position);
     }
 
 }

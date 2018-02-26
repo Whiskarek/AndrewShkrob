@@ -16,8 +16,8 @@
     <string name="context_menu_app_info">सूचना</string>
 
     <!-- Navigation Drawer Menu -->
-    <string name="nav_drawer_launcher_grid">जाल</string>
-    <string name="nav_drawer_launcher_list">की सूची</string>
+    <string name="nav_drawer_grid">जाल</string>
+    <string name="nav_drawer_list">की सूची</string>
     <string name="nav_drawer_title_options">मापदंडों</string>
     <string name="nav_drawer_settings">सेटिंग्स</string>
 

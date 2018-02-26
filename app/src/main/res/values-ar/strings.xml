@@ -16,8 +16,8 @@
     <string name="context_menu_app_info">معلومات</string>
 
     <!-- Navigation Drawer Menu -->
-    <string name="nav_drawer_launcher_grid">شبكة</string>
-    <string name="nav_drawer_launcher_list">قائمة</string>
+    <string name="nav_drawer_grid">شبكة</string>
+    <string name="nav_drawer_list">قائمة</string>
     <string name="nav_drawer_title_options">المعلمات</string>
     <string name="nav_drawer_settings">إعدادات</string>
 
