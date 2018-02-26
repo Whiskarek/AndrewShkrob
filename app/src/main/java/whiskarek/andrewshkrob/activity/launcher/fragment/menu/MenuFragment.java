@@ -84,7 +84,7 @@ public class MenuFragment extends Fragment {
     }
 
     public ViewPager getViewPager() {
-        Log.d("111", "getViewPager()");
+        Log.d("111", "getViewPager(): " + (mViewPager == null ? "null" : "not null"));
         return mViewPager;
     }
 

@@ -33,12 +33,14 @@ import whiskarek.andrewshkrob.activity.launcher.fragment.desktop.DesktopFragment
 import whiskarek.andrewshkrob.activity.launcher.fragment.menu.MenuFragment;
 import whiskarek.andrewshkrob.activity.welcomepage.WelcomePageActivity;
 import whiskarek.andrewshkrob.view.VerticalViewPager;
+import whiskarek.andrewshkrob.view.adapter.MenuFragmentAdapter;
 import whiskarek.andrewshkrob.view.adapter.VerticalViewPagerAdapter;
 
 public class LauncherActivity extends BaseActivity {
 
+    private ViewPager viewPager = null;
     private NavigationView mNavigationView = null;
-    private VerticalViewPagerAdapter verticalViewPagerAdapter = null;
+    private MenuFragmentAdapter verticalViewPagerAdapter = null;
     private final ViewPager.SimpleOnPageChangeListener mSimpleOnPageChangeListener =
             new ViewPager.SimpleOnPageChangeListener() {
                 @Override
@@ -114,9 +116,9 @@ public class LauncherActivity extends BaseActivity {
         final List<Fragment> screens = new ArrayList<>();
         screens.add(new DesktopFragment());
         screens.add(new MenuFragment());
-        final VerticalViewPager viewPager = findViewById(R.id.vertical_view_pager);
+        viewPager = findViewById(R.id.vertical_view_pager);
         verticalViewPagerAdapter =
-                new VerticalViewPagerAdapter(getSupportFragmentManager(), screens);
+                new MenuFragmentAdapter(getSupportFragmentManager(), screens);
         viewPager.setAdapter(verticalViewPagerAdapter);
         viewPager.addOnPageChangeListener(mSimpleOnPageChangeListener);
 
@@ -151,6 +153,12 @@ public class LauncherActivity extends BaseActivity {
     protected void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString("title_name", getTitle().toString());
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
     }
 
     @Override
