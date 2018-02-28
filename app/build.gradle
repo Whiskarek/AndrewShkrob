@@ -27,18 +27,7 @@ repositories {
     jcenter()
 }
 
-check.dependsOn 'lint'
-
 android {
-    lintOptions {
-        abortOnError false
-        xmlReport false
-        htmlReport true
-
-        lintConfig rootProject.file('config/lint/lint.xml')
-        htmlOutput rootProject.file('reports/lint/lint-result.html')
-        xmlOutput rootProject.file('reports/lint/lint-result.xml')
-    }
     signingConfigs {
         config {
             keyAlias 'AndrewShkrob'
