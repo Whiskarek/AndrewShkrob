@@ -39,9 +39,9 @@ jobs:
           command: ./gradlew test
       - run:
           name: Start Android Emulator
-          command: emulator -avd circleci-android24 -no-window:
-          background: true
-          parallel: true
+          emulator -avd circleci-android24 -no-window:
+              background: true
+              parallel: true
       - run:
           name: Run Android Tests
           command: ./gradlew connectedAndroidTest
