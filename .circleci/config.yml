@@ -37,6 +37,9 @@ jobs:
       - run:
           name: Run Unit Tests
           command: ./gradlew test
+      - emulator -avd circleci-android24 -no-window:
+          background: true
+          parallel: true
       - run:
           name: Run Android Tests
           command: ./gradlew connectedAndroidTest
