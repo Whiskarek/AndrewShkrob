@@ -27,14 +27,11 @@
             android:title="@string/pref_sort_type" />
     </PreferenceCategory>
 
-    <PreferenceScreen
-        android:key="pref_background_screen"
-        android:title="@string/pref_background">
-
+    <PreferenceCategory android:title="@string/pref_background">
         <SwitchPreference
             android:defaultValue="false"
             android:key="@string/pref_key_unique_background_photos"
-            android:summary="@string/pref_background_unique_for_every_fragment" />
+            android:title="@string/pref_background_unique_for_every_fragment" />
 
 
         <ListPreference
@@ -43,9 +40,7 @@
             android:entryValues="@array/pref_background_change_frequency_entry_values"
             android:key="@string/pref_key_background_change_frequency"
             android:title="@string/pref_background_change_frequency" />
-
-
-    </PreferenceScreen>
+    </PreferenceCategory>
 
     <SwitchPreference
         android:defaultValue="true"

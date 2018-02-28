@@ -20,9 +20,20 @@
             android:name="net.hockeyapp.android.appIdentifier"
             android:value="${HOCKEYAPP_APP_ID}" />
 
+        <meta-data
+            android:name="android.support.VERSION"
+            android:value="26.1.0" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_info_outline" />
+        <meta-data android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@android:color/holo_orange_dark" />
+
         <activity
-            android:name=".activity.main.MainActivity"
+            android:name=".activity.launcher.LauncherActivity"
             android:launchMode="singleTask"
+            android:screenOrientation="locked"
             android:stateNotNeeded="true"
             android:theme="@style/AppThemeLight">
             <intent-filter>
@@ -38,19 +49,26 @@
             android:launchMode="singleTask"
             android:theme="@style/AppThemeLight" />
         <activity
-            android:name=".activity.settings.SettingsActivity"
-            android:label="@string/nav_drawer_settings"
-            android:launchMode="singleTask"
-            android:parentActivityName=".activity.main.MainActivity"
-            android:stateNotNeeded="true"
-            android:theme="@style/AppThemeLight" />
-        <activity
             android:name=".activity.ProfileActivity"
-            android:label="@string/developer_name"
-            android:parentActivityName=".activity.main.MainActivity"
-            android:theme="@style/AppThemeLight.NoActionBar"/>
+            android:launchMode="singleTask"
+            android:parentActivityName=".activity.launcher.LauncherActivity"
+            android:theme="@style/AppThemeLight">
+            <intent-filter android:label="Open Profile">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="profile.activity"
+                    android:scheme="launcher" />
+            </intent-filter>
+        </activity>
 
-        <service android:name=".background.ImageService" />
+        <receiver android:name=".broadcast.SilentPushReceiver">
+            <intent-filter>
+                <!--Получение silent push-уведомлений-->
+                <action android:name="whiskarek.andrewshkrob.action.ymp.SILENT_PUSH_RECEIVE" />
+            </intent-filter>
+        </receiver>
 
     </application>
 

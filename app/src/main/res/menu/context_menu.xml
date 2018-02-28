@@ -9,4 +9,7 @@
     <item
         android:id="@+id/context_menu_app_info"
         android:title="@string/context_menu_app_info" />
+    <item
+        android:id="@+id/context_menu_app_add_to_desktop"
+        android:title="@string/context_menu_app_add_to_desktop" />
 </menu>

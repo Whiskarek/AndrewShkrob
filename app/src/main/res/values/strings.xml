@@ -14,12 +14,14 @@
     <string name="context_menu_app_frequency">Frequency</string>
     <string name="context_menu_app_launch_amount">Launch amount</string>
     <string name="context_menu_app_info">Information</string>
+    <string name="context_menu_app_add_to_desktop">Add to desktop</string>
 
     <!-- Navigation Drawer Menu -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_drawer_launcher_grid">Grid</string>
-    <string name="nav_drawer_launcher_list">List</string>
+    <string name="nav_drawer_desktop">Desktop</string>
+    <string name="nav_drawer_grid">Grid</string>
+    <string name="nav_drawer_list">List</string>
     <string name="nav_drawer_title_options">Options</string>
     <string name="nav_drawer_settings">Settings</string>
 

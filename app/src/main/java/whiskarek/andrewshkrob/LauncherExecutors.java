@@ -8,11 +8,10 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class LauncherExecutors {
+    private static LauncherExecutors sInstance;
 
     private final Executor mDiskIO;
-
     private final Executor mNetworkIO;
-
     private final Executor mMainThreadIO;
 
     private LauncherExecutors(final Executor diskIO, final Executor networkIO,
@@ -22,10 +21,22 @@ public class LauncherExecutors {
         this.mMainThreadIO = mainThreadIO;
     }
 
-    public LauncherExecutors() {
-        this(Executors.newFixedThreadPool(3),
+    private LauncherExecutors() {
+        this(Executors.newSingleThreadExecutor(),
                 Executors.newFixedThreadPool(3),
                 new MainThreadExecutor());
+    }
+
+    public static LauncherExecutors getInstance() {
+        if (sInstance == null) {
+            synchronized (LauncherExecutors.class) {
+                if (sInstance == null) {
+                    sInstance = new LauncherExecutors();
+                }
+            }
+        }
+
+        return sInstance;
     }
 
     public Executor diskIO() {

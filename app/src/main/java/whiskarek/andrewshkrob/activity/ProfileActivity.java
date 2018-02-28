@@ -2,7 +2,6 @@ package whiskarek.andrewshkrob.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,16 +9,18 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import whiskarek.andrewshkrob.R;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends BaseActivity
+        implements SharedPreferences.OnSharedPreferenceChangeListener{
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -73,6 +74,22 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             }
         });
+
+        final SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        final String silentMessage =
+                sharedPreferences.getString("silent_push_message", "");
+
+        if (!silentMessage.equals("")) {
+            final LinearLayout silentNotification = findViewById(R.id.silent_notification);
+            silentNotification.setVisibility(View.VISIBLE);
+            findViewById(R.id.silent_notification_del).setVisibility(View.VISIBLE);
+
+            final TextView silentText = findViewById(R.id.silent_text);
+            silentText.setText("Silent Push Message: " + silentMessage);
+        }
+
     }
 
     @Override
@@ -98,18 +115,33 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     @Override
-    public Resources.Theme getTheme() {
-        final Resources.Theme theme = super.getTheme();
-        final SharedPreferences sharedPreferences =
-                PreferenceManager.getDefaultSharedPreferences(this);
-        final boolean themeDark =
-                sharedPreferences.getBoolean(getString(R.string.pref_key_theme_dark), false);
-        if (themeDark) {
-            theme.applyStyle(R.style.AppThemeDark, true);
-        } else {
-            theme.applyStyle(R.style.AppThemeLight, true);
+    public void onSharedPreferenceChanged(final SharedPreferences sharedPreferences,
+                                          final String key) {
+        if (key.equals("silent_push_message")) {
+            final String silentMessage =
+                    sharedPreferences.getString("silent_push_message", "");
+            if (!silentMessage.equals("")) {
+                final TextView silentText = findViewById(R.id.silent_text);
+                silentText.setText("Silent Push Message: " + silentMessage);
+            } else {
+                final LinearLayout silentNotification = findViewById(R.id.silent_notification);
+                silentNotification.setVisibility(View.GONE);
+                findViewById(R.id.silent_notification_del).setVisibility(View.GONE);
+            }
         }
+    }
 
-        return theme;
+    @Override
+    public void onResume() {
+        super.onResume();
+        PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
+                .registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
+                .unregisterOnSharedPreferenceChangeListener(this);
     }
 }

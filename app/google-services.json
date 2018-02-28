@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1079490247074",
+    "firebase_url": "https://andrew-shkrob-launcher.firebaseio.com",
+    "project_id": "andrew-shkrob-launcher",
+    "storage_bucket": "andrew-shkrob-launcher.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1079490247074:android:3108b2ded93ad7cd",
+        "android_client_info": {
+          "package_name": "whiskarek.andrewshkrob"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1079490247074-r2l2n97drndfmmgmfm0orse662q62qju.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsNtPmwkP77EBbOOnqO2uVMyPG2Bh5pNs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -4,6 +4,7 @@ defaults: &defaults
     - image: circleci/android:api-26-alpha
   environment:
     JVM_OPTS: -Xmx3200m
+    QEMU_AUDIO_DRV: none
 
 version: 2
 jobs:
@@ -27,16 +28,13 @@ jobs:
           root: ~/code
           paths:
             - ./*
-  "Unit Tests":
+  "Tests":
     <<: *defaults
     steps:
       - attach_workspace:
           at: ~/code
       - restore_cache:
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
-      - run:
-          name: Run Unit Tests
-          command: ./gradlew test
       - store_artifacts:
           path: app/build/reports
           destination: reports
@@ -133,7 +131,7 @@ workflows:
       - "Lint":
           requires:
             - "Make Dependencies"
-      - "Unit Tests":
+      - "Tests":
           requires:
             - "Make Dependencies"
       - "Build App":
@@ -142,7 +140,7 @@ workflows:
             - "CheckStyle"
             - "PMD"
             - "Lint"
-            - "Unit Tests"
+            - "Tests"
       - "FindBugs":
           requires:
             - "Make Dependencies"
@@ -151,7 +149,7 @@ workflows:
           requires:
             - "Make Dependencies"
             - "Build App"
-            - "Unit Tests"
+            - "Tests"
             - "CheckStyle"
             - "PMD"
             - "Lint"
@@ -163,7 +161,7 @@ workflows:
           requires:
             - "Make Dependencies"
             - "Build App"
-            - "Unit Tests"
+            - "Tests"
             - "CheckStyle"
             - "PMD"
             - "Lint"

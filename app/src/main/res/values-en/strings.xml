@@ -16,8 +16,8 @@
     <string name="context_menu_app_info">Information</string>
 
     <!-- Navigation Drawer Menu -->
-    <string name="nav_drawer_launcher_grid">Grid</string>
-    <string name="nav_drawer_launcher_list">List</string>
+    <string name="nav_drawer_grid">Grid</string>
+    <string name="nav_drawer_list">List</string>
     <string name="nav_drawer_title_options">Options</string>
     <string name="nav_drawer_settings">Settings</string>
 

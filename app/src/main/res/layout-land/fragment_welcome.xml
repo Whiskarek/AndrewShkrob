@@ -16,6 +16,7 @@
         android:layout_gravity="center">
 
         <whiskarek.andrewshkrob.view.CircleImageView
+            android:id="@+id/circle_image_view"
             android:layout_width="@dimen/welcome_page_photo"
             android:layout_height="@dimen/welcome_page_photo"
             android:layout_margin="@dimen/offset"

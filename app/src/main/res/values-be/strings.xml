@@ -16,8 +16,8 @@
     <string name="context_menu_app_info">Інфармацыя</string>
 
     <!-- Navigation Drawer Menu -->
-    <string name="nav_drawer_launcher_grid">Сетка</string>
-    <string name="nav_drawer_launcher_list">Спіс</string>
+    <string name="nav_drawer_grid">Сетка</string>
+    <string name="nav_drawer_list">Спіс</string>
     <string name="nav_drawer_title_options">Параметры</string>
     <string name="nav_drawer_settings">Налады</string>
 
