@@ -39,9 +39,9 @@ jobs:
           command: ./gradlew test
       - run:
           name: Start Android Emulator
-          emulator -avd circleci-android24 -no-window:
-              background: true
-              parallel: true
+          command: emulator -avd circleci-android24 -no-window: background: true parallel: true
+      - run:
+          name: Waiting For Android Emulator
           command: circle-android wait-for-boot
       - run:
           name: Run Android Tests
