@@ -17,6 +17,7 @@ public abstract class LauncherDatabase extends RoomDatabase{
     public static final String DATABASE_ROW_INSTALL_TIME = "InstallTime";
     public static final String DATABASE_ROW_LAUNCH_AMOUNT = "LaunchAmount";
     public static final String DATABASE_ROW_IS_SYSTEM = "IsSystem";
+    public static final String DATABASE_ROW_INTENT = "Intent";
 
     private static LauncherDatabase sInstance;
 

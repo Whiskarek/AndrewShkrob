@@ -10,7 +10,7 @@ import whiskarek.andrewshkrob.database.LauncherDatabase;
 import whiskarek.andrewshkrob.model.ApplicationInfoModel;
 
 @Entity(tableName = LauncherDatabase.DATABASE_NAME,
-        indices = {@Index(value = LauncherDatabase.DATABASE_ROW_PACKAGE_NAME,
+        indices = {@Index(value = LauncherDatabase.DATABASE_ROW_INTENT,
                           unique = true)})
 public class ApplicationInfoEntity implements ApplicationInfoModel{
 
@@ -28,12 +28,16 @@ public class ApplicationInfoEntity implements ApplicationInfoModel{
     @ColumnInfo(name = LauncherDatabase.DATABASE_ROW_IS_SYSTEM)
     private boolean mSystemApp;
 
+    @ColumnInfo(name = LauncherDatabase.DATABASE_ROW_INTENT)
+    private String mIntent;
+
     public ApplicationInfoEntity(final String packageName, final long installTime,
-                             final int launchAmount, final boolean systemApp) {
+                             final int launchAmount, final boolean systemApp, final String intent) {
         mPackageName = packageName;
         mInstallTime = installTime;
         mLaunchAmount = launchAmount;
         mSystemApp = systemApp;
+        mIntent = intent;
     }
 
     @Override
@@ -54,6 +58,10 @@ public class ApplicationInfoEntity implements ApplicationInfoModel{
     @Override
     public boolean isSystemApp() {
         return mSystemApp;
+    }
+
+    public String getIntent() {
+        return mIntent;
     }
 
 }

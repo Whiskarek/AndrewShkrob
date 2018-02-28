@@ -4,14 +4,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.crashlytics.android.Crashlytics;
@@ -23,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.fabric.sdk.android.Fabric;
-import whiskarek.andrewshkrob.AppInfo;
 import whiskarek.andrewshkrob.InstalledApplicationsParser;
 import whiskarek.andrewshkrob.LauncherExecutors;
 import whiskarek.andrewshkrob.R;
@@ -33,64 +33,21 @@ import whiskarek.andrewshkrob.activity.launcher.fragment.desktop.DesktopFragment
 import whiskarek.andrewshkrob.activity.launcher.fragment.menu.MenuFragment;
 import whiskarek.andrewshkrob.activity.welcomepage.WelcomePageActivity;
 import whiskarek.andrewshkrob.view.VerticalViewPager;
-import whiskarek.andrewshkrob.view.adapter.MenuFragmentAdapter;
 import whiskarek.andrewshkrob.view.adapter.VerticalViewPagerAdapter;
 
-public class LauncherActivity extends BaseActivity {
+public class LauncherActivity extends BaseActivity implements
+        NavigationView.OnNavigationItemSelectedListener, VerticalViewPager.OnPageChangeListener {
 
-    private ViewPager viewPager = null;
+    private static int mCurrentId = R.id.nav_drawer_desktop;
+
     private NavigationView mNavigationView = null;
-    private MenuFragmentAdapter verticalViewPagerAdapter = null;
-    private final ViewPager.SimpleOnPageChangeListener mSimpleOnPageChangeListener =
-            new ViewPager.SimpleOnPageChangeListener() {
-                @Override
-                public void onPageSelected(int position) {
-                    super.onPageSelected(position);
-                    switch (position) {
-                        case 0: {
-                            LauncherActivity.this.setTitle(R.string.nav_drawer_desktop);
-                            mNavigationView.setCheckedItem(R.id.nav_drawer_desktop);
-                            break;
-                        }
-                        case 1: {
-                            setTitle("");
-                            // TODO
-                            final MenuFragment menuFragment =
-                                    (MenuFragment) verticalViewPagerAdapter.getItem(1);
-                            switch (menuFragment.getViewPager().getCurrentItem()) {
-                                case 0: {
-                                    setTitle(R.string.nav_drawer_grid);
-                                    mNavigationView.setCheckedItem(R.id.nav_drawer_grid);
-                                    break;
-                                }
-                                case 1: {
-                                    setTitle(R.string.nav_drawer_list);
-                                    mNavigationView.setCheckedItem(R.id.nav_drawer_list);
-                                    break;
-                                }
-                                case 2: {
-                                    setTitle(R.string.nav_drawer_settings);
-                                    mNavigationView.setCheckedItem(R.id.nav_drawer_settings);
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                }
-            };
+    private VerticalViewPagerAdapter mVerticalViewPagerAdapter = null;
+    private VerticalViewPager mViewPager = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fabric.with(getApplicationContext(), new Crashlytics());
-
-        LauncherExecutors.getInstance().diskIO().execute(new Runnable() {
-            @Override
-            public void run() {
-                InstalledApplicationsParser.appInfoList = InstalledApplicationsParser
-                        .getInstalledApplications(getApplicationContext());
-            }
-        });
 
         final SharedPreferences sharedPreferences =
                 PreferenceManager.getDefaultSharedPreferences(this);
@@ -98,12 +55,30 @@ public class LauncherActivity extends BaseActivity {
                 getString(R.string.pref_key_show_welcome_page_on_next_load), true);
         if (launchWelcome) {
             startActivity(new Intent(this, WelcomePageActivity.class));
+            LauncherExecutors.getInstance().diskIO().execute(new Runnable() {
+                @Override
+                public void run() {
+                    InstalledApplicationsParser.firstLoad(getApplicationContext());
+                }
+            });
+
             finish();
         }
 
         setContentView(R.layout.activity_launcher);
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        final List<Fragment> screen = new ArrayList<>();
+        screen.add(new DesktopFragment());
+        screen.add(new MenuFragment());
+
+        mVerticalViewPagerAdapter =
+                new VerticalViewPagerAdapter(getSupportFragmentManager(), screen);
+
+        mViewPager = findViewById(R.id.launcher_screen);
+        mViewPager.setAdapter(mVerticalViewPagerAdapter);
+        mViewPager.addOnPageChangeListener(this);
 
         final DrawerLayout drawer = findViewById(R.id.drawer_layout);
         final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -113,22 +88,11 @@ public class LauncherActivity extends BaseActivity {
                 R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
 
-        final List<Fragment> screens = new ArrayList<>();
-        screens.add(new DesktopFragment());
-        screens.add(new MenuFragment());
-        viewPager = findViewById(R.id.vertical_view_pager);
-        verticalViewPagerAdapter =
-                new MenuFragmentAdapter(getSupportFragmentManager(), screens);
-        viewPager.setAdapter(verticalViewPagerAdapter);
-        viewPager.addOnPageChangeListener(mSimpleOnPageChangeListener);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
 
         mNavigationView = findViewById(R.id.nav_view);
-        mNavigationView.setNavigationItemSelectedListener(
-                new ScreenChangeListener(
-                        (DrawerLayout) findViewById(R.id.drawer_layout),
-                        viewPager,
-                        toolbar,
-                        toggle));
+        mNavigationView.setNavigationItemSelectedListener(this);
         mNavigationView.setCheckedItem(R.id.nav_drawer_desktop);
         setTitle(R.string.nav_drawer_desktop);
         mNavigationView.getHeaderView(0)
@@ -142,6 +106,7 @@ public class LauncherActivity extends BaseActivity {
                         ));
                     }
                 });
+
         checkForUpdates();
     }
 
@@ -153,12 +118,6 @@ public class LauncherActivity extends BaseActivity {
     protected void onSaveInstanceState(final Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString("title_name", getTitle().toString());
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
     }
 
     @Override
@@ -191,6 +150,45 @@ public class LauncherActivity extends BaseActivity {
         unregisterManagers();
     }
 
+    @Override
+    public boolean onNavigationItemSelected(@NonNull final MenuItem item) {
+        final int id = item.getItemId();
+
+        if (mCurrentId != id) {
+            if (id == R.id.nav_drawer_desktop) {
+                mViewPager.setCurrentItem(0);
+                item.setChecked(true);
+                setTitle(item.getTitle());
+            } else if (id == R.id.nav_drawer_grid) {
+                mViewPager.setCurrentItem(1);
+                final MenuFragment menuFragment =
+                        (MenuFragment) mVerticalViewPagerAdapter.getItem(1);
+                menuFragment.getViewPager().setCurrentItem(0);
+                item.setChecked(true);
+                setTitle(item.getTitle());
+            } else if (id == R.id.nav_drawer_list) {
+                mViewPager.setCurrentItem(1);
+                final MenuFragment menuFragment =
+                        (MenuFragment) mVerticalViewPagerAdapter.getItem(1);
+                menuFragment.getViewPager().setCurrentItem(1);
+                item.setChecked(true);
+                setTitle(item.getTitle());
+            } else if (id == R.id.nav_drawer_settings) {
+                mViewPager.setCurrentItem(1);
+                final MenuFragment menuFragment =
+                        (MenuFragment) mVerticalViewPagerAdapter.getItem(1);
+                menuFragment.getViewPager().setCurrentItem(2);
+                item.setChecked(true);
+                setTitle(item.getTitle());
+            }
+            mCurrentId = id;
+        }
+
+        final DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
     private void checkForCrashes() {
         CrashManager.register(getApplicationContext());
     }
@@ -202,5 +200,49 @@ public class LauncherActivity extends BaseActivity {
 
     private void unregisterManagers() {
         UpdateManager.unregister();
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        switch (position) {
+            case 0: {
+                LauncherActivity.this.setTitle(R.string.nav_drawer_desktop);
+                mNavigationView.setCheckedItem(R.id.nav_drawer_desktop);
+                break;
+            }
+            case 1: {
+                // TODO
+                /*
+                final MenuFragment menuFragment =
+                        (MenuFragment) mVerticalViewPagerAdapter.getItem(1);
+                switch (menuFragment.getViewPager().getCurrentItem()) {
+                    case 0: {
+                        setTitle(R.string.nav_drawer_grid);
+                        mNavigationView.setCheckedItem(R.id.nav_drawer_grid);
+                        break;
+                    }
+                    case 1: {
+                        setTitle(R.string.nav_drawer_list);
+                        mNavigationView.setCheckedItem(R.id.nav_drawer_list);
+                        break;
+                    }
+                    case 2: {
+                        setTitle(R.string.nav_drawer_settings);
+                        mNavigationView.setCheckedItem(R.id.nav_drawer_settings);
+                        break;
+                    }
+                }*/
+            }
+        }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }

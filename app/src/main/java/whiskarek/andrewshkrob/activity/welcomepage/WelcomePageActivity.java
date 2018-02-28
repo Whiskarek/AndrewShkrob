@@ -1,5 +1,6 @@
 package whiskarek.andrewshkrob.activity.welcomepage;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -13,6 +14,7 @@ import java.util.List;
 
 import whiskarek.andrewshkrob.R;
 import whiskarek.andrewshkrob.activity.BaseActivity;
+import whiskarek.andrewshkrob.activity.launcher.LauncherActivity;
 import whiskarek.andrewshkrob.activity.welcomepage.fragments.AboutFragment;
 import whiskarek.andrewshkrob.activity.welcomepage.fragments.ModelTypeFragment;
 import whiskarek.andrewshkrob.activity.welcomepage.fragments.ThemeFragment;
@@ -53,7 +55,7 @@ public class WelcomePageActivity extends BaseActivity implements View.OnClickLis
             sharedPreferences.edit()
                     .putBoolean(getString(R.string.pref_key_show_welcome_page_on_next_load), false)
                     .apply();
-            //startActivity(new Intent(this, MainActivity.class));
+            startActivity(new Intent(this, LauncherActivity.class));
             finish();
         }
     }

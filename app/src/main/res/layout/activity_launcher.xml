@@ -39,8 +39,8 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:context=".activity.launcher.LauncherActivity">
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/vertical_view_pager"
+            <whiskarek.andrewshkrob.view.VerticalViewPager
+                android:id="@+id/launcher_screen"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
@@ -48,7 +48,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"/>
+
         </android.support.constraint.ConstraintLayout>
 
     </android.support.design.widget.CoordinatorLayout>

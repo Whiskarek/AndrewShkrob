@@ -27,7 +27,7 @@ jobs:
           root: ~/code
           paths:
             - ./*
-  "Unit Tests":
+  "Tests":
     <<: *defaults
     steps:
       - attach_workspace:
@@ -37,6 +37,9 @@ jobs:
       - run:
           name: Run Unit Tests
           command: ./gradlew test
+      - run:
+          name: Run Android Tests
+          command: ./gradlew connectedAndroidTest
       - store_artifacts:
           path: app/build/reports
           destination: reports

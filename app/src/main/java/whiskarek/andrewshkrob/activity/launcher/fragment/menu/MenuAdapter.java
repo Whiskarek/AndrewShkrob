@@ -1,6 +1,8 @@
 package whiskarek.andrewshkrob.activity.launcher.fragment.menu;
 
+import android.content.ClipData;
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
@@ -27,7 +29,7 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     {
         mContext = context;
         mLayoutType = layoutType;
-        mAppInfoList = InstalledApplicationsParser.appInfoList;
+        mAppInfoList = new ArrayList<>();
     }
 
     @Override
@@ -41,6 +43,34 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     .inflate(R.layout.list_item, parent, false);
         }
         final MenuViewHolder viewHolder = new MenuViewHolder(view, mLayoutType);
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                final int adapterPosition = viewHolder.getAdapterPosition();
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    mContext.startActivity(mAppInfoList.get(adapterPosition).getIntent());
+                }
+            }
+        });
+
+        view.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                final int adapterPosition = viewHolder.getAdapterPosition();
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    final AppInfo app = mAppInfoList.get(adapterPosition);
+                    final ClipData item = ClipData.newPlainText(
+                            app.getPackageName(),
+                            app.getIntent().toUri(0)
+                    );
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        v.startDragAndDrop(item, new View.DragShadowBuilder(v), null, 0);
+                    }
+                }
+                return true;
+            }
+        });
 
         return viewHolder;
     }
@@ -79,7 +109,7 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     }
 
     public void updateList(final List<AppInfo> appInfoList) {
-        if (mAppInfoList == null) {
+        if (mAppInfoList == null || mAppInfoList.size() == 0) {
             mAppInfoList = appInfoList;
             notifyDataSetChanged();
         } else {
@@ -112,6 +142,7 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             });
             mAppInfoList = appInfoList;
             result.dispatchUpdatesTo(this);
+            //notifyDataSetChanged();
         }
     }
 }

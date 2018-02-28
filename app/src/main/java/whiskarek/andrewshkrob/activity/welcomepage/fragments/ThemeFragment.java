@@ -13,7 +13,8 @@ import android.widget.RadioGroup;
 
 import whiskarek.andrewshkrob.R;
 
-public class ThemeFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class ThemeFragment extends PreferenceFragmentCompat implements
+        SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Override
     public void onCreatePreferences(final Bundle savedInstanceState, final String rootKey) {
@@ -29,7 +30,8 @@ public class ThemeFragment extends PreferenceFragmentCompat implements SharedPre
         final RadioButton rbLight = view.findViewById(R.id.radio_button_theme_light);
         final RadioButton rbDark = view.findViewById(R.id.radio_button_theme_dark);
 
-        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        final SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(getContext());
 
         final boolean themeDark = sharedPreferences
                 .getBoolean(getString(R.string.pref_key_theme_dark), false);
@@ -50,16 +52,17 @@ public class ThemeFragment extends PreferenceFragmentCompat implements SharedPre
                     case R.id.radio_button_theme_light: {
                         if (themeDark) {
                             sharedPreferences.edit()
-                                    .putBoolean(getString(R.string.pref_key_theme_dark), false).apply();
+                                    .putBoolean(getString(R.string.pref_key_theme_dark), false)
+                                    .apply();
                         }
                         break;
                     }
                     case R.id.radio_button_theme_dark: {
                         if (!themeDark) {
                             sharedPreferences.edit()
-                                    .putBoolean(getString(R.string.pref_key_theme_dark), true).apply();
+                                    .putBoolean(getString(R.string.pref_key_theme_dark), true)
+                                    .apply();
                         }
-
                         break;
                     }
                 }
@@ -70,7 +73,8 @@ public class ThemeFragment extends PreferenceFragmentCompat implements SharedPre
     }
 
     @Override
-    public void onSharedPreferenceChanged(final SharedPreferences sharedPreferences, final String key) {
+    public void onSharedPreferenceChanged(final SharedPreferences sharedPreferences,
+                                          final String key) {
         if (key.equals(getString(R.string.pref_key_theme_dark))) {
             getActivity().recreate();
         }

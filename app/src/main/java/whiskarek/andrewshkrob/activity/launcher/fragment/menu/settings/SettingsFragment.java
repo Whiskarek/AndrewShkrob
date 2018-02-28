@@ -1,18 +1,32 @@
 package whiskarek.andrewshkrob.activity.launcher.fragment.menu.settings;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.PreferenceFragmentCompat;
+import android.util.Log;
+import android.view.View;
 
+import java.util.List;
+
+import whiskarek.andrewshkrob.AppInfo;
+import whiskarek.andrewshkrob.LauncherExecutors;
 import whiskarek.andrewshkrob.R;
+import whiskarek.andrewshkrob.Sort;
+import whiskarek.andrewshkrob.viewmodel.AppInfoViewModel;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements
         SharedPreferences.OnSharedPreferenceChangeListener{
 
+    private AppInfoViewModel mSortType;
+
     @Override
     public void onCreatePreferences(final Bundle savedInstanceState, final String rootKey) {
         setPreferencesFromResource(R.xml.preferences, rootKey);
+
+        mSortType = ViewModelProviders.of(getActivity()).get(AppInfoViewModel.class);
 
         final ListPreference listPreferenceSortType = (ListPreference)
                 findPreference(getString(R.string.pref_key_sort_type));
@@ -75,6 +89,9 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                         Integer.parseInt(sharedPreferences.getString(key, "0"));
                 final String sortTypeName = sortArray[sortTypePos];
                 listPreferenceSortType.setSummary(sortTypeName);
+                mSortType.setSortType(sortTypePos);
+
+                Log.d("Launcher", "Post new sort type: " + sortTypePos);
             }
         } else if (key.equals(getString(R.string.pref_key_show_welcome_page_on_next_load))) {
 

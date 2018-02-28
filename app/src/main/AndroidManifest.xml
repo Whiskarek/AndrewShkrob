@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
+        android:name=".LauncherApplication"
         android:allowBackup="false"
         android:icon="@drawable/photo_circle"
         android:label="@string/app_name"
@@ -19,9 +20,14 @@
             android:name="net.hockeyapp.android.appIdentifier"
             android:value="${HOCKEYAPP_APP_ID}" />
 
+        <meta-data
+            android:name="android.support.VERSION"
+            android:value="26.1.0" />
+
         <activity
             android:name=".activity.launcher.LauncherActivity"
             android:launchMode="singleTask"
+            android:screenOrientation="locked"
             android:stateNotNeeded="true"
             android:theme="@style/AppThemeLight">
             <intent-filter>
@@ -41,6 +47,13 @@
             android:launchMode="singleTask"
             android:parentActivityName=".activity.launcher.LauncherActivity"
             android:theme="@style/AppThemeLight" />
+
+        <receiver android:name=".broadcast.SilentPushReceiver">
+            <intent-filter>
+                <!--Получение silent push-уведомлений-->
+                <action android:name="whiskarek.andrewshkrob.action.ymp.SILENT_PUSH_RECEIVE"/>
+            </intent-filter>
+        </receiver>
 
     </application>
 

@@ -8,13 +8,14 @@ import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.util.TimingLogger;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class InstalledApplicationsParser {
+import whiskarek.andrewshkrob.database.entity.ApplicationInfoEntity;
 
-    public static List<AppInfo> appInfoList = null;
+public class InstalledApplicationsParser {
 
     public static boolean isDefault(final Context context) {
         Intent intent = new Intent(Intent.ACTION_MAIN);
@@ -68,7 +69,8 @@ public class InstalledApplicationsParser {
                 installTime,
                 launchAmount,
                 systemApp,
-                applicationIcon
+                applicationIcon,
+                intent
         );
     }
 
@@ -91,6 +93,62 @@ public class InstalledApplicationsParser {
         }
 
         return appInfos;
+    }
+
+    @NonNull
+    public static ApplicationInfoEntity getApplicationInfoEntity(final String packageName,
+                                                                 final Context context) {
+        final PackageManager manager = context.getPackageManager();
+        final Intent intent = manager.getLaunchIntentForPackage(packageName);
+        final ResolveInfo info = manager.resolveActivity(intent, 0);
+
+        final int launchAmount = 0;
+        long installTime;
+        try {
+            installTime = manager.getPackageInfo(packageName, 0).firstInstallTime;
+        } catch (PackageManager.NameNotFoundException e) {
+            installTime = System.currentTimeMillis();
+            Log.e("Launcher", e.toString());
+        }
+
+        final boolean systemApp = isSystemApp(context, packageName);
+
+        return new ApplicationInfoEntity(
+                packageName,
+                installTime,
+                launchAmount,
+                systemApp,
+                intent.toUri(0)
+        );
+    }
+
+    public static List<ApplicationInfoEntity> getInstalled(final Context context) {
+        final PackageManager manager = context.getPackageManager();
+        final Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        final List<ResolveInfo> appResolveInfos =
+                manager.queryIntentActivities(intent, PackageManager.GET_META_DATA);
+
+        final List<ApplicationInfoEntity> appInfos = new ArrayList<>();
+
+        for (ResolveInfo appInfo : appResolveInfos) {
+            if (appInfo.activityInfo.packageName.equals(context.getPackageName())) {
+                continue;
+            }
+
+            appInfos.add(getApplicationInfoEntity(appInfo.activityInfo.packageName, context));
+        }
+
+        return appInfos;
+    }
+
+    public static void firstLoad(final Context context) {
+        final List<ApplicationInfoEntity> appInfos = getInstalled(context);
+
+        ((LauncherApplication) context.getApplicationContext())
+                .getDatabase()
+                .applicationInfoDao()
+                .insertAll(appInfos);
     }
 
 }

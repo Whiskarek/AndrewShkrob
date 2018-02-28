@@ -48,8 +48,8 @@ public class Sort {
             new Comparator<AppInfo>() {
                 @Override
                 public int compare(final AppInfo o1, final AppInfo o2) {
-                    return (o1.getLaunchAmount() > o2.getLaunchAmount() ? -1 :
-                            (o1.getLaunchAmount() == o2.getLaunchAmount() ? 0 : 1));
+                    return (o1.getLaunchAmount() > o2.getLaunchAmount() ? 1 :
+                            (o1.getLaunchAmount() == o2.getLaunchAmount() ? 0 : -1));
                 }
             };
 
@@ -63,13 +63,45 @@ public class Sort {
             };
 
     public static void sort(final List<AppInfo> apps, final Context context) {
-        SharedPreferences sharedPreferences =
+        final SharedPreferences sharedPreferences =
                 PreferenceManager.getDefaultSharedPreferences(context);
 
         final int sortType = Integer.parseInt(sharedPreferences
                 .getString(context.getResources().getString(R.string.pref_key_sort_type),
                         "0"));
 
+        switch (sortType) {
+            case 0: {
+                break;
+            }
+            case 1: {
+                Collections.sort(apps, mSortByInstallTimeUp);
+                break;
+            }
+            case 2: {
+                Collections.sort(apps, mSortByInstallTimeDown);
+                break;
+            }
+            case 3: {
+                Collections.sort(apps, mSortByNameUp);
+                break;
+            }
+            case 4: {
+                Collections.sort(apps, mSortByNameDown);
+                break;
+            }
+            case 5: {
+                Collections.sort(apps, mSortByLaunchAmountUp);
+                break;
+            }
+            case 6: {
+                Collections.sort(apps, mSortByLaunchAmountDown);
+                break;
+            }
+        }
+    }
+
+    public static void sort(final List<AppInfo> apps, final int sortType) {
         switch (sortType) {
             case 0: {
                 break;

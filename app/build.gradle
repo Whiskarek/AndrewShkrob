@@ -8,6 +8,7 @@ buildscript {
     }
 }
 apply plugin: 'com.android.application'
+apply plugin: 'jacoco'
 apply plugin: 'io.fabric'
 apply plugin: 'checkstyle'
 apply plugin: 'findbugs'
@@ -15,6 +16,10 @@ apply plugin: 'pmd'
 
 checkstyle {
     toolVersion = "8.7"
+}
+
+jacoco {
+    toolVersion = '0.8.0'
 }
 
 repositories {
@@ -60,8 +65,17 @@ android {
             signingConfig signingConfigs.config
             ext.betaDistributionGroupAliases = 'andrew-shkrob'
         }
+        debug {
+            testCoverageEnabled = true
+        }
+    }
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
     }
 }
+
 
 task checkstyle(type: Checkstyle) {
     description 'Checks if the code is somewhat acceptable'
@@ -130,6 +144,34 @@ task pmd(type: Pmd) {
     }
 }
 
+afterEvaluate {
+    testDebugUnitTest.jacoco.includeNoLocationClasses = true
+    task runTestsWithCoverage(type: JacocoReport) {
+        description 'Generate JaCoCo coverage reports'
+        group 'verification'
+
+        dependsOn(testDebugUnitTest, connectedDebugAndroidTest)
+        executionData(fileTree(dir: buildDir, includes: ['**/*.exec' , '**/*.ec']))
+        setSourceDirectories(files(new File(projectDir, 'src/main/java')))
+        setClassDirectories(fileTree(dir: new File(buildDir, 'intermediates/classes/debug'), exclude: [
+                '**/R.class', '**/R$*.class', '**/BuildConfig.*', 'android/**/*.*'
+        ]))
+
+        reports {
+            xml.enabled = true
+            html.enabled = true
+
+            xml {
+                destination rootProject.file('reports/jacoco/jacoco.xml')
+            }
+            html {
+                destination rootProject.file('reports/jacoco/jacoco.html')
+            }
+        }
+
+    }
+}
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:preference-v14:26.1.0'
@@ -140,18 +182,31 @@ dependencies {
     implementation 'com.android.support:support-v4:26.1.0'
 
     implementation 'com.yandex.android:mobmetricalib:2.80'
+    implementation "com.yandex.android:mobmetricapushlib:1.0.0"
+    implementation "com.google.android.gms:play-services-gcm:11.8.0"
+    implementation 'com.google.firebase:firebase-core:11.8.0'
 
     implementation "android.arch.persistence.room:runtime:1.0.0"
     annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
 
     implementation "android.arch.lifecycle:extensions:1.1.0"
 
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     compile('com.crashlytics.sdk.android:crashlytics:2.8.0@aar') {
         transitive = true
     }
-    compile 'net.hockeyapp.android:HockeySDK:5.1.0'
-    compile 'org.jetbrains:annotations-java5:15.0'
+    implementation 'net.hockeyapp.android:HockeySDK:5.1.0'
+    implementation 'org.jetbrains:annotations-java5:15.0'
+
+    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.15.0'
+    testImplementation 'org.robolectric:robolectric:3.7'
+    testImplementation 'org.robolectric:shadows-support-v4:3.3.2'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:3.0.1'
+    androidTestImplementation 'com.squareup.okhttp3:mockwebserver:3.8.1'
+    androidTestImplementation 'org.mockito:mockito-android:2.15.0'
+    androidTestImplementation 'android.arch.core:core-testing:1.1.0'
 }
+
+apply plugin: 'com.google.gms.google-services'

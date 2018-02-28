@@ -4,28 +4,97 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
+import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Observer;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.util.List;
 
 import whiskarek.andrewshkrob.AppInfo;
+import whiskarek.andrewshkrob.LauncherApplication;
+import whiskarek.andrewshkrob.LauncherExecutors;
+import whiskarek.andrewshkrob.R;
+import whiskarek.andrewshkrob.Sort;
+import whiskarek.andrewshkrob.database.entity.ApplicationInfoEntity;
 
-public class AppInfoViewModel extends AndroidViewModel{
+public class AppInfoViewModel extends AndroidViewModel {
 
     private final MediatorLiveData<List<AppInfo>> mObservableAppInfoList;
+    private final MutableLiveData<Integer> mSortType;
 
     public AppInfoViewModel(final Application application) {
         super(application);
         mObservableAppInfoList = new MediatorLiveData<>();
         mObservableAppInfoList.setValue(null);
-        //mObservableAppInfoList.addSource();
+        mSortType = new MutableLiveData<>();
+        initSortType(application.getApplicationContext());
+
+        LiveData<List<ApplicationInfoEntity>> listLiveData = ((LauncherApplication) application)
+                .getDatabase()
+                .applicationInfoDao()
+                .loadAllApplications();
+
+        mObservableAppInfoList.addSource(listLiveData, new Observer<List<ApplicationInfoEntity>>() {
+            @Override
+            public void onChanged(@Nullable final List<ApplicationInfoEntity> applicationInfoEntities) {
+                LauncherExecutors.getInstance().diskIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d("Launcher", "Start monitoring");
+                        long start = System.currentTimeMillis();
+                        final List<AppInfo> appInfoList = AppInfo.Converter.getAppInfoList(
+                                applicationInfoEntities,
+                                application.getApplicationContext()
+                        );
+                        Log.d("Launcher", "converting: " + (System.currentTimeMillis() - start));
+                        start = System.currentTimeMillis();
+                        Sort.sort(appInfoList, mSortType.getValue());
+                        Log.d("Launcher", "sorting: " + (System.currentTimeMillis() - start));
+
+                        mObservableAppInfoList.postValue(appInfoList);
+                    }
+                }
+            );
+            }
+        });
+
+        mObservableAppInfoList.addSource(mSortType, new Observer<Integer>() {
+            @Override
+            public void onChanged(final @Nullable Integer sortType) {
+                final List<AppInfo> appInfoList = mObservableAppInfoList.getValue();
+                if(appInfoList != null) {
+                    Sort.sort(appInfoList, sortType);
+
+                    mObservableAppInfoList.postValue(appInfoList);
+                }
+            }
+        });
+
+    }
+
+    private void initSortType(Context context) {
+        mSortType.postValue(0);
+
+        final SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(context);
+
+        final int sortType = Integer.parseInt(sharedPreferences
+                .getString(context.getResources().getString(R.string.pref_key_sort_type),
+                        "0"));
+
+        mSortType.postValue(sortType);
     }
 
     public LiveData<List<AppInfo>> getApplications() {
         return mObservableAppInfoList;
     }
 
+    public void setSortType(final int sortType) {
+        mSortType.postValue(sortType);
+    }
 
-    /*public static class AppInfoViewModelFactory extends ViewModelProvider.Factory {
-
-    }*/
 }

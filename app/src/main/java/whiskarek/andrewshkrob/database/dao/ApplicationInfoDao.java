@@ -21,6 +21,11 @@ public interface ApplicationInfoDao {
     @Query("SELECT * FROM " + LauncherDatabase.DATABASE_NAME)
     LiveData<List<ApplicationInfoEntity>> loadAllApplications();
 
+    @Query("SELECT * FROM " + LauncherDatabase.DATABASE_NAME +
+            " WHERE " + LauncherDatabase.DATABASE_ROW_PACKAGE_NAME +
+            " LIKE :packageName")
+    ApplicationInfoEntity getApp(final String packageName);
+
     @Query("SELECT COUNT(*) FROM " + LauncherDatabase.DATABASE_NAME)
     long count();
 

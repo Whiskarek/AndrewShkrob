@@ -56,14 +56,13 @@ public class MenuFragment extends Fragment {
                              @Nullable final Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_menu, container, false);
 
-        Log.d("111", "onCreateView");
         mViewPager = view.findViewById(R.id.fragment_holder);
         mViewPager.setAdapter(new MenuFragmentAdapter(
                 getFragmentManager(),
                 mMenuScreenFragments
         ));
         mViewPager.addOnPageChangeListener(mOnPageChangeListener);
-        Log.d("111", "ViewPager created: " + (mViewPager == null ? "null" : "not null"));
+        mViewPager.setOffscreenPageLimit(3);
         return view;
     }
 
@@ -74,17 +73,14 @@ public class MenuFragment extends Fragment {
         mMenuScreenFragments.add(new GridFragment());
         mMenuScreenFragments.add(new ListFragment());
         mMenuScreenFragments.add(new SettingsFragment());
-        Log.d("111", "onCreate");
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.d("111", "onViewCreated");
     }
 
     public ViewPager getViewPager() {
-        Log.d("111", "getViewPager(): " + (mViewPager == null ? "null" : "not null"));
         return mViewPager;
     }
 
