@@ -27,6 +27,8 @@ import whiskarek.andrewshkrob.viewmodel.AppInfoViewModel;
 
 public class GridFragment extends MenuScreenFragment {
 
+    private AppInfoViewModel mViewModel;
+
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container,
                              @Nullable final Bundle savedInstanceState) {
@@ -39,10 +41,16 @@ public class GridFragment extends MenuScreenFragment {
         final int offset = getResources().getDimensionPixelOffset(R.dimen.offset);
         getRecyclerView().addItemDecoration(new OffsetItemDecoration(offset));
         // Get Model Type
-        final SharedPreferences sharedPreferences =
-                PreferenceManager.getDefaultSharedPreferences(getContext());
-        final boolean modelSolid = sharedPreferences
-                .getBoolean(getString(R.string.pref_key_model_solid), false);
+        boolean modelSolid;
+        if (mViewModel.getModelType().getValue() != null)
+        {
+            modelSolid = mViewModel.getModelType().getValue();
+        } else {
+            final SharedPreferences sharedPreferences =
+                    PreferenceManager.getDefaultSharedPreferences(getContext());
+            modelSolid = sharedPreferences
+                    .getBoolean(getString(R.string.pref_key_model_solid), false);
+        }
         final int spanCount = (modelSolid ?
                 getResources().getInteger(R.integer.model_solid)
                 : getResources().getInteger(R.integer.model_default));
@@ -60,16 +68,15 @@ public class GridFragment extends MenuScreenFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+
+        mViewModel = ViewModelProviders.of(getActivity()).get(AppInfoViewModel.class);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        final AppInfoViewModel viewModel =
-                ViewModelProviders.of(getActivity()).get(AppInfoViewModel.class);
-
-        subscribeUI(viewModel);
+        subscribeUI(mViewModel);
     }
 
     private void subscribeUI(final AppInfoViewModel viewModel) {
@@ -79,6 +86,15 @@ public class GridFragment extends MenuScreenFragment {
                 if (appInfos != null) {
                     ((MenuAdapter) getRecyclerView().getAdapter()).updateList(appInfos);
                 }
+            }
+        });
+
+        viewModel.getModelType().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable final Boolean modelSolid) {
+                ((GridLayoutManager) getRecyclerView().getLayoutManager()).setSpanCount((modelSolid ?
+                        getResources().getInteger(R.integer.model_solid)
+                        : getResources().getInteger(R.integer.model_default)));
             }
         });
     }

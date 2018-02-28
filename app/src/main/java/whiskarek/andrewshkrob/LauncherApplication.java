@@ -14,7 +14,7 @@ public class LauncherApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-/*
+
         // Инициализация AppMetrica SDK
         YandexMetrica.activate(getApplicationContext(), API_key);
         // Отслеживание активности пользователей
@@ -22,7 +22,8 @@ public class LauncherApplication extends Application {
 
         YandexMetricaPush.init(getApplicationContext());
 
-        YandexMetrica.reportEvent("Application.onCreate()");*/
+        YandexMetrica.reportEvent("Application.onCreate()");
+        YandexMetrica.reportEvent("New user", "android");
     }
 
     public LauncherDatabase getDatabase() {

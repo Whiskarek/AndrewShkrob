@@ -113,7 +113,7 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             mAppInfoList = appInfoList;
             notifyDataSetChanged();
         } else {
-            DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
+            /*DiffUtil.DiffResult result = DiffUtil.calculateDiff(new DiffUtil.Callback() {
                 @Override
                 public int getOldListSize() {
                     return mAppInfoList.size();
@@ -139,10 +139,10 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                             && mAppInfoList.get(oldItemPosition).getLaunchAmount() ==
                             appInfoList.get(newItemPosition).getLaunchAmount();
                 }
-            });
+            });*/
             mAppInfoList = appInfoList;
-            result.dispatchUpdatesTo(this);
-            //notifyDataSetChanged();
+            //result.dispatchUpdatesTo(this);
+            notifyDataSetChanged();
         }
     }
 }

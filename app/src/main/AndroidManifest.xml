@@ -24,6 +24,12 @@
             android:name="android.support.VERSION"
             android:value="26.1.0" />
 
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_info_outline" />
+        <meta-data android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@android:color/holo_orange_dark" />
+
         <activity
             android:name=".activity.launcher.LauncherActivity"
             android:launchMode="singleTask"
@@ -46,12 +52,21 @@
             android:name=".activity.ProfileActivity"
             android:launchMode="singleTask"
             android:parentActivityName=".activity.launcher.LauncherActivity"
-            android:theme="@style/AppThemeLight" />
+            android:theme="@style/AppThemeLight">
+            <intent-filter android:label="Open Profile">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="profile.activity"
+                    android:scheme="launcher" />
+            </intent-filter>
+        </activity>
 
         <receiver android:name=".broadcast.SilentPushReceiver">
             <intent-filter>
                 <!--Получение silent push-уведомлений-->
-                <action android:name="whiskarek.andrewshkrob.action.ymp.SILENT_PUSH_RECEIVE"/>
+                <action android:name="whiskarek.andrewshkrob.action.ymp.SILENT_PUSH_RECEIVE" />
             </intent-filter>
         </receiver>
 

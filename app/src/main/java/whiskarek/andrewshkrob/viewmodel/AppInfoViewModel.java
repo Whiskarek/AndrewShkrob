@@ -25,13 +25,16 @@ public class AppInfoViewModel extends AndroidViewModel {
 
     private final MediatorLiveData<List<AppInfo>> mObservableAppInfoList;
     private final MutableLiveData<Integer> mSortType;
+    private final MutableLiveData<Boolean> mSolidModel;
 
     public AppInfoViewModel(final Application application) {
         super(application);
         mObservableAppInfoList = new MediatorLiveData<>();
         mObservableAppInfoList.setValue(null);
         mSortType = new MutableLiveData<>();
+        mSolidModel = new MutableLiveData<>();
         initSortType(application.getApplicationContext());
+        initSolidModel(application.getApplicationContext());
 
         LiveData<List<ApplicationInfoEntity>> listLiveData = ((LauncherApplication) application)
                 .getDatabase()
@@ -76,8 +79,7 @@ public class AppInfoViewModel extends AndroidViewModel {
 
     }
 
-    private void initSortType(Context context) {
-        mSortType.postValue(0);
+    private void initSortType(final Context context) {
 
         final SharedPreferences sharedPreferences =
                 PreferenceManager.getDefaultSharedPreferences(context);
@@ -89,12 +91,31 @@ public class AppInfoViewModel extends AndroidViewModel {
         mSortType.postValue(sortType);
     }
 
+    private void initSolidModel(final Context context) {
+        final SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(context);
+
+        final boolean solidModel = sharedPreferences
+                .getBoolean(context.getResources().getString(R.string.pref_key_model_solid),
+                        false);
+
+        mSolidModel.setValue(solidModel);
+    }
+
     public LiveData<List<AppInfo>> getApplications() {
         return mObservableAppInfoList;
     }
 
+    public LiveData<Boolean> getModelType() {
+        return mSolidModel;
+    }
+
     public void setSortType(final int sortType) {
         mSortType.postValue(sortType);
+    }
+
+    public void setSolidModel(final boolean solid) {
+        mSolidModel.setValue(solid);
     }
 
 }

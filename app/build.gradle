@@ -53,7 +53,7 @@ android {
         minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
-        versionName "4.0.0"
+        versionName "5.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         manifestPlaceholders = [HOCKEYAPP_APP_ID: "8a4807f5389f43e793a953995c85ae32"]
         vectorDrawables.useSupportLibrary = true
@@ -183,7 +183,9 @@ dependencies {
 
     implementation 'com.yandex.android:mobmetricalib:2.80'
     implementation "com.yandex.android:mobmetricapushlib:1.0.0"
-    implementation "com.google.android.gms:play-services-gcm:11.8.0"
+    implementation "com.google.firebase:firebase-messaging:11.8.0"
+    implementation "com.google.android.gms:play-services-base:11.8.0"
+    implementation "com.android.support:support-compat:26.1.0"
     implementation 'com.google.firebase:firebase-core:11.8.0'
 
     implementation "android.arch.persistence.room:runtime:1.0.0"
