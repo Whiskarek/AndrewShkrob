@@ -4,6 +4,7 @@ defaults: &defaults
     - image: circleci/android:api-26-alpha
   environment:
     JVM_OPTS: -Xmx3200m
+    ANDROID_HOME: /usr/local/android-sdk-linux
 
 version: 2
 jobs:
@@ -39,7 +40,9 @@ jobs:
           command: ./gradlew test
       - run:
           name: Start Android Emulator
-          command: emulator -avd circleci-android24 -no-window
+          command: emulator -avd circleci-android26 -no-window -no-audio
+          background: true
+          parallel: true
       - run:
           name: Waiting For Android Emulator
           command: circle-android wait-for-boot
