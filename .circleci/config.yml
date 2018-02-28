@@ -136,7 +136,7 @@ workflows:
       - "Lint":
           requires:
             - "Make Dependencies"
-      - "Unit Tests":
+      - "Tests":
           requires:
             - "Make Dependencies"
       - "Build App":
