@@ -145,7 +145,7 @@ workflows:
             - "CheckStyle"
             - "PMD"
             - "Lint"
-            - "Unit Tests"
+            - "Tests"
       - "FindBugs":
           requires:
             - "Make Dependencies"
@@ -154,7 +154,7 @@ workflows:
           requires:
             - "Make Dependencies"
             - "Build App"
-            - "Unit Tests"
+            - "Tests"
             - "CheckStyle"
             - "PMD"
             - "Lint"
@@ -166,7 +166,7 @@ workflows:
           requires:
             - "Make Dependencies"
             - "Build App"
-            - "Unit Tests"
+            - "Tests"
             - "CheckStyle"
             - "PMD"
             - "Lint"
