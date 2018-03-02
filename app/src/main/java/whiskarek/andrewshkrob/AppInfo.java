@@ -1,13 +1,10 @@
 package whiskarek.andrewshkrob;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 
 import java.net.URISyntaxException;
@@ -79,45 +76,49 @@ public class AppInfo implements ApplicationInfoModel {
                 mInstallTime,
                 mLaunchAmount,
                 mSystemApp,
-                mIntent.toUri(0)
+                mIntent
         );
     }
 
     public static class Converter {
-        public static AppInfo getAppInfo(final ApplicationInfoEntity applicationInfoEntity,
-                                         final Context context) {
+
+        @NonNull
+        public static AppInfo getAppInfo(final PackageManager packageManager,
+                                  final ApplicationInfoEntity applicationInfoEntity) {
             final String packageName = applicationInfoEntity.getPackageName();
             final long installTime = applicationInfoEntity.getInstallTime();
             final int launchAmount = applicationInfoEntity.getLaunchAmount();
             final boolean systemApp = applicationInfoEntity.isSystemApp();
-            Intent intent = null;
+            final Intent intent = applicationInfoEntity.getIntent();
+            final ResolveInfo info = packageManager.resolveActivity(intent, 0);
             try {
-                intent = Intent.parseUri(applicationInfoEntity.getIntent(), 0);
-            } catch (URISyntaxException e) {
+                final String applicationName = info.loadLabel(packageManager).toString();
+                final Drawable applicationIcon = info.loadIcon(packageManager);
+
+                return new AppInfo(
+                        packageName,
+                        applicationName,
+                        installTime,
+                        launchAmount,
+                        systemApp,
+                        applicationIcon,
+                        intent
+                );
+            } catch (NullPointerException e) {
                 Log.e("Launcher", e.toString());
             }
-            final PackageManager packageManager = context.getPackageManager();
-            final ResolveInfo info = packageManager.resolveActivity(intent, 0);
-            final String applicationName = info.loadLabel(packageManager).toString();
-            final Drawable applicationIcon = info.loadIcon(packageManager);
 
-            return new AppInfo(
-                    packageName,
-                    applicationName,
-                    installTime,
-                    launchAmount,
-                    systemApp,
-                    applicationIcon,
-                    intent
-            );
+            return null;
         }
 
-        public static List<AppInfo> getAppInfoList(
-                final List<ApplicationInfoEntity> applicationInfoEntityList,
-                final Context context) {
+        public static List<AppInfo> getAppInfoList(final PackageManager packageManager,
+                final List<ApplicationInfoEntity> applicationInfoEntityList) {
             final List<AppInfo> appInfoList = new ArrayList<>();
             for (ApplicationInfoEntity applicationInfoEntity : applicationInfoEntityList) {
-                appInfoList.add(getAppInfo(applicationInfoEntity, context));
+                final AppInfo app = getAppInfo(packageManager, applicationInfoEntity);
+                if (app != null) {
+                    appInfoList.add(app);
+                }
             }
 
             return appInfoList;

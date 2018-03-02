@@ -4,19 +4,18 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 
 import whiskarek.andrewshkrob.database.LauncherDatabase;
 import whiskarek.andrewshkrob.model.ApplicationInfoModel;
 
-@Entity(tableName = LauncherDatabase.DATABASE_NAME,
+@Entity(tableName = LauncherDatabase.DATABASE_APPS_NAME,
         indices = {@Index(value = LauncherDatabase.DATABASE_ROW_INTENT,
-                          unique = true)})
-public class ApplicationInfoEntity implements ApplicationInfoModel{
+                unique = true)})
+public class ApplicationInfoEntity implements ApplicationInfoModel {
 
     @ColumnInfo(name = LauncherDatabase.DATABASE_ROW_PACKAGE_NAME)
-    @PrimaryKey
-    @NonNull
     private String mPackageName;
 
     @ColumnInfo(name = LauncherDatabase.DATABASE_ROW_INSTALL_TIME)
@@ -29,10 +28,13 @@ public class ApplicationInfoEntity implements ApplicationInfoModel{
     private boolean mSystemApp;
 
     @ColumnInfo(name = LauncherDatabase.DATABASE_ROW_INTENT)
-    private String mIntent;
+    @PrimaryKey
+    @NonNull
+    private Intent mIntent;
 
     public ApplicationInfoEntity(final String packageName, final long installTime,
-                             final int launchAmount, final boolean systemApp, final String intent) {
+                                 final int launchAmount, final boolean systemApp,
+                                 final Intent intent) {
         mPackageName = packageName;
         mInstallTime = installTime;
         mLaunchAmount = launchAmount;
@@ -60,7 +62,8 @@ public class ApplicationInfoEntity implements ApplicationInfoModel{
         return mSystemApp;
     }
 
-    public String getIntent() {
+    @Override
+    public Intent getIntent() {
         return mIntent;
     }
 

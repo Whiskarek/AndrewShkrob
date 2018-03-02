@@ -1,5 +1,7 @@
 package whiskarek.andrewshkrob.model;
 
+import android.content.Intent;
+
 public interface ApplicationInfoModel {
 
     String getPackageName();
@@ -9,5 +11,7 @@ public interface ApplicationInfoModel {
     int getLaunchAmount();
 
     boolean isSystemApp();
+
+    Intent getIntent();
 
 }

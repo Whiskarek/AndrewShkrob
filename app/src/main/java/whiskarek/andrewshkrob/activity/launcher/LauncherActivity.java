@@ -12,6 +12,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -32,6 +33,8 @@ import whiskarek.andrewshkrob.activity.ProfileActivity;
 import whiskarek.andrewshkrob.activity.launcher.fragment.desktop.DesktopFragment;
 import whiskarek.andrewshkrob.activity.launcher.fragment.menu.MenuFragment;
 import whiskarek.andrewshkrob.activity.welcomepage.WelcomePageActivity;
+import whiskarek.andrewshkrob.background.ApplicationManager;
+import whiskarek.andrewshkrob.database.entity.ApplicationInfoEntity;
 import whiskarek.andrewshkrob.view.VerticalViewPager;
 import whiskarek.andrewshkrob.view.adapter.VerticalViewPagerAdapter;
 
@@ -55,13 +58,6 @@ public class LauncherActivity extends BaseActivity implements
                 getString(R.string.pref_key_show_welcome_page_on_next_load), true);
         if (launchWelcome) {
             startActivity(new Intent(this, WelcomePageActivity.class));
-            LauncherExecutors.getInstance().diskIO().execute(new Runnable() {
-                @Override
-                public void run() {
-                    InstalledApplicationsParser.firstLoad(getApplicationContext());
-                }
-            });
-
             finish();
         }
 
@@ -107,6 +103,9 @@ public class LauncherActivity extends BaseActivity implements
                     }
                 });
 
+        Log.d("Launcher", "Starting Service");
+        startService(new Intent(this, ApplicationInfoEntity.class));
+
         checkForUpdates();
     }
 
@@ -148,6 +147,7 @@ public class LauncherActivity extends BaseActivity implements
     protected void onDestroy() {
         super.onDestroy();
         unregisterManagers();
+        stopService(new Intent(this, ApplicationManager.class));
     }
 
     @Override
