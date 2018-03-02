@@ -3,7 +3,6 @@
     package="whiskarek.andrewshkrob">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:name=".LauncherApplication"
@@ -19,16 +18,9 @@
         <meta-data
             android:name="net.hockeyapp.android.appIdentifier"
             android:value="${HOCKEYAPP_APP_ID}" />
-
         <meta-data
             android:name="android.support.VERSION"
             android:value="26.1.0" />
-
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/ic_info_outline" />
-        <meta-data android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@android:color/holo_orange_dark" />
 
         <activity
             android:name=".activity.launcher.LauncherActivity"
@@ -55,8 +47,10 @@
             android:theme="@style/AppThemeLight">
             <intent-filter android:label="Open Profile">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
                     android:host="profile.activity"
                     android:scheme="launcher" />
@@ -69,6 +63,8 @@
                 <action android:name="whiskarek.andrewshkrob.action.ymp.SILENT_PUSH_RECEIVE" />
             </intent-filter>
         </receiver>
+
+        <service android:name=".background.ApplicationManager" />
 
     </application>
 

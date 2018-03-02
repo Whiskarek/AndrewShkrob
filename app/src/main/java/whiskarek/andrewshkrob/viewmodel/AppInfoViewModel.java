@@ -8,10 +8,12 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import whiskarek.andrewshkrob.AppInfo;
@@ -30,13 +32,13 @@ public class AppInfoViewModel extends AndroidViewModel {
     public AppInfoViewModel(final Application application) {
         super(application);
         mObservableAppInfoList = new MediatorLiveData<>();
-        mObservableAppInfoList.setValue(null);
+        mObservableAppInfoList.setValue(new ArrayList<AppInfo>());
         mSortType = new MutableLiveData<>();
         mSolidModel = new MutableLiveData<>();
         initSortType(application.getApplicationContext());
         initSolidModel(application.getApplicationContext());
 
-        LiveData<List<ApplicationInfoEntity>> listLiveData = ((LauncherApplication) application)
+        final LiveData<List<ApplicationInfoEntity>> listLiveData = ((LauncherApplication) application)
                 .getDatabase()
                 .applicationInfoDao()
                 .loadAllApplications();
@@ -47,21 +49,30 @@ public class AppInfoViewModel extends AndroidViewModel {
                 LauncherExecutors.getInstance().diskIO().execute(new Runnable() {
                     @Override
                     public void run() {
-                        Log.d("Launcher", "Start monitoring");
-                        long start = System.currentTimeMillis();
-                        final List<AppInfo> appInfoList = AppInfo.Converter.getAppInfoList(
-                                applicationInfoEntities,
-                                application.getApplicationContext()
-                        );
-                        Log.d("Launcher", "converting: " + (System.currentTimeMillis() - start));
-                        start = System.currentTimeMillis();
-                        Sort.sort(appInfoList, mSortType.getValue());
-                        Log.d("Launcher", "sorting: " + (System.currentTimeMillis() - start));
+                        //TODO Не подгружать весь список, а только добавленные приложения
 
-                        mObservableAppInfoList.postValue(appInfoList);
+                        final PackageManager packageManager = application.getPackageManager();
+                        List<AppInfo> appList = new ArrayList<>();
+                        for (ApplicationInfoEntity appEntity : applicationInfoEntities) {
+                            final AppInfo app = AppInfo.Converter.getAppInfo(
+                                    packageManager,
+                                    appEntity
+                            );
+                            if (app != null) {
+                                appList = new ArrayList<>(appList);
+                                appList.add(app);
+                                mObservableAppInfoList.postValue(null);
+                                mObservableAppInfoList.postValue(appList);
+                            }
+                        }
+
+                        appList = new ArrayList<>(appList);
+                        Sort.sort(appList, mSortType.getValue());
+                        mObservableAppInfoList.postValue(appList);
+
+                        applicationInfoEntities.clear();
                     }
-                }
-            );
+                });
             }
         });
 
@@ -69,7 +80,7 @@ public class AppInfoViewModel extends AndroidViewModel {
             @Override
             public void onChanged(final @Nullable Integer sortType) {
                 final List<AppInfo> appInfoList = mObservableAppInfoList.getValue();
-                if(appInfoList != null) {
+                if (appInfoList != null) {
                     Sort.sort(appInfoList, sortType);
 
                     mObservableAppInfoList.postValue(appInfoList);
@@ -86,9 +97,9 @@ public class AppInfoViewModel extends AndroidViewModel {
 
         final int sortType = Integer.parseInt(sharedPreferences
                 .getString(context.getResources().getString(R.string.pref_key_sort_type),
-                        "0"));
+                        "3"));
 
-        mSortType.postValue(sortType);
+        mSortType.setValue(sortType);
     }
 
     private void initSolidModel(final Context context) {

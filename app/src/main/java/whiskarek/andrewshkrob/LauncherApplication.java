@@ -15,6 +15,17 @@ public class LauncherApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        /*StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                .detectAll()   // or .detectAll() for all detectable problems
+                .penaltyLog()
+                .build());
+        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                .detectLeakedSqlLiteObjects()
+                .detectLeakedClosableObjects()
+                .penaltyLog()
+                .penaltyDeath()
+                .build());
+        */
         // Инициализация AppMetrica SDK
         YandexMetrica.activate(getApplicationContext(), API_key);
         // Отслеживание активности пользователей
@@ -23,7 +34,6 @@ public class LauncherApplication extends Application {
         YandexMetricaPush.init(getApplicationContext());
 
         YandexMetrica.reportEvent("Application.onCreate()");
-        YandexMetrica.reportEvent("New user", "android");
     }
 
     public LauncherDatabase getDatabase() {

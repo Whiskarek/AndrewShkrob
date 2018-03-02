@@ -39,7 +39,7 @@ public class ProfileActivity extends BaseActivity
         final FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
                 final Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse("https://github.com/Whiskarek"));
                 startActivity(intent);
@@ -48,7 +48,7 @@ public class ProfileActivity extends BaseActivity
 
         findViewById(R.id.github).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 final Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse("https://github.com/Whiskarek"));
                 startActivity(intent);
@@ -57,7 +57,7 @@ public class ProfileActivity extends BaseActivity
 
         findViewById(R.id.email).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 final Intent intent = new Intent(Intent.ACTION_SENDTO);
                 intent.setData(Uri.parse("mailto:"));
                 intent.putExtra(Intent.EXTRA_EMAIL, "andrei5709978@gmail.com");
@@ -67,7 +67,7 @@ public class ProfileActivity extends BaseActivity
 
         findViewById(R.id.phone).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 final Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "+375 29 123-45-67"));
                 if (intent.resolveActivity(getPackageManager()) != null) {
                     startActivity(intent);

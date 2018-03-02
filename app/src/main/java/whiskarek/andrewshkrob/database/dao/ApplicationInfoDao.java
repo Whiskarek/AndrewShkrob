@@ -15,41 +15,42 @@ import whiskarek.andrewshkrob.database.entity.ApplicationInfoEntity;
 @Dao
 public interface ApplicationInfoDao {
 
-    @Query("SELECT * FROM " + LauncherDatabase.DATABASE_NAME)
+    @Query("SELECT * FROM " + LauncherDatabase.DATABASE_APPS_NAME)
     List<ApplicationInfoEntity> loadAll();
 
-    @Query("SELECT * FROM " + LauncherDatabase.DATABASE_NAME)
+    @Query("SELECT * FROM " + LauncherDatabase.DATABASE_APPS_NAME)
     LiveData<List<ApplicationInfoEntity>> loadAllApplications();
 
-    @Query("SELECT * FROM " + LauncherDatabase.DATABASE_NAME +
+    @Query("SELECT * FROM " + LauncherDatabase.DATABASE_APPS_NAME +
             " WHERE " + LauncherDatabase.DATABASE_ROW_PACKAGE_NAME +
             " LIKE :packageName")
     ApplicationInfoEntity getApp(final String packageName);
 
-    @Query("SELECT COUNT(*) FROM " + LauncherDatabase.DATABASE_NAME)
+    @Query("SELECT COUNT(*) FROM " + LauncherDatabase.DATABASE_APPS_NAME)
     long count();
 
-    @Query("SELECT " + LauncherDatabase.DATABASE_ROW_LAUNCH_AMOUNT +
-            " FROM " + LauncherDatabase.DATABASE_NAME +
-            " WHERE " + LauncherDatabase.DATABASE_ROW_PACKAGE_NAME + " LIKE :packageName")
-    int getLaunchAmount(final String packageName);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(final List<ApplicationInfoEntity> apps);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(final List<ApplicationInfoEntity> apps);
+    void insert(final ApplicationInfoEntity app);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertApplicationInfo(final ApplicationInfoEntity app);
-
-    @Query("UPDATE " + LauncherDatabase.DATABASE_NAME +
+    @Query("UPDATE " + LauncherDatabase.DATABASE_APPS_NAME +
             " SET " + LauncherDatabase.DATABASE_ROW_LAUNCH_AMOUNT + " = :launchAmount" +
             " WHERE " + LauncherDatabase.DATABASE_ROW_PACKAGE_NAME + " LIKE :packageName")
-    void updateLaunches(final String packageName, final int launchAmount);
+    void setLaunchAmount(final String packageName, final int launchAmount);
 
-    @Query("DELETE FROM " + LauncherDatabase.DATABASE_NAME +
+    @Query("DELETE FROM " + LauncherDatabase.DATABASE_APPS_NAME +
             " WHERE " + LauncherDatabase.DATABASE_ROW_PACKAGE_NAME + " LIKE :packageName")
     void delete(final String packageName);
 
     @Delete
-    void delete(List<ApplicationInfoEntity> app);
+    void delete(final ApplicationInfoEntity app);
+
+    @Delete
+    void delete(final List<ApplicationInfoEntity> appList);
+
+    @Query("DELETE FROM " + LauncherDatabase.DATABASE_APPS_NAME)
+    void deleteAll();
 
 }
