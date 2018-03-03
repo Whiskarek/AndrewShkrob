@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -58,13 +59,17 @@ public class InstalledApplicationsParser {
         }
 
         final boolean systemApp = isSystemApp(packageManager, appInfo.activityInfo.packageName);
+        final Drawable icon = appInfo.loadIcon(packageManager);
+        final String label = appInfo.loadLabel(packageManager).toString();
 
         return new ApplicationInfoEntity(
                 appInfo.activityInfo.packageName,
                 installTime,
                 launchAmount,
                 systemApp,
-                appIntent
+                appIntent,
+                icon,
+                label
         );
     }
 
@@ -88,4 +93,23 @@ public class InstalledApplicationsParser {
         return appInfoList;
     }
 
+    public static List<String> getInstalledPackages(final Context context) {
+        final PackageManager manager = context.getPackageManager();
+        final Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        final List<ResolveInfo> appResolveInfoList =
+                manager.queryIntentActivities(intent, PackageManager.GET_META_DATA);
+
+        final List<String> appInfoList = new ArrayList<>();
+
+        for (ResolveInfo appInfo : appResolveInfoList) {
+            if (appInfo.activityInfo.packageName.equals(context.getPackageName())) {
+                continue;
+            }
+
+            appInfoList.add(appInfo.activityInfo.packageName);
+        }
+
+        return appInfoList;
+    }
 }

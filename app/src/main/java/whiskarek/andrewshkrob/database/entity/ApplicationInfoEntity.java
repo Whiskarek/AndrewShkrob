@@ -5,6 +5,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 
 import whiskarek.andrewshkrob.database.LauncherDatabase;
@@ -25,21 +26,30 @@ public class ApplicationInfoEntity implements ApplicationInfoModel {
     private int mLaunchAmount;
 
     @ColumnInfo(name = LauncherDatabase.DATABASE_ROW_IS_SYSTEM)
-    private boolean mSystemApp;
+    private boolean mSystem;
 
     @ColumnInfo(name = LauncherDatabase.DATABASE_ROW_INTENT)
     @PrimaryKey
     @NonNull
     private Intent mIntent;
 
+    @ColumnInfo(name = LauncherDatabase.DATABASE_ROW_ICON_PATH)
+    private Drawable mIcon;
+
+    @ColumnInfo(name = LauncherDatabase.DATABASE_ROW_APP_NAME)
+    private String mLabel;
+
     public ApplicationInfoEntity(final String packageName, final long installTime,
-                                 final int launchAmount, final boolean systemApp,
-                                 @NonNull final Intent intent) {
+                                 final int launchAmount, final boolean system,
+                                 @NonNull final Intent intent, final Drawable icon,
+                                 final String label) {
         mPackageName = packageName;
         mInstallTime = installTime;
         mLaunchAmount = launchAmount;
-        mSystemApp = systemApp;
+        mSystem = system;
         mIntent = intent;
+        mIcon = icon;
+        mLabel = label;
     }
 
     @Override
@@ -58,13 +68,23 @@ public class ApplicationInfoEntity implements ApplicationInfoModel {
     }
 
     @Override
-    public boolean isSystemApp() {
-        return mSystemApp;
+    public boolean isSystem() {
+        return mSystem;
     }
 
     @Override
     public Intent getIntent() {
         return mIntent;
+    }
+
+    @Override
+    public Drawable getIcon() {
+        return mIcon;
+    }
+
+    @Override
+    public String getLabel() {
+        return mLabel;
     }
 
 }

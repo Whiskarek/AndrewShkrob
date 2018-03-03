@@ -75,6 +75,7 @@ public class LauncherActivity extends BaseActivity implements
         mViewPager = findViewById(R.id.launcher_screen);
         mViewPager.setAdapter(mVerticalViewPagerAdapter);
         mViewPager.addOnPageChangeListener(this);
+        mViewPager.setCurrentItem(1);
 
         final DrawerLayout drawer = findViewById(R.id.drawer_layout);
         final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

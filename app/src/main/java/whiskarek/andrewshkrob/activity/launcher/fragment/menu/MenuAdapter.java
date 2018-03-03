@@ -13,17 +13,17 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import whiskarek.andrewshkrob.AppInfo;
 import whiskarek.andrewshkrob.LauncherApplication;
 import whiskarek.andrewshkrob.LauncherExecutors;
 import whiskarek.andrewshkrob.R;
 import whiskarek.andrewshkrob.database.dao.ApplicationInfoDao;
+import whiskarek.andrewshkrob.database.entity.ApplicationInfoEntity;
 
 public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private final Context mContext;
     private final int mLayoutType;
-    private List<AppInfo> mAppInfoList;
+    private List<ApplicationInfoEntity> mAppInfoList;
 
     public MenuAdapter(final Context context, final int layoutType)
     {
@@ -49,22 +49,25 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             public void onClick(final View v) {
                 final int adapterPosition = viewHolder.getAdapterPosition();
                 if (adapterPosition != RecyclerView.NO_POSITION) {
-                    //mContext.startActivity(mAppInfoList.get(adapterPosition).getIntent());
+                    try {
+                        mContext.startActivity(mAppInfoList.get(adapterPosition).getIntent());
 
-                    LauncherExecutors.getInstance().diskIO().execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            final ApplicationInfoDao appDao =
-                                    ((LauncherApplication) mContext.getApplicationContext())
-                                            .getDatabase()
-                                            .applicationInfoDao();
-                            appDao.setLaunchAmount(
-                                    mAppInfoList.get(adapterPosition).getPackageName(),
-                                    mAppInfoList.get(adapterPosition).getLaunchAmount() + 1
-                            );
-                        }
-                    });
+                        LauncherExecutors.getInstance().diskIO().execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                final ApplicationInfoDao appDao =
+                                        ((LauncherApplication) mContext.getApplicationContext())
+                                                .getDatabase()
+                                                .applicationInfoDao();
+                                appDao.setLaunchAmount(
+                                        mAppInfoList.get(adapterPosition).getPackageName(),
+                                        mAppInfoList.get(adapterPosition).getLaunchAmount() + 1
+                                );
+                            }
+                        });
+                    } catch (Exception e) {
 
+                    }
                 }
             }
         });
@@ -88,10 +91,10 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         menuHolder.itemView.setOnCreateContextMenuListener(listener);
 
         final ImageView appIcon = menuHolder.getAppIcon();
-        appIcon.setBackground(mAppInfoList.get(pos).getApplicationIcon());
+        appIcon.setBackground(mAppInfoList.get(pos).getIcon());
 
         final TextView appName = menuHolder.getAppName();
-        appName.setText(mAppInfoList.get(pos).getAppName());
+        appName.setText(mAppInfoList.get(pos).getLabel());
 
         if (mLayoutType == MenuViewHolder.LIST_LAYOUT) {
             final TextView appPackageName = menuHolder.getAppPackageName();
@@ -105,7 +108,7 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         return mAppInfoList == null ? 0 : mAppInfoList.size();
     }
 
-    public void updateList(final List<AppInfo> appInfoList) {
+    public void updateList(final List<ApplicationInfoEntity> appInfoList) {
         if (mAppInfoList == null || mAppInfoList.size() == 0) {
             mAppInfoList = appInfoList;
             notifyDataSetChanged();
@@ -131,15 +134,15 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
                     return mAppInfoList.get(oldItemPosition).getPackageName()
                             .equals(appInfoList.get(newItemPosition).getPackageName())
-                            && mAppInfoList.get(oldItemPosition).getAppName()
-                            .equals(appInfoList.get(newItemPosition).getAppName())
-                            && mAppInfoList.get(oldItemPosition).getLaunchAmount() ==
-                            appInfoList.get(newItemPosition).getLaunchAmount();
+                            || mAppInfoList.get(oldItemPosition).getLabel()
+                            .equals(appInfoList.get(newItemPosition).getLabel())
+                            || mAppInfoList.get(oldItemPosition).getIcon().hashCode()
+                            == appInfoList.get(newItemPosition).getIcon().hashCode();
                 }
             });
             mAppInfoList = appInfoList;
             result.dispatchUpdatesTo(this);
-            notifyDataSetChanged();
+            //notifyDataSetChanged();
         }
     }
 }

@@ -2,6 +2,7 @@ package whiskarek.andrewshkrob.database.converter;
 
 import android.arch.persistence.room.TypeConverter;
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.net.URISyntaxException;
@@ -9,7 +10,8 @@ import java.net.URISyntaxException;
 public class IntentConverter {
 
     @TypeConverter
-    public static Intent toIntent(String intent) {
+    @Nullable
+    public static Intent toIntent(final String intent) {
         try {
             return Intent.parseUri(intent, 0);
         } catch (URISyntaxException e) {
@@ -20,7 +22,8 @@ public class IntentConverter {
     }
 
     @TypeConverter
-    public static String toString(Intent intent) {
+    public static String toString(final Intent intent) {
         return intent.toUri(0);
     }
+
 }

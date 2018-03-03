@@ -9,17 +9,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import whiskarek.andrewshkrob.AppInfo;
 import whiskarek.andrewshkrob.R;
+import whiskarek.andrewshkrob.database.entity.ApplicationInfoEntity;
 
 public class ContextMenuListener implements
         View.OnCreateContextMenuListener,
         MenuItem.OnMenuItemClickListener{
 
-    private final AppInfo mAppInfo;
+    private final ApplicationInfoEntity mAppInfo;
     private final Context mContext;
 
-    public ContextMenuListener(final Context context, final AppInfo appInfo) {
+    public ContextMenuListener(final Context context, final ApplicationInfoEntity appInfo) {
         mContext = context;
         mAppInfo = appInfo;
     }
@@ -28,8 +28,8 @@ public class ContextMenuListener implements
     public void onCreateContextMenu(final ContextMenu menu,
                                     final View v, final ContextMenu.ContextMenuInfo menuInfo) {
 
-        boolean systemApp = mAppInfo.isSystemApp();
-        menu.setHeaderTitle(mAppInfo.getAppName());
+        boolean systemApp = mAppInfo.isSystem();
+        menu.setHeaderTitle(mAppInfo.getLabel());
         if (!systemApp) {
             final MenuItem delete = menu.add(Menu.NONE, R.id.context_menu_app_delete, Menu.NONE,
                     R.string.context_menu_app_delete);

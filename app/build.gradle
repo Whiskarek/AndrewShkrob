@@ -193,6 +193,8 @@ dependencies {
 
     implementation "android.arch.lifecycle:extensions:1.1.0"
 
+    implementation 'com.facebook.stetho:stetho:1.5.0'
+
     // ViewPager AnimationLibrary
     implementation 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:1.2.32@aar'
 

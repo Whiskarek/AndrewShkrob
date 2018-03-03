@@ -1,8 +1,10 @@
 package whiskarek.andrewshkrob;
 
 import android.app.Application;
+import android.os.Environment;
 import android.os.StrictMode;
 
+import com.facebook.stetho.Stetho;
 import com.yandex.metrica.YandexMetrica;
 import com.yandex.metrica.push.YandexMetricaPush;
 
@@ -33,6 +35,8 @@ public class LauncherApplication extends Application {
         YandexMetricaPush.init(getApplicationContext());
 
         YandexMetrica.reportEvent("Application.onCreate()");
+
+        Stetho.initializeWithDefaults(this);
     }
 
     public LauncherDatabase getDatabase() {
