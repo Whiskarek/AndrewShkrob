@@ -1,70 +1,66 @@
 package whiskarek.andrewshkrob;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import whiskarek.andrewshkrob.database.entity.ApplicationInfoEntity;
+import whiskarek.andrewshkrob.database.entity.ApplicationEntity;
 
 public class Sort {
 
-    private static final Comparator<ApplicationInfoEntity> mSortByInstallTimeUp =
-            new Comparator<ApplicationInfoEntity>() {
+    private static final Comparator<ApplicationEntity> mSortByInstallTimeUp =
+            new Comparator<ApplicationEntity>() {
                 @Override
-                public int compare(final ApplicationInfoEntity o1, final ApplicationInfoEntity o2) {
+                public int compare(final ApplicationEntity o1, final ApplicationEntity o2) {
                     return (o1.getInstallTime() < o2.getInstallTime() ? -1 :
                             (o1.getInstallTime() == o2.getInstallTime() ? 0 : 1));
                 }
             };
 
-    private static final Comparator<ApplicationInfoEntity> mSortByInstallTimeDown =
-            new Comparator<ApplicationInfoEntity>() {
+    private static final Comparator<ApplicationEntity> mSortByInstallTimeDown =
+            new Comparator<ApplicationEntity>() {
                 @Override
-                public int compare(final ApplicationInfoEntity o1, final ApplicationInfoEntity o2) {
+                public int compare(final ApplicationEntity o1, final ApplicationEntity o2) {
                     return (o1.getInstallTime() > o2.getInstallTime() ? -1 :
                             (o1.getInstallTime() == o2.getInstallTime() ? 0 : 1));
                 }
             };
 
-    private static final Comparator<ApplicationInfoEntity> mSortByNameUp =
-            new Comparator<ApplicationInfoEntity>() {
+    private static final Comparator<ApplicationEntity> mSortByNameUp =
+            new Comparator<ApplicationEntity>() {
                 @Override
-                public int compare(final ApplicationInfoEntity o1, final ApplicationInfoEntity o2) {
+                public int compare(final ApplicationEntity o1, final ApplicationEntity o2) {
                     return o1.getLabel().compareTo(o2.getLabel());
                 }
             };
 
-    private static final Comparator<ApplicationInfoEntity> mSortByNameDown =
-            new Comparator<ApplicationInfoEntity>() {
+    private static final Comparator<ApplicationEntity> mSortByNameDown =
+            new Comparator<ApplicationEntity>() {
                 @Override
-                public int compare(final ApplicationInfoEntity o1, final ApplicationInfoEntity o2) {
+                public int compare(final ApplicationEntity o1, final ApplicationEntity o2) {
                     return o2.getLabel().compareTo(o1.getLabel());
                 }
             };
 
-    private static final Comparator<ApplicationInfoEntity> mSortByLaunchAmountUp =
-            new Comparator<ApplicationInfoEntity>() {
+    private static final Comparator<ApplicationEntity> mSortByLaunchAmountUp =
+            new Comparator<ApplicationEntity>() {
                 @Override
-                public int compare(final ApplicationInfoEntity o1, final ApplicationInfoEntity o2) {
+                public int compare(final ApplicationEntity o1, final ApplicationEntity o2) {
                     return (o1.getLaunchAmount() > o2.getLaunchAmount() ? 1 :
                             (o1.getLaunchAmount() == o2.getLaunchAmount() ? 0 : -1));
                 }
             };
 
-    private static final Comparator<ApplicationInfoEntity> mSortByLaunchAmountDown =
-            new Comparator<ApplicationInfoEntity>() {
+    private static final Comparator<ApplicationEntity> mSortByLaunchAmountDown =
+            new Comparator<ApplicationEntity>() {
                 @Override
-                public int compare(final ApplicationInfoEntity o1, final ApplicationInfoEntity o2) {
+                public int compare(final ApplicationEntity o1, final ApplicationEntity o2) {
                     return (o1.getLaunchAmount() > o2.getLaunchAmount() ? -1 :
                             (o1.getLaunchAmount() == o2.getLaunchAmount() ? 0 : 1));
                 }
             };
 
-    public static void sort(final List<ApplicationInfoEntity> apps, final int sortType) {
+    public static void sort(final List<ApplicationEntity> apps, final int sortType) {
         switch (sortType) {
             case 0: {
                 Collections.sort(apps, mSortByNameUp);

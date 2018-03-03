@@ -18,11 +18,11 @@ import whiskarek.andrewshkrob.LauncherApplication;
 import whiskarek.andrewshkrob.LauncherExecutors;
 import whiskarek.andrewshkrob.R;
 import whiskarek.andrewshkrob.Sort;
-import whiskarek.andrewshkrob.database.entity.ApplicationInfoEntity;
+import whiskarek.andrewshkrob.database.entity.ApplicationEntity;
 
 public class AppInfoViewModel extends AndroidViewModel {
 
-    private final MediatorLiveData<List<ApplicationInfoEntity>> mObservableAppInfoList;
+    private final MediatorLiveData<List<ApplicationEntity>> mObservableAppInfoList;
     private final MutableLiveData<Integer> mSortType;
     private final MutableLiveData<Boolean> mSolidModel;
 
@@ -35,14 +35,14 @@ public class AppInfoViewModel extends AndroidViewModel {
         initSortType(application.getApplicationContext());
         initSolidModel(application.getApplicationContext());
 
-        final LiveData<List<ApplicationInfoEntity>> listLiveData = ((LauncherApplication) application)
+        final LiveData<List<ApplicationEntity>> listLiveData = ((LauncherApplication) application)
                 .getDatabase()
                 .applicationInfoDao()
                 .loadAllApplications();
 
-        mObservableAppInfoList.addSource(listLiveData, new Observer<List<ApplicationInfoEntity>>() {
+        mObservableAppInfoList.addSource(listLiveData, new Observer<List<ApplicationEntity>>() {
             @Override
-            public void onChanged(@Nullable final List<ApplicationInfoEntity> applicationInfoEntities) {
+            public void onChanged(@Nullable final List<ApplicationEntity> applicationInfoEntities) {
                 LauncherExecutors.getInstance().diskIO().execute(new Runnable() {
                     @Override
                     public void run() {
@@ -57,7 +57,7 @@ public class AppInfoViewModel extends AndroidViewModel {
             @Override
             public void onChanged(final @Nullable Integer sortType) {
                 if (mObservableAppInfoList.getValue() != null) {
-                    final List<ApplicationInfoEntity> appInfoList =
+                    final List<ApplicationEntity> appInfoList =
                             new ArrayList<>(mObservableAppInfoList.getValue());
                     if (appInfoList != null) {
                         Sort.sort(appInfoList, sortType);
@@ -93,7 +93,7 @@ public class AppInfoViewModel extends AndroidViewModel {
         mSolidModel.setValue(solidModel);
     }
 
-    public LiveData<List<ApplicationInfoEntity>> getApplications() {
+    public LiveData<List<ApplicationEntity>> getApplications() {
         return mObservableAppInfoList;
     }
 

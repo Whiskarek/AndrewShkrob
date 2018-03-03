@@ -17,13 +17,13 @@ import whiskarek.andrewshkrob.LauncherApplication;
 import whiskarek.andrewshkrob.LauncherExecutors;
 import whiskarek.andrewshkrob.R;
 import whiskarek.andrewshkrob.database.dao.ApplicationInfoDao;
-import whiskarek.andrewshkrob.database.entity.ApplicationInfoEntity;
+import whiskarek.andrewshkrob.database.entity.ApplicationEntity;
 
 public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private final Context mContext;
     private final int mLayoutType;
-    private List<ApplicationInfoEntity> mAppInfoList;
+    private List<ApplicationEntity> mAppInfoList;
 
     public MenuAdapter(final Context context, final int layoutType)
     {
@@ -108,7 +108,7 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
         return mAppInfoList == null ? 0 : mAppInfoList.size();
     }
 
-    public void updateList(final List<ApplicationInfoEntity> appInfoList) {
+    public void updateList(final List<ApplicationEntity> appInfoList) {
         if (mAppInfoList == null || mAppInfoList.size() == 0) {
             mAppInfoList = appInfoList;
             notifyDataSetChanged();

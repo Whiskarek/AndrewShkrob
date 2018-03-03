@@ -25,8 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.fabric.sdk.android.Fabric;
-import whiskarek.andrewshkrob.InstalledApplicationsParser;
-import whiskarek.andrewshkrob.LauncherExecutors;
 import whiskarek.andrewshkrob.R;
 import whiskarek.andrewshkrob.activity.BaseActivity;
 import whiskarek.andrewshkrob.activity.ProfileActivity;
@@ -34,7 +32,6 @@ import whiskarek.andrewshkrob.activity.launcher.fragment.desktop.DesktopFragment
 import whiskarek.andrewshkrob.activity.launcher.fragment.menu.MenuFragment;
 import whiskarek.andrewshkrob.activity.welcomepage.WelcomePageActivity;
 import whiskarek.andrewshkrob.background.ApplicationManager;
-import whiskarek.andrewshkrob.database.entity.ApplicationInfoEntity;
 import whiskarek.andrewshkrob.view.VerticalViewPager;
 import whiskarek.andrewshkrob.view.adapter.VerticalViewPagerAdapter;
 
@@ -105,7 +102,7 @@ public class LauncherActivity extends BaseActivity implements
                 });
 
         Log.d("Launcher", "Starting Service");
-        startService(new Intent(this, ApplicationInfoEntity.class));
+        startService(new Intent(this, ApplicationManager.class));
 
         checkForUpdates();
     }

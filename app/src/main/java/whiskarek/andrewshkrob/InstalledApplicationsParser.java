@@ -13,7 +13,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import whiskarek.andrewshkrob.database.entity.ApplicationInfoEntity;
+import whiskarek.andrewshkrob.database.entity.ApplicationEntity;
 
 public class InstalledApplicationsParser {
 
@@ -34,7 +34,7 @@ public class InstalledApplicationsParser {
     }
 
     @NonNull
-    public static ApplicationInfoEntity getApplicationInfoEntity(
+    public static ApplicationEntity getApplicationInfoEntity(
             final PackageManager packageManager,
             final ResolveInfo appInfo) {
 
@@ -62,7 +62,7 @@ public class InstalledApplicationsParser {
         final Drawable icon = appInfo.loadIcon(packageManager);
         final String label = appInfo.loadLabel(packageManager).toString();
 
-        return new ApplicationInfoEntity(
+        return new ApplicationEntity(
                 appInfo.activityInfo.packageName,
                 installTime,
                 launchAmount,
@@ -73,14 +73,14 @@ public class InstalledApplicationsParser {
         );
     }
 
-    public static List<ApplicationInfoEntity> getInstalled(final Context context) {
+    public static List<ApplicationEntity> getInstalled(final Context context) {
         final PackageManager manager = context.getPackageManager();
         final Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
         final List<ResolveInfo> appResolveInfos =
                 manager.queryIntentActivities(intent, PackageManager.GET_META_DATA);
 
-        final List<ApplicationInfoEntity> appInfoList = new ArrayList<>();
+        final List<ApplicationEntity> appInfoList = new ArrayList<>();
 
         for (ResolveInfo appInfo : appResolveInfos) {
             if (appInfo.activityInfo.packageName.equals(context.getPackageName())) {

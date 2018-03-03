@@ -10,16 +10,16 @@ import android.view.MenuItem;
 import android.view.View;
 
 import whiskarek.andrewshkrob.R;
-import whiskarek.andrewshkrob.database.entity.ApplicationInfoEntity;
+import whiskarek.andrewshkrob.database.entity.ApplicationEntity;
 
 public class ContextMenuListener implements
         View.OnCreateContextMenuListener,
         MenuItem.OnMenuItemClickListener{
 
-    private final ApplicationInfoEntity mAppInfo;
+    private final ApplicationEntity mAppInfo;
     private final Context mContext;
 
-    public ContextMenuListener(final Context context, final ApplicationInfoEntity appInfo) {
+    public ContextMenuListener(final Context context, final ApplicationEntity appInfo) {
         mContext = context;
         mAppInfo = appInfo;
     }

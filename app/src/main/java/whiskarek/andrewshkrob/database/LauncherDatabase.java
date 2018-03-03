@@ -23,11 +23,11 @@ import whiskarek.andrewshkrob.LauncherExecutors;
 import whiskarek.andrewshkrob.database.converter.DrawableConverter;
 import whiskarek.andrewshkrob.database.converter.IntentConverter;
 import whiskarek.andrewshkrob.database.dao.ApplicationInfoDao;
-import whiskarek.andrewshkrob.database.entity.ApplicationInfoEntity;
+import whiskarek.andrewshkrob.database.entity.ApplicationEntity;
 
 import static whiskarek.andrewshkrob.InstalledApplicationsParser.isSystemApp;
 
-@Database(entities = {ApplicationInfoEntity.class}, version = 1)
+@Database(entities = {ApplicationEntity.class}, version = 1)
 @TypeConverters({IntentConverter.class, DrawableConverter.class})
 public abstract class LauncherDatabase extends RoomDatabase {
 
@@ -133,7 +133,7 @@ public abstract class LauncherDatabase extends RoomDatabase {
             intent.addCategory(Intent.CATEGORY_LAUNCHER);
             final ResolveInfo resolveInfo = packageManager.resolveActivity(intent, 0);
 
-            final ApplicationInfoEntity app = InstalledApplicationsParser
+            final ApplicationEntity app = InstalledApplicationsParser
                     .getApplicationInfoEntity(packageManager, resolveInfo);
 
             applicationInfoDao().insert(app);
@@ -221,7 +221,7 @@ public abstract class LauncherDatabase extends RoomDatabase {
             final Drawable icon = appInfo.loadIcon(packageManager);
             final String label = appInfo.loadLabel(packageManager).toString();
 
-            applicationInfoDao().insert(new ApplicationInfoEntity(
+            applicationInfoDao().insert(new ApplicationEntity(
                     appInfo.activityInfo.packageName,
                     installTime,
                     launchAmount,

@@ -11,10 +11,7 @@ import android.util.Log;
 
 import java.util.Timer;
 
-import whiskarek.andrewshkrob.InstalledApplicationsParser;
-import whiskarek.andrewshkrob.LauncherApplication;
 import whiskarek.andrewshkrob.LauncherExecutors;
-import whiskarek.andrewshkrob.database.entity.ApplicationInfoEntity;
 
 public class ApplicationManager extends Service {
 

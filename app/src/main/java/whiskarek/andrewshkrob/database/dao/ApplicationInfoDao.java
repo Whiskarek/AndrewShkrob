@@ -10,7 +10,7 @@ import android.arch.persistence.room.Query;
 import java.util.List;
 
 import whiskarek.andrewshkrob.database.LauncherDatabase;
-import whiskarek.andrewshkrob.database.entity.ApplicationInfoEntity;
+import whiskarek.andrewshkrob.database.entity.ApplicationEntity;
 
 @Dao
 public interface ApplicationInfoDao {
@@ -23,10 +23,10 @@ public interface ApplicationInfoDao {
     //----------------------------------------------------------------------------------------------
 
     @Query("SELECT * FROM " + LauncherDatabase.DATABASE_APPS_NAME)
-    List<ApplicationInfoEntity> loadAll();
+    List<ApplicationEntity> loadAll();
 
     @Query("SELECT * FROM " + LauncherDatabase.DATABASE_APPS_NAME)
-    LiveData<List<ApplicationInfoEntity>> loadAllApplications();
+    LiveData<List<ApplicationEntity>> loadAllApplications();
 
     @Query("SELECT " + LauncherDatabase.DATABASE_ROW_PACKAGE_NAME +
             " FROM " + LauncherDatabase.DATABASE_APPS_NAME)
@@ -35,7 +35,7 @@ public interface ApplicationInfoDao {
     @Query("SELECT * FROM " + LauncherDatabase.DATABASE_APPS_NAME +
             " WHERE " + LauncherDatabase.DATABASE_ROW_PACKAGE_NAME +
             " LIKE :packageName")
-    ApplicationInfoEntity getApp(final String packageName);
+    ApplicationEntity getApp(final String packageName);
 
     @Query("SELECT " + LauncherDatabase.DATABASE_ROW_ICON_PATH +
             " FROM " + LauncherDatabase.DATABASE_APPS_NAME +
@@ -52,10 +52,10 @@ public interface ApplicationInfoDao {
     //------------------------------------INSERT----------------------------------------------------
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(final List<ApplicationInfoEntity> apps);
+    void insert(final List<ApplicationEntity> apps);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(final ApplicationInfoEntity app);
+    void insert(final ApplicationEntity app);
 
     //------------------------------------DELETE----------------------------------------------------
 
@@ -68,7 +68,7 @@ public interface ApplicationInfoDao {
     void delete(final List<String> packageName);
 
     @Delete
-    void delete(final ApplicationInfoEntity app);
+    void delete(final ApplicationEntity app);
 
     @Query("DELETE FROM " + LauncherDatabase.DATABASE_APPS_NAME)
     void deleteAll();

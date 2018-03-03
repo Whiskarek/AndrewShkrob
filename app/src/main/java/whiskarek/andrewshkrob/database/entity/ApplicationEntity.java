@@ -14,7 +14,7 @@ import whiskarek.andrewshkrob.model.ApplicationInfoModel;
 @Entity(tableName = LauncherDatabase.DATABASE_APPS_NAME,
         indices = {@Index(value = LauncherDatabase.DATABASE_ROW_INTENT,
                 unique = true)})
-public class ApplicationInfoEntity implements ApplicationInfoModel {
+public class ApplicationEntity implements ApplicationInfoModel {
 
     @ColumnInfo(name = LauncherDatabase.DATABASE_ROW_PACKAGE_NAME)
     private String mPackageName;
@@ -39,10 +39,10 @@ public class ApplicationInfoEntity implements ApplicationInfoModel {
     @ColumnInfo(name = LauncherDatabase.DATABASE_ROW_APP_NAME)
     private String mLabel;
 
-    public ApplicationInfoEntity(final String packageName, final long installTime,
-                                 final int launchAmount, final boolean system,
-                                 @NonNull final Intent intent, final Drawable icon,
-                                 final String label) {
+    public ApplicationEntity(final String packageName, final long installTime,
+                             final int launchAmount, final boolean system,
+                             @NonNull final Intent intent, final Drawable icon,
+                             final String label) {
         mPackageName = packageName;
         mInstallTime = installTime;
         mLaunchAmount = launchAmount;

@@ -18,7 +18,7 @@ import whiskarek.andrewshkrob.R;
 import whiskarek.andrewshkrob.activity.launcher.fragment.menu.MenuAdapter;
 import whiskarek.andrewshkrob.activity.launcher.fragment.menu.MenuScreenFragment;
 import whiskarek.andrewshkrob.activity.launcher.fragment.menu.MenuViewHolder;
-import whiskarek.andrewshkrob.database.entity.ApplicationInfoEntity;
+import whiskarek.andrewshkrob.database.entity.ApplicationEntity;
 import whiskarek.andrewshkrob.view.decoration.OffsetItemDecoration;
 import whiskarek.andrewshkrob.viewmodel.AppInfoViewModel;
 
@@ -77,9 +77,9 @@ public class GridFragment extends MenuScreenFragment {
     }
 
     private void subscribeUI(final AppInfoViewModel viewModel) {
-        viewModel.getApplications().observe(this, new Observer<List<ApplicationInfoEntity>>() {
+        viewModel.getApplications().observe(this, new Observer<List<ApplicationEntity>>() {
             @Override
-            public void onChanged(final @Nullable List<ApplicationInfoEntity> appInfos) {
+            public void onChanged(final @Nullable List<ApplicationEntity> appInfos) {
                 if (appInfos != null) {
                     ((MenuAdapter) getRecyclerView().getAdapter()).updateList(appInfos);
                 }
