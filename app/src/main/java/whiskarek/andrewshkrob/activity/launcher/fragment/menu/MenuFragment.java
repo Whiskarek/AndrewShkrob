@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ToxicBakery.viewpager.transforms.RotateUpTransformer;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,6 +65,7 @@ public class MenuFragment extends Fragment {
         ));
         mViewPager.addOnPageChangeListener(mOnPageChangeListener);
         mViewPager.setOffscreenPageLimit(3);
+        mViewPager.setPageTransformer(true, new RotateUpTransformer());
         return view;
     }
 

@@ -5,11 +5,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
-
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
 
 import whiskarek.andrewshkrob.database.entity.ApplicationInfoEntity;
 import whiskarek.andrewshkrob.model.ApplicationInfoModel;
@@ -25,7 +22,7 @@ public class AppInfo implements ApplicationInfoModel {
     private final Drawable mApplicationIcon;
     private final Intent mIntent;
 
-    public AppInfo(@NonNull final String packageName, final String applicationName,
+    AppInfo(@NonNull final String packageName, final String applicationName,
                    final long installTime, final int launchAmount,
                    final boolean systemApp, final Drawable applicationIcon,
                    final Intent intent) {
@@ -62,6 +59,7 @@ public class AppInfo implements ApplicationInfoModel {
         return mSystemApp;
     }
 
+    @Override
     public Intent getIntent() {
         return mIntent;
     }
@@ -70,19 +68,9 @@ public class AppInfo implements ApplicationInfoModel {
         return mApplicationIcon;
     }
 
-    public ApplicationInfoEntity getApplicationInfoEntity() {
-        return new ApplicationInfoEntity(
-                mPackageName,
-                mInstallTime,
-                mLaunchAmount,
-                mSystemApp,
-                mIntent
-        );
-    }
-
     public static class Converter {
 
-        @NonNull
+        @Nullable
         public static AppInfo getAppInfo(final PackageManager packageManager,
                                   final ApplicationInfoEntity applicationInfoEntity) {
             final String packageName = applicationInfoEntity.getPackageName();
@@ -109,19 +97,6 @@ public class AppInfo implements ApplicationInfoModel {
             }
 
             return null;
-        }
-
-        public static List<AppInfo> getAppInfoList(final PackageManager packageManager,
-                final List<ApplicationInfoEntity> applicationInfoEntityList) {
-            final List<AppInfo> appInfoList = new ArrayList<>();
-            for (ApplicationInfoEntity applicationInfoEntity : applicationInfoEntityList) {
-                final AppInfo app = getAppInfo(packageManager, applicationInfoEntity);
-                if (app != null) {
-                    appInfoList.add(app);
-                }
-            }
-
-            return appInfoList;
         }
     }
 }

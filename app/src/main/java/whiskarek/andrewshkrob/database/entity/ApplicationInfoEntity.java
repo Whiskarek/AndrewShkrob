@@ -34,7 +34,7 @@ public class ApplicationInfoEntity implements ApplicationInfoModel {
 
     public ApplicationInfoEntity(final String packageName, final long installTime,
                                  final int launchAmount, final boolean systemApp,
-                                 final Intent intent) {
+                                 @NonNull final Intent intent) {
         mPackageName = packageName;
         mInstallTime = installTime;
         mLaunchAmount = launchAmount;

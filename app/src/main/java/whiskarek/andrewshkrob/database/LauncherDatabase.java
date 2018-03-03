@@ -28,7 +28,7 @@ import static whiskarek.andrewshkrob.InstalledApplicationsParser.isSystemApp;
 @TypeConverters({IntentConverter.class})
 public abstract class LauncherDatabase extends RoomDatabase {
 
-    public static final String DATABASE_NAME = "Launcher.db";
+    private static final String DATABASE_NAME = "Launcher.db";
     public static final String DATABASE_APPS_NAME = "Applications";
 
     public static final String DATABASE_ROW_PACKAGE_NAME = "PackageName";

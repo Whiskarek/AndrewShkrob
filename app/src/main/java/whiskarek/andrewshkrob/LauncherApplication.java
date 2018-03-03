@@ -1,6 +1,7 @@
 package whiskarek.andrewshkrob;
 
 import android.app.Application;
+import android.os.StrictMode;
 
 import com.yandex.metrica.YandexMetrica;
 import com.yandex.metrica.push.YandexMetricaPush;
@@ -14,16 +15,14 @@ public class LauncherApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
-        /*StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+        /*
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                 .detectAll()   // or .detectAll() for all detectable problems
                 .penaltyLog()
                 .build());
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-                .detectLeakedSqlLiteObjects()
-                .detectLeakedClosableObjects()
+                .detectAll()
                 .penaltyLog()
-                .penaltyDeath()
                 .build());
         */
         // Инициализация AppMetrica SDK

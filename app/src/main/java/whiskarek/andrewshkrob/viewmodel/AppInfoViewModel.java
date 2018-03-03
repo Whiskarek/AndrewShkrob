@@ -11,7 +11,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +23,8 @@ import whiskarek.andrewshkrob.Sort;
 import whiskarek.andrewshkrob.database.entity.ApplicationInfoEntity;
 
 public class AppInfoViewModel extends AndroidViewModel {
+
+    private static boolean mFirstLaunch = true;
 
     private final MediatorLiveData<List<AppInfo>> mObservableAppInfoList;
     private final MutableLiveData<Integer> mSortType;
@@ -50,7 +51,7 @@ public class AppInfoViewModel extends AndroidViewModel {
                     @Override
                     public void run() {
                         //TODO Не подгружать весь список, а только добавленные приложения
-
+                        mObservableAppInfoList.postValue(null);
                         final PackageManager packageManager = application.getPackageManager();
                         List<AppInfo> appList = new ArrayList<>();
                         for (ApplicationInfoEntity appEntity : applicationInfoEntities) {
@@ -59,18 +60,21 @@ public class AppInfoViewModel extends AndroidViewModel {
                                     appEntity
                             );
                             if (app != null) {
-                                appList = new ArrayList<>(appList);
                                 appList.add(app);
-                                mObservableAppInfoList.postValue(null);
-                                mObservableAppInfoList.postValue(appList);
+                                if (mFirstLaunch) {
+                                    mObservableAppInfoList.postValue(appList);
+                                }
                             }
                         }
 
-                        appList = new ArrayList<>(appList);
+                        if (mFirstLaunch) {
+                            appList = new ArrayList<>(appList);
+                        }
                         Sort.sort(appList, mSortType.getValue());
                         mObservableAppInfoList.postValue(appList);
 
                         applicationInfoEntities.clear();
+                        mFirstLaunch = false;
                     }
                 });
             }

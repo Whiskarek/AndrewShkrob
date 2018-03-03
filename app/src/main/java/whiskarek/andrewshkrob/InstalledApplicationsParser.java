@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -31,56 +30,6 @@ public class InstalledApplicationsParser {
         // So additionally we check whether was system app updated so won't delete it also
         int mask = ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP;
         return (info.flags & mask) != 0;
-    }
-
-    @NonNull
-    public static AppInfo newAppInfo(final PackageManager manager, final String packageName) {
-        final Intent intent = manager.getLaunchIntentForPackage(packageName);
-        final ResolveInfo info = manager.resolveActivity(intent, 0);
-        final int launchAmount = 0;
-        long installTime;
-        try {
-            installTime = manager.getPackageInfo(packageName, 0).firstInstallTime;
-        } catch (PackageManager.NameNotFoundException e) {
-            installTime = System.currentTimeMillis();
-            Log.e("Launcher", e.toString());
-        }
-
-        final boolean systemApp = isSystemApp(manager, packageName);
-
-        final Drawable applicationIcon = info.loadIcon(manager);
-        final String applicationName = info.loadLabel(manager).toString();
-
-        return new AppInfo(
-                packageName,
-                applicationName,
-                installTime,
-                launchAmount,
-                systemApp,
-                applicationIcon,
-                intent
-        );
-    }
-
-    public static List<AppInfo> getInstalledApplications(final Context context) {
-        final PackageManager manager = context.getPackageManager();
-        final Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        final List<ResolveInfo> appResolveInfos =
-                manager.queryIntentActivities(intent, PackageManager.GET_META_DATA);
-
-        final List<AppInfo> appInfos = new ArrayList<>();
-
-        for (ResolveInfo appInfo : appResolveInfos) {
-            if (appInfo.activityInfo.packageName.equals(context.getPackageName())) {
-                continue;
-            }
-
-            appInfos.add(newAppInfo(manager, appInfo.activityInfo.packageName));
-
-        }
-
-        return appInfos;
     }
 
     @NonNull

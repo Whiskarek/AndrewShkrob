@@ -34,7 +34,7 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
-        View view;
+        final View view;
         if (mLayoutType == MenuViewHolder.GRID_LAYOUT) {
             view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.grid_item, parent, false);
@@ -49,7 +49,7 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             public void onClick(final View v) {
                 final int adapterPosition = viewHolder.getAdapterPosition();
                 if (adapterPosition != RecyclerView.NO_POSITION) {
-                    mContext.startActivity(mAppInfoList.get(adapterPosition).getIntent());
+                    //mContext.startActivity(mAppInfoList.get(adapterPosition).getIntent());
 
                     LauncherExecutors.getInstance().diskIO().execute(new Runnable() {
                         @Override
@@ -139,7 +139,7 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
             });
             mAppInfoList = appInfoList;
             result.dispatchUpdatesTo(this);
-            //notifyDataSetChanged();
+            notifyDataSetChanged();
         }
     }
 }
