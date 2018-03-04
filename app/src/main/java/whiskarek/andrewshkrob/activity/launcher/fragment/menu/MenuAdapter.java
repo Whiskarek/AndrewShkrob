@@ -52,7 +52,7 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                     try {
                         mContext.startActivity(mAppInfoList.get(adapterPosition).getIntent());
 
-                        LauncherExecutors.getInstance().diskIO().execute(new Runnable() {
+                        LauncherExecutors.getInstance().databaseIO().execute(new Runnable() {
                             @Override
                             public void run() {
                                 final ApplicationInfoDao appDao =

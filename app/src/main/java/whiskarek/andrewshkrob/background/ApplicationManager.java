@@ -28,7 +28,7 @@ public class ApplicationManager extends Service {
             switch (intent.getAction()) {
                 case Intent.ACTION_PACKAGE_ADDED: {
 
-                    LauncherExecutors.getInstance().diskIO().execute(new Runnable() {
+                    LauncherExecutors.getInstance().databaseIO().execute(new Runnable() {
                         @Override
                         public void run() {
 

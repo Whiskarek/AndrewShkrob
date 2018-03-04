@@ -43,7 +43,7 @@ public class AppInfoViewModel extends AndroidViewModel {
         mObservableAppInfoList.addSource(listLiveData, new Observer<List<ApplicationEntity>>() {
             @Override
             public void onChanged(@Nullable final List<ApplicationEntity> applicationInfoEntities) {
-                LauncherExecutors.getInstance().diskIO().execute(new Runnable() {
+                LauncherExecutors.getInstance().databaseIO().execute(new Runnable() {
                     @Override
                     public void run() {
                         Sort.sort(applicationInfoEntities, mSortType.getValue());

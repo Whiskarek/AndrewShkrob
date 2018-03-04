@@ -6,14 +6,14 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-public class VerticalViewPager extends ViewPager {
+public class MenuViewPager extends ViewPager {
 
-    public VerticalViewPager(final Context context) {
+    public MenuViewPager(final Context context) {
         super(context);
         init();
     }
 
-    public VerticalViewPager(final Context context, final AttributeSet attrs) {
+    public MenuViewPager(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         init();
     }
@@ -45,14 +45,8 @@ public class VerticalViewPager extends ViewPager {
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent ev) {
-        performClick();
+    public boolean onTouchEvent(final MotionEvent ev) {
         return super.onTouchEvent(swapXY(ev));
-    }
-
-    @Override
-    public boolean performClick() {
-        return super.performClick();
     }
 
     @Override
@@ -61,7 +55,7 @@ public class VerticalViewPager extends ViewPager {
         if (v != this && v instanceof ViewPager) {
             return true;
         }
-        return false;//super.canScroll(v, checkV, dx, x, y);
+        return super.canScroll(v, checkV, dx, x, y);
     }
 
     private class VerticalPageTransformer implements ViewPager.PageTransformer {
