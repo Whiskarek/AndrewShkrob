@@ -10,13 +10,13 @@ import java.util.concurrent.Executors;
 public class LauncherExecutors {
     private static LauncherExecutors sInstance;
 
-    private final Executor mDiskIO;
+    private final Executor mDatabaseIO;
     private final Executor mNetworkIO;
     private final Executor mMainThreadIO;
 
-    private LauncherExecutors(final Executor diskIO, final Executor networkIO,
+    private LauncherExecutors(final Executor databaseIO, final Executor networkIO,
                               final Executor mainThreadIO) {
-        this.mDiskIO = diskIO;
+        this.mDatabaseIO = databaseIO;
         this.mNetworkIO = networkIO;
         this.mMainThreadIO = mainThreadIO;
     }
@@ -39,8 +39,8 @@ public class LauncherExecutors {
         return sInstance;
     }
 
-    public Executor diskIO() {
-        return mDiskIO;
+    public Executor databaseIO() {
+        return mDatabaseIO;
     }
 
     public Executor networkIO() {
@@ -52,7 +52,7 @@ public class LauncherExecutors {
     }
 
     private static class MainThreadExecutor implements Executor {
-        private Handler mMainThreadHandler = new Handler(Looper.getMainLooper());
+        private final Handler mMainThreadHandler = new Handler(Looper.getMainLooper());
 
         @Override
         public void execute(@NonNull final Runnable command) {
