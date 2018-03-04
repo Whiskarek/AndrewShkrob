@@ -1,4 +1,4 @@
-package whiskarek.andrewshkrob.view;
+package whiskarek.andrewshkrob.view.viewpager;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;
@@ -6,14 +6,14 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-public class MenuViewPager extends ViewPager {
+public class VerticalViewPager extends ViewPager {
 
-    public MenuViewPager(final Context context) {
+    public VerticalViewPager(final Context context) {
         super(context);
         init();
     }
 
-    public MenuViewPager(final Context context, final AttributeSet attrs) {
+    public VerticalViewPager(final Context context, final AttributeSet attrs) {
         super(context, attrs);
         init();
     }
@@ -45,8 +45,14 @@ public class MenuViewPager extends ViewPager {
     }
 
     @Override
-    public boolean onTouchEvent(final MotionEvent ev) {
+    public boolean onTouchEvent(MotionEvent ev) {
+        performClick();
         return super.onTouchEvent(swapXY(ev));
+    }
+
+    @Override
+    public boolean performClick() {
+        return super.performClick();
     }
 
     @Override
@@ -55,7 +61,7 @@ public class MenuViewPager extends ViewPager {
         if (v != this && v instanceof ViewPager) {
             return true;
         }
-        return super.canScroll(v, checkV, dx, x, y);
+        return false;//super.canScroll(v, checkV, dx, x, y);
     }
 
     private class VerticalPageTransformer implements ViewPager.PageTransformer {

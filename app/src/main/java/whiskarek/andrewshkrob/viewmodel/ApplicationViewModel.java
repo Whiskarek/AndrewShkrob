@@ -20,13 +20,13 @@ import whiskarek.andrewshkrob.R;
 import whiskarek.andrewshkrob.Sort;
 import whiskarek.andrewshkrob.database.entity.ApplicationEntity;
 
-public class AppInfoViewModel extends AndroidViewModel {
+public class ApplicationViewModel extends AndroidViewModel {
 
     private final MediatorLiveData<List<ApplicationEntity>> mObservableAppInfoList;
     private final MutableLiveData<Integer> mSortType;
     private final MutableLiveData<Boolean> mSolidModel;
 
-    public AppInfoViewModel(final Application application) {
+    public ApplicationViewModel(final Application application) {
         super(application);
         mObservableAppInfoList = new MediatorLiveData<>();
         mObservableAppInfoList.setValue(null);

@@ -9,12 +9,12 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 
 import whiskarek.andrewshkrob.database.LauncherDatabase;
-import whiskarek.andrewshkrob.model.ApplicationInfoModel;
+import whiskarek.andrewshkrob.model.ApplicationModel;
 
-@Entity(tableName = LauncherDatabase.DATABASE_APPS_NAME,
+@Entity(tableName = LauncherDatabase.DATABASE_APPS,
         indices = {@Index(value = LauncherDatabase.DATABASE_ROW_INTENT,
                 unique = true)})
-public class ApplicationEntity implements ApplicationInfoModel {
+public class ApplicationEntity implements ApplicationModel {
 
     @ColumnInfo(name = LauncherDatabase.DATABASE_ROW_PACKAGE_NAME)
     private String mPackageName;

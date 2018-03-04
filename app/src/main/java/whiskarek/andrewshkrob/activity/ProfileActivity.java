@@ -78,6 +78,8 @@ public class ProfileActivity extends BaseActivity
         final SharedPreferences sharedPreferences =
                 PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+
         final String silentMessage =
                 sharedPreferences.getString("silent_push_message", "");
 

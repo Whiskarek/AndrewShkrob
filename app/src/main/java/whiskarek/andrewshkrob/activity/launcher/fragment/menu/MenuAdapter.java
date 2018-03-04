@@ -134,10 +134,8 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                 public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
                     return mAppInfoList.get(oldItemPosition).getPackageName()
                             .equals(appInfoList.get(newItemPosition).getPackageName())
-                            || mAppInfoList.get(oldItemPosition).getLabel()
-                            .equals(appInfoList.get(newItemPosition).getLabel())
-                            || mAppInfoList.get(oldItemPosition).getIcon().hashCode()
-                            == appInfoList.get(newItemPosition).getIcon().hashCode();
+                            && mAppInfoList.get(oldItemPosition).getLabel()
+                            .equals(appInfoList.get(newItemPosition).getLabel());
                 }
             });
             mAppInfoList = appInfoList;

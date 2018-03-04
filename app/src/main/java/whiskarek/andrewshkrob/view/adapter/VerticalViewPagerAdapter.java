@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.List;
 
-public class VerticalViewPagerAdapter extends FragmentPagerAdapter {
+public class VerticalViewPagerAdapter extends PagerAdapter {
 
     private final List<Fragment> mFragments;
 

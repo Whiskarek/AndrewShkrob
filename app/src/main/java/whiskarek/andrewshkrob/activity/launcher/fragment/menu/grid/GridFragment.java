@@ -2,6 +2,7 @@ package whiskarek.andrewshkrob.activity.launcher.fragment.menu.grid;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -20,11 +21,11 @@ import whiskarek.andrewshkrob.activity.launcher.fragment.menu.MenuScreenFragment
 import whiskarek.andrewshkrob.activity.launcher.fragment.menu.MenuViewHolder;
 import whiskarek.andrewshkrob.database.entity.ApplicationEntity;
 import whiskarek.andrewshkrob.view.decoration.OffsetItemDecoration;
-import whiskarek.andrewshkrob.viewmodel.AppInfoViewModel;
+import whiskarek.andrewshkrob.viewmodel.ApplicationViewModel;
 
 public class GridFragment extends MenuScreenFragment {
 
-    private AppInfoViewModel mViewModel;
+    private ApplicationViewModel mViewModel;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container,
@@ -66,7 +67,16 @@ public class GridFragment extends MenuScreenFragment {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
 
-        mViewModel = ViewModelProviders.of(getActivity()).get(AppInfoViewModel.class);
+        mViewModel = ViewModelProviders.of(getActivity()).get(ApplicationViewModel.class);
+        PreferenceManager.getDefaultSharedPreferences(getContext())
+                .registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        PreferenceManager.getDefaultSharedPreferences(getContext())
+                .unregisterOnSharedPreferenceChangeListener(this);
     }
 
     @Override
@@ -76,7 +86,7 @@ public class GridFragment extends MenuScreenFragment {
         subscribeUI(mViewModel);
     }
 
-    private void subscribeUI(final AppInfoViewModel viewModel) {
+    private void subscribeUI(final ApplicationViewModel viewModel) {
         viewModel.getApplications().observe(this, new Observer<List<ApplicationEntity>>() {
             @Override
             public void onChanged(final @Nullable List<ApplicationEntity> appInfos) {
@@ -94,5 +104,19 @@ public class GridFragment extends MenuScreenFragment {
                         : getResources().getInteger(R.integer.model_default)));
             }
         });
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(final SharedPreferences sharedPreferences,
+                                          final String key) {
+        if (key.equals(getResources().getString(R.string.pref_key_sort_type))) {
+            mViewModel.setSortType(Integer.parseInt(sharedPreferences
+                    .getString(getResources().getString(R.string.pref_key_sort_type), "3")));
+        } else if (key.equals(getResources().getString(R.string.pref_key_model_solid))) {
+            final boolean modelSolid = sharedPreferences
+                    .getBoolean(getResources().getString(R.string.pref_key_model_solid), false);
+
+            mViewModel.setSolidModel(modelSolid);
+        }
     }
 }

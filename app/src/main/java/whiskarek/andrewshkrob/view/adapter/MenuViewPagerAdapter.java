@@ -6,14 +6,17 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.List;
 
-public class MenuFragmentAdapter extends FragmentPagerAdapter {
+public class MenuViewPagerAdapter extends FragmentPagerAdapter {
 
     private final List<Fragment> mFragments;
+    private final int mSettingsPage;
 
-    public MenuFragmentAdapter(final FragmentManager fragmentManager,
-                               final List<Fragment> fragments) {
+    public MenuViewPagerAdapter(final FragmentManager fragmentManager,
+                                final List<Fragment> fragments,
+                                final int settingsPage) {
         super(fragmentManager);
         mFragments = fragments;
+        mSettingsPage = settingsPage;
     }
 
     @Override

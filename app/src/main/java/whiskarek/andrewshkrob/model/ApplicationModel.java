@@ -3,7 +3,7 @@ package whiskarek.andrewshkrob.model;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 
-public interface ApplicationInfoModel {
+public interface ApplicationModel {
 
     String getPackageName();
 

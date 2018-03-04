@@ -1,25 +1,18 @@
-package whiskarek.andrewshkrob.activity.launcher.fragment.menu.settings;
+package whiskarek.andrewshkrob.activity.settings;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.PreferenceFragmentCompat;
-import android.util.Log;
 
 import whiskarek.andrewshkrob.R;
-import whiskarek.andrewshkrob.viewmodel.AppInfoViewModel;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements
         SharedPreferences.OnSharedPreferenceChangeListener{
 
-    private AppInfoViewModel mAppViewModel;
-
     @Override
     public void onCreatePreferences(final Bundle savedInstanceState, final String rootKey) {
         setPreferencesFromResource(R.xml.preferences, rootKey);
-
-        mAppViewModel = ViewModelProviders.of(getActivity()).get(AppInfoViewModel.class);
 
         final ListPreference listPreferenceSortType = (ListPreference)
                 findPreference(getString(R.string.pref_key_sort_type));
@@ -72,10 +65,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
         if (key.equals(getString(R.string.pref_key_theme_dark))) {
             getActivity().recreate();
         } else if (key.equals(getString(R.string.pref_key_model_solid))) {
-            mAppViewModel.setSolidModel(sharedPreferences.getBoolean(
-                    getString(R.string.pref_key_model_solid),
-                    false)
-            );
         } else if (key.equals(getString(R.string.pref_key_sort_type))) {
             final ListPreference listPreferenceSortType = (ListPreference)
                     findPreference(key);
@@ -85,9 +74,6 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                         Integer.parseInt(sharedPreferences.getString(key, "0"));
                 final String sortTypeName = sortArray[sortTypePos];
                 listPreferenceSortType.setSummary(sortTypeName);
-                mAppViewModel.setSortType(sortTypePos);
-
-                Log.d("Launcher", "Post new sort type: " + sortTypePos);
             }
         } else if (key.equals(getString(R.string.pref_key_show_welcome_page_on_next_load))) {
 

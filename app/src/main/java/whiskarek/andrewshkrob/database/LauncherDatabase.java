@@ -33,7 +33,7 @@ public abstract class LauncherDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "Launcher.db";
 
-    public static final String DATABASE_APPS_NAME = "Applications";
+    public static final String DATABASE_APPS = "Applications";
     public static final String DATABASE_ROW_PACKAGE_NAME = "PackageName";
     public static final String DATABASE_ROW_INSTALL_TIME = "InstallTime";
     public static final String DATABASE_ROW_LAUNCH_AMOUNT = "LaunchAmount";

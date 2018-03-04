@@ -1,5 +1,6 @@
 package whiskarek.andrewshkrob.activity.launcher.fragment.menu;
 
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,7 +8,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-public abstract class MenuScreenFragment extends Fragment {
+public abstract class MenuScreenFragment extends Fragment
+        implements SharedPreferences.OnSharedPreferenceChangeListener {
     private RecyclerView mRecyclerView = null;
     protected View mRootLayout = null;
 

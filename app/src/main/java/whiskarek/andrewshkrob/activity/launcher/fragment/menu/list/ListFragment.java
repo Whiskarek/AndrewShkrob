@@ -2,7 +2,9 @@ package whiskarek.andrewshkrob.activity.launcher.fragment.menu.list;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,9 +20,11 @@ import whiskarek.andrewshkrob.activity.launcher.fragment.menu.MenuScreenFragment
 import whiskarek.andrewshkrob.activity.launcher.fragment.menu.MenuViewHolder;
 import whiskarek.andrewshkrob.database.entity.ApplicationEntity;
 import whiskarek.andrewshkrob.view.decoration.OffsetItemDecoration;
-import whiskarek.andrewshkrob.viewmodel.AppInfoViewModel;
+import whiskarek.andrewshkrob.viewmodel.ApplicationViewModel;
 
 public class ListFragment extends MenuScreenFragment {
+
+    private ApplicationViewModel mViewModel;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container,
@@ -48,19 +52,27 @@ public class ListFragment extends MenuScreenFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
+
+        PreferenceManager.getDefaultSharedPreferences(getContext())
+                .registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        PreferenceManager.getDefaultSharedPreferences(getContext())
+                .registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        mViewModel = ViewModelProviders.of(getActivity()).get(ApplicationViewModel.class);
 
-        final AppInfoViewModel viewModel =
-                ViewModelProviders.of(getActivity()).get(AppInfoViewModel.class);
-
-        subscribeUI(viewModel);
+        subscribeUI(mViewModel);
     }
 
-    private void subscribeUI(final AppInfoViewModel viewModel) {
+    private void subscribeUI(final ApplicationViewModel viewModel) {
         viewModel.getApplications().observe(this, new Observer<List<ApplicationEntity>>() {
             @Override
             public void onChanged(@Nullable List<ApplicationEntity> appInfos) {
@@ -71,4 +83,12 @@ public class ListFragment extends MenuScreenFragment {
         });
     }
 
+    @Override
+    public void onSharedPreferenceChanged(final SharedPreferences sharedPreferences,
+                                          final String key) {
+        if (key.equals(getResources().getString(R.string.pref_key_sort_type))) {
+            mViewModel.setSortType(Integer.parseInt(sharedPreferences
+                    .getString(getResources().getString(R.string.pref_key_sort_type), "3")));
+        }
+    }
 }

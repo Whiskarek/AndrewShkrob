@@ -30,13 +30,16 @@ import whiskarek.andrewshkrob.activity.BaseActivity;
 import whiskarek.andrewshkrob.activity.ProfileActivity;
 import whiskarek.andrewshkrob.activity.launcher.fragment.desktop.DesktopFragment;
 import whiskarek.andrewshkrob.activity.launcher.fragment.menu.MenuFragment;
+import whiskarek.andrewshkrob.activity.settings.SettingsActivity;
 import whiskarek.andrewshkrob.activity.welcomepage.WelcomePageActivity;
 import whiskarek.andrewshkrob.background.ApplicationManager;
-import whiskarek.andrewshkrob.view.VerticalViewPager;
+import whiskarek.andrewshkrob.view.viewpager.VerticalViewPager;
 import whiskarek.andrewshkrob.view.adapter.VerticalViewPagerAdapter;
 
 public class LauncherActivity extends BaseActivity implements
-        NavigationView.OnNavigationItemSelectedListener, VerticalViewPager.OnPageChangeListener {
+        NavigationView.OnNavigationItemSelectedListener,
+        VerticalViewPager.OnPageChangeListener,
+        SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static int mCurrentId = R.id.nav_drawer_desktop;
 
@@ -142,9 +145,18 @@ public class LauncherActivity extends BaseActivity implements
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterManagers();
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .unregisterOnSharedPreferenceChangeListener(this);
         stopService(new Intent(this, ApplicationManager.class));
     }
 
@@ -157,6 +169,7 @@ public class LauncherActivity extends BaseActivity implements
                 mViewPager.setCurrentItem(0);
                 item.setChecked(true);
                 setTitle(item.getTitle());
+                mCurrentId = id;
             } else if (id == R.id.nav_drawer_grid) {
                 mViewPager.setCurrentItem(1);
                 final MenuFragment menuFragment =
@@ -164,6 +177,7 @@ public class LauncherActivity extends BaseActivity implements
                 menuFragment.getViewPager().setCurrentItem(0);
                 item.setChecked(true);
                 setTitle(item.getTitle());
+                mCurrentId = id;
             } else if (id == R.id.nav_drawer_list) {
                 mViewPager.setCurrentItem(1);
                 final MenuFragment menuFragment =
@@ -171,15 +185,10 @@ public class LauncherActivity extends BaseActivity implements
                 menuFragment.getViewPager().setCurrentItem(1);
                 item.setChecked(true);
                 setTitle(item.getTitle());
+                mCurrentId = id;
             } else if (id == R.id.nav_drawer_settings) {
-                mViewPager.setCurrentItem(1);
-                final MenuFragment menuFragment =
-                        (MenuFragment) mVerticalViewPagerAdapter.getItem(1);
-                menuFragment.getViewPager().setCurrentItem(2);
-                item.setChecked(true);
-                setTitle(item.getTitle());
+                startActivity(new Intent(this, SettingsActivity.class));
             }
-            mCurrentId = id;
         }
 
         final DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -201,12 +210,13 @@ public class LauncherActivity extends BaseActivity implements
     }
 
     @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+    public void onPageScrolled(final int position, final float positionOffset,
+                               final int positionOffsetPixels) {
 
     }
 
     @Override
-    public void onPageSelected(int position) {
+    public void onPageSelected(final int position) {
         switch (position) {
             case 0: {
                 LauncherActivity.this.setTitle(R.string.nav_drawer_desktop);
@@ -240,7 +250,15 @@ public class LauncherActivity extends BaseActivity implements
     }
 
     @Override
-    public void onPageScrollStateChanged(int state) {
+    public void onPageScrollStateChanged(final int state) {
 
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(final SharedPreferences sharedPreferences,
+                                          final String key) {
+        if (key.equals(getResources().getString(R.string.pref_key_theme_dark))) {
+            recreate();
+        }
     }
 }

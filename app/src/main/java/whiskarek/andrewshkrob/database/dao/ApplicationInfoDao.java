@@ -17,34 +17,34 @@ public interface ApplicationInfoDao {
 
     //----------------------------------------------------------------------------------------------
 
-    @Query("SELECT COUNT(*) FROM " + LauncherDatabase.DATABASE_APPS_NAME)
+    @Query("SELECT COUNT(*) FROM " + LauncherDatabase.DATABASE_APPS)
     long count();
 
     //----------------------------------------------------------------------------------------------
 
-    @Query("SELECT * FROM " + LauncherDatabase.DATABASE_APPS_NAME)
+    @Query("SELECT * FROM " + LauncherDatabase.DATABASE_APPS)
     List<ApplicationEntity> loadAll();
 
-    @Query("SELECT * FROM " + LauncherDatabase.DATABASE_APPS_NAME)
+    @Query("SELECT * FROM " + LauncherDatabase.DATABASE_APPS)
     LiveData<List<ApplicationEntity>> loadAllApplications();
 
     @Query("SELECT " + LauncherDatabase.DATABASE_ROW_PACKAGE_NAME +
-            " FROM " + LauncherDatabase.DATABASE_APPS_NAME)
+            " FROM " + LauncherDatabase.DATABASE_APPS)
     List<String> loadAllPackages();
 
-    @Query("SELECT * FROM " + LauncherDatabase.DATABASE_APPS_NAME +
+    @Query("SELECT * FROM " + LauncherDatabase.DATABASE_APPS +
             " WHERE " + LauncherDatabase.DATABASE_ROW_PACKAGE_NAME +
             " LIKE :packageName")
     ApplicationEntity getApp(final String packageName);
 
     @Query("SELECT " + LauncherDatabase.DATABASE_ROW_ICON_PATH +
-            " FROM " + LauncherDatabase.DATABASE_APPS_NAME +
+            " FROM " + LauncherDatabase.DATABASE_APPS +
             " WHERE " + LauncherDatabase.DATABASE_ROW_PACKAGE_NAME + " LIKE :packageName LIMIT 1")
     String getIconPath(final String packageName);
 
     //----------------------------------------------------------------------------------------------
 
-    @Query("UPDATE " + LauncherDatabase.DATABASE_APPS_NAME +
+    @Query("UPDATE " + LauncherDatabase.DATABASE_APPS +
             " SET " + LauncherDatabase.DATABASE_ROW_LAUNCH_AMOUNT + " = :launchAmount" +
             " WHERE " + LauncherDatabase.DATABASE_ROW_PACKAGE_NAME + " LIKE :packageName")
     void setLaunchAmount(final String packageName, final int launchAmount);
@@ -59,18 +59,18 @@ public interface ApplicationInfoDao {
 
     //------------------------------------DELETE----------------------------------------------------
 
-    @Query("DELETE FROM " + LauncherDatabase.DATABASE_APPS_NAME +
+    @Query("DELETE FROM " + LauncherDatabase.DATABASE_APPS +
             " WHERE " + LauncherDatabase.DATABASE_ROW_PACKAGE_NAME + " LIKE :packageName")
     void delete(final String packageName);
 
-    @Query("DELETE FROM " + LauncherDatabase.DATABASE_APPS_NAME +
+    @Query("DELETE FROM " + LauncherDatabase.DATABASE_APPS +
             " WHERE " + LauncherDatabase.DATABASE_ROW_PACKAGE_NAME + " IN(:packageName)")
     void delete(final List<String> packageName);
 
     @Delete
     void delete(final ApplicationEntity app);
 
-    @Query("DELETE FROM " + LauncherDatabase.DATABASE_APPS_NAME)
+    @Query("DELETE FROM " + LauncherDatabase.DATABASE_APPS)
     void deleteAll();
 
 }
