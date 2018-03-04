@@ -62,7 +62,7 @@ public abstract class LauncherDatabase extends RoomDatabase {
                         public void onCreate(@NonNull final SupportSQLiteDatabase db) {
                             super.onCreate(db);
                             mFirstLaunch = true;
-                            LauncherExecutors.getInstance().diskIO().execute(new Runnable() {
+                            LauncherExecutors.getInstance().databaseIO().execute(new Runnable() {
                                 @Override
                                 public void run() {
                                     LauncherDatabase.getInstance(context).firstLoad(context);
@@ -75,7 +75,7 @@ public abstract class LauncherDatabase extends RoomDatabase {
                             if (mFirstLaunch) {
                                 return;
                             }
-                            LauncherExecutors.getInstance().diskIO().execute(new Runnable() {
+                            LauncherExecutors.getInstance().databaseIO().execute(new Runnable() {
                                 @Override
                                 public void run() {
                                     LauncherDatabase.getInstance(context)
@@ -186,6 +186,7 @@ public abstract class LauncherDatabase extends RoomDatabase {
     }
 
     private void firstLoad(final Context context) {
+        final long start = System.currentTimeMillis();
         final PackageManager packageManager = context.getPackageManager();
         final Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -230,7 +231,11 @@ public abstract class LauncherDatabase extends RoomDatabase {
                     icon,
                     label
             ));
+
         }
+        final long end = System.currentTimeMillis();
+
+        Log.d("Launcher", "First load: " + (end - start));
     }
 
 }
