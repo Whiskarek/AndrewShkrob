@@ -55,7 +55,7 @@ public class ApplicationManager extends Service {
                                         .getApplicationInfoEntity(packageManager, app);
                                 LauncherDatabase
                                         .getInstance(ApplicationManager.this)
-                                        .applicationInfoDao()
+                                        .applicationDao()
                                         .insert(applicationEntity);
                             }
                         }
@@ -71,12 +71,12 @@ public class ApplicationManager extends Service {
                             final String packageName = intent.getData().getSchemeSpecificPart();
                             final String iconPath = LauncherDatabase
                                     .getInstance(ApplicationManager.this)
-                                    .applicationInfoDao()
+                                    .applicationDao()
                                     .getIconPath(packageName);
 
                             LauncherDatabase
                                     .getInstance(ApplicationManager.this)
-                                    .applicationInfoDao()
+                                    .applicationDao()
                                     .delete(packageName);
 
                             new File(context.getFilesDir().toString() +

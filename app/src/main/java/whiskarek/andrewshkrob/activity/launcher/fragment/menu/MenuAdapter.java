@@ -16,10 +16,10 @@ import java.util.List;
 import whiskarek.andrewshkrob.LauncherApplication;
 import whiskarek.andrewshkrob.LauncherExecutors;
 import whiskarek.andrewshkrob.R;
-import whiskarek.andrewshkrob.database.dao.ApplicationInfoDao;
+import whiskarek.andrewshkrob.database.dao.ApplicationDao;
 import whiskarek.andrewshkrob.database.entity.ApplicationEntity;
 
-public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
+public class MenuAdapter extends RecyclerView.Adapter<MenuViewHolder>{
 
     private final Context mContext;
     private final int mLayoutType;
@@ -33,7 +33,7 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
+    public MenuViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
         final View view;
         if (mLayoutType == MenuViewHolder.GRID_LAYOUT) {
             view = LayoutInflater.from(parent.getContext())
@@ -55,10 +55,10 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
                         LauncherExecutors.getInstance().databaseIO().execute(new Runnable() {
                             @Override
                             public void run() {
-                                final ApplicationInfoDao appDao =
+                                final ApplicationDao appDao =
                                         ((LauncherApplication) mContext.getApplicationContext())
                                                 .getDatabase()
-                                                .applicationInfoDao();
+                                                .applicationDao();
                                 appDao.setLaunchAmount(
                                         mAppInfoList.get(adapterPosition).getPackageName(),
                                         mAppInfoList.get(adapterPosition).getLaunchAmount() + 1
@@ -76,8 +76,8 @@ public class MenuAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
-        bindView((MenuViewHolder) holder);
+    public void onBindViewHolder(final MenuViewHolder holder, final int position) {
+        bindView(holder);
     }
 
     private void bindView(@NonNull final MenuViewHolder menuHolder) {

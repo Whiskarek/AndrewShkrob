@@ -22,8 +22,10 @@ import whiskarek.andrewshkrob.InstalledApplicationsParser;
 import whiskarek.andrewshkrob.LauncherExecutors;
 import whiskarek.andrewshkrob.database.converter.DrawableConverter;
 import whiskarek.andrewshkrob.database.converter.IntentConverter;
-import whiskarek.andrewshkrob.database.dao.ApplicationInfoDao;
+import whiskarek.andrewshkrob.database.dao.ApplicationDao;
+import whiskarek.andrewshkrob.database.dao.DesktopCellDao;
 import whiskarek.andrewshkrob.database.entity.ApplicationEntity;
+import whiskarek.andrewshkrob.database.entity.DesktopCellEntity;
 
 import static whiskarek.andrewshkrob.InstalledApplicationsParser.isSystemApp;
 
@@ -33,20 +35,12 @@ public abstract class LauncherDatabase extends RoomDatabase {
 
     private static final String DATABASE_NAME = "Launcher.db";
 
-    public static final String DATABASE_APPS = "Applications";
-    public static final String DATABASE_ROW_PACKAGE_NAME = "PackageName";
-    public static final String DATABASE_ROW_INSTALL_TIME = "InstallTime";
-    public static final String DATABASE_ROW_LAUNCH_AMOUNT = "LaunchAmount";
-    public static final String DATABASE_ROW_IS_SYSTEM = "IsSystem";
-    public static final String DATABASE_ROW_INTENT = "Intent";
-    public static final String DATABASE_ROW_ICON_PATH = "IconPath";
-    public static final String DATABASE_ROW_APP_NAME = "Label";
-
     private static boolean mFirstLaunch = false;
 
     private static LauncherDatabase sInstance;
 
-    public abstract ApplicationInfoDao applicationInfoDao();
+    public abstract ApplicationDao applicationDao();
+    public abstract DesktopCellDao desktopCellDao();
 
     public static LauncherDatabase getInstance(final Context context) {
         if (sInstance == null) {
@@ -66,6 +60,7 @@ public abstract class LauncherDatabase extends RoomDatabase {
                                 @Override
                                 public void run() {
                                     LauncherDatabase.getInstance(context).firstLoad(context);
+                                    LauncherDatabase.getInstance(context).createFirstScreen();
                                 }
                             });
                         }
@@ -94,7 +89,7 @@ public abstract class LauncherDatabase extends RoomDatabase {
     }
 
     private void updateDatabase(final Context context) {
-        if (applicationInfoDao().count() == 0) {
+        if (applicationDao().count() == 0) {
             firstLoad(context);
         } else {
             generateUpToDateInformation(context);
@@ -104,7 +99,7 @@ public abstract class LauncherDatabase extends RoomDatabase {
     private void generateUpToDateInformation(final Context context) {
         final List<String> appsFromSystem =
                 InstalledApplicationsParser.getInstalledPackages(context);
-        final List<String> appsFromDatabase = applicationInfoDao().loadAllPackages();
+        final List<String> appsFromDatabase = applicationDao().loadAllPackages();
 
         final List<String> uninstalledPackageList = getUninstalledPackageList(
                 appsFromSystem,
@@ -112,12 +107,12 @@ public abstract class LauncherDatabase extends RoomDatabase {
         );
 
         for (final String packageName : uninstalledPackageList) {
-            final String iconPath = applicationInfoDao().getIconPath(packageName);
+            final String iconPath = applicationDao().getIconPath(packageName);
             new File(context.getFilesDir().toString() +
                     File.separator + DrawableConverter.ICON_FOLDER_NAME +
                     File.separator + iconPath
             ).delete();
-            applicationInfoDao().delete(packageName);
+            applicationDao().delete(packageName);
         }
 
         //FIXME Instead of packages need to check intents
@@ -136,7 +131,7 @@ public abstract class LauncherDatabase extends RoomDatabase {
             final ApplicationEntity app = InstalledApplicationsParser
                     .getApplicationInfoEntity(packageManager, resolveInfo);
 
-            applicationInfoDao().insert(app);
+            applicationDao().insert(app);
         }
 
     }
@@ -222,7 +217,7 @@ public abstract class LauncherDatabase extends RoomDatabase {
             final Drawable icon = appInfo.loadIcon(packageManager);
             final String label = appInfo.loadLabel(packageManager).toString();
 
-            applicationInfoDao().insert(new ApplicationEntity(
+            applicationDao().insert(new ApplicationEntity(
                     appInfo.activityInfo.packageName,
                     installTime,
                     launchAmount,
@@ -236,6 +231,20 @@ public abstract class LauncherDatabase extends RoomDatabase {
         final long end = System.currentTimeMillis();
 
         Log.d("Launcher", "First load: " + (end - start));
+    }
+
+    private void createFirstScreen() {
+        final ApplicationEntity gallery =
+                applicationDao().getAppWithPackage("com.miui.gallery");
+
+        final DesktopCellEntity galleryCell = new DesktopCellEntity(
+                gallery.getId(),
+                1,
+                1,
+                DesktopCellEntity.CellType.APP, null
+        );
+
+        desktopCellDao().insert(galleryCell);
     }
 
 }

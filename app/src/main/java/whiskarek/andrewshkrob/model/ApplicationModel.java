@@ -5,6 +5,8 @@ import android.graphics.drawable.Drawable;
 
 public interface ApplicationModel {
 
+    int getId();
+
     String getPackageName();
 
     long getInstallTime();

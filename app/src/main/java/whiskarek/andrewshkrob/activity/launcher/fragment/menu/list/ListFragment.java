@@ -29,7 +29,7 @@ public class ListFragment extends MenuScreenFragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container,
                              @Nullable final Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_launcher, container,
+        final View view = inflater.inflate(R.layout.fragment_menu_screen, container,
                 false);
         setRootLayout(view);
         // SET UP RECYCLER VIEW

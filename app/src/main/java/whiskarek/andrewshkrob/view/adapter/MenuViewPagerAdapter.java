@@ -9,14 +9,11 @@ import java.util.List;
 public class MenuViewPagerAdapter extends FragmentPagerAdapter {
 
     private final List<Fragment> mFragments;
-    private final int mSettingsPage;
 
     public MenuViewPagerAdapter(final FragmentManager fragmentManager,
-                                final List<Fragment> fragments,
-                                final int settingsPage) {
+                                final List<Fragment> fragments) {
         super(fragmentManager);
         mFragments = fragments;
-        mSettingsPage = settingsPage;
     }
 
     @Override

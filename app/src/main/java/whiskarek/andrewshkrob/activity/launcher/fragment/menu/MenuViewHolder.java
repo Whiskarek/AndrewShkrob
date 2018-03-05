@@ -19,10 +19,10 @@ public class MenuViewHolder extends RecyclerView.ViewHolder implements MenuViewH
 
     public MenuViewHolder(final View view, final int layoutType) {
         super(view);
-        mAppIcon = (ImageView) view.findViewById(R.id.launcher_app_icon);
-        mAppName = (TextView) view.findViewById(R.id.launcher_app_name);
+        mAppIcon = view.findViewById(R.id.launcher_app_icon);
+        mAppName = view.findViewById(R.id.launcher_app_name);
         if (layoutType == LIST_LAYOUT) {
-            mAppPackageName = (TextView) view.findViewById(R.id.launcher_app_package_name);
+            mAppPackageName = view.findViewById(R.id.launcher_app_package_name);
         } else {
             mAppPackageName = null;
         }

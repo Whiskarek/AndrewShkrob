@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/grid_item_main_view"
-    android:layout_width="match_parent"
+    android:layout_width="56dp"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_gravity="center">
@@ -16,9 +16,7 @@
         android:id="@+id/launcher_app_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/text_size_default"
-        android:gravity="center"
-        android:lines="@integer/text_lines_default"
-        android:text="Color"/>
+        android:theme="@style/IconText"
+        tools:text="Color"/>
 
 </LinearLayout>

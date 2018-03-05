@@ -2,7 +2,6 @@ package whiskarek.andrewshkrob.activity.launcher.fragment.menu.grid;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -30,7 +29,7 @@ public class GridFragment extends MenuScreenFragment {
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container,
                              @Nullable final Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_launcher, container,
+        final View view = inflater.inflate(R.layout.fragment_menu_screen, container,
                 false);
         setRootLayout(view);
         // SET UP RECYCLER VIEW

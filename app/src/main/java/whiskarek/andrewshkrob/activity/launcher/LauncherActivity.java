@@ -239,12 +239,8 @@ public class LauncherActivity extends BaseActivity implements
                         mNavigationView.setCheckedItem(R.id.nav_drawer_list);
                         break;
                     }
-                    case 2: {
-                        setTitle(R.string.nav_drawer_settings);
-                        mNavigationView.setCheckedItem(R.id.nav_drawer_settings);
-                        break;
-                    }
-                }*/
+                }
+                */
             }
         }
     }
@@ -260,5 +256,9 @@ public class LauncherActivity extends BaseActivity implements
         if (key.equals(getResources().getString(R.string.pref_key_theme_dark))) {
             recreate();
         }
+    }
+
+    public void setCurrentId(final int id) {
+        mCurrentId = id;
     }
 }

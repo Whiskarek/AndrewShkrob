@@ -34,12 +34,14 @@ public class MenuFragment extends Fragment {
                             getActivity().setTitle(R.string.nav_drawer_grid);
                             ((LauncherActivity) getActivity()).getNavigationView()
                                     .setCheckedItem(R.id.nav_drawer_grid);
+                            ((LauncherActivity) getActivity()).setCurrentId(R.id.nav_drawer_grid);
                             break;
                         }
                         case 1: {
                             getActivity().setTitle(R.string.nav_drawer_list);
                             ((LauncherActivity) getActivity()).getNavigationView()
                                     .setCheckedItem(R.id.nav_drawer_list);
+                            ((LauncherActivity) getActivity()).setCurrentId(R.id.nav_drawer_list);
                             break;
                         }
                     }
@@ -55,8 +57,7 @@ public class MenuFragment extends Fragment {
         mViewPager = view.findViewById(R.id.fragment_holder);
         mViewPager.setAdapter(new MenuViewPagerAdapter(
                 getFragmentManager(),
-                mMenuScreenFragments,
-                2
+                mMenuScreenFragments
         ));
         mViewPager.addOnPageChangeListener(mOnPageChangeListener);
         mViewPager.setOffscreenPageLimit(3);
