@@ -3,10 +3,12 @@ package whiskarek.andrewshkrob.database.entity;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Index;
+import android.arch.persistence.room.PrimaryKey;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 
 import whiskarek.andrewshkrob.database.DesktopCellDatabase;
-import whiskarek.andrewshkrob.model.DesktopCellModel;
+import whiskarek.andrewshkrob.model.entity.DesktopCellModel;
 
 @Entity(tableName = DesktopCellDatabase.NAME,
         indices = {@Index(value = DesktopCellDatabase.ROW_ID, unique = true),
@@ -31,6 +33,8 @@ public class DesktopCellEntity implements DesktopCellModel {
     @ColumnInfo(name = DesktopCellDatabase.ROW_CELL_TYPE)
     private int mCellType;
 
+    @PrimaryKey
+    @NonNull
     @ColumnInfo(name = DesktopCellDatabase.ROW_INTENT)
     private Intent mIntent;
 
