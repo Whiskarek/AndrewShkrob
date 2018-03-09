@@ -1,7 +1,12 @@
 package whiskarek.andrewshkrob.activity.launcher;
 
+import android.app.WallpaperManager;
+import android.appwidget.AppWidgetHost;
+import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -15,6 +20,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -41,6 +48,9 @@ public class LauncherActivity extends BaseActivity implements
         VerticalViewPager.OnPageChangeListener,
         SharedPreferences.OnSharedPreferenceChangeListener {
 
+    private AppWidgetManager mAppWidgetManager;
+    private AppWidgetHost mAppWidgetHost;
+
     private static int mCurrentId = R.id.nav_drawer_desktop;
 
     private NavigationView mNavigationView = null;
@@ -49,6 +59,12 @@ public class LauncherActivity extends BaseActivity implements
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            final Window w = getWindow();
+            w.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS,
+                    WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        }
+
         super.onCreate(savedInstanceState);
         Fabric.with(getApplicationContext(), new Crashlytics());
 
@@ -61,9 +77,13 @@ public class LauncherActivity extends BaseActivity implements
             finish();
         }
 
+        mAppWidgetManager = AppWidgetManager.getInstance(getApplicationContext());
+        mAppWidgetHost = new AppWidgetHost(getApplicationContext(), R.id.APPWIDGET_HOST_ID);
+
         setContentView(R.layout.activity_launcher);
+
         final Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //setSupportActionBar(toolbar);
 
         final List<Fragment> screen = new ArrayList<>();
         screen.add(new DesktopFragment());
@@ -75,7 +95,11 @@ public class LauncherActivity extends BaseActivity implements
         mViewPager = findViewById(R.id.launcher_screen);
         mViewPager.setAdapter(mVerticalViewPagerAdapter);
         mViewPager.addOnPageChangeListener(this);
-        mViewPager.setCurrentItem(1);
+
+        final WallpaperManager wallpaperManager = WallpaperManager.getInstance(this);
+        final Drawable wallpaperDrawable = wallpaperManager.getDrawable();
+
+        mViewPager.setBackground(wallpaperDrawable);
 
         final DrawerLayout drawer = findViewById(R.id.drawer_layout);
         final ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -107,6 +131,8 @@ public class LauncherActivity extends BaseActivity implements
         Log.d("Launcher", "Starting Service");
         startService(new Intent(this, ApplicationManager.class));
 
+        mAppWidgetHost.startListening();
+
         checkForUpdates();
     }
 
@@ -136,11 +162,14 @@ public class LauncherActivity extends BaseActivity implements
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
+
+        mViewPager.setCurrentItem(0);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
         checkForCrashes();
     }
 
@@ -158,6 +187,7 @@ public class LauncherActivity extends BaseActivity implements
         PreferenceManager.getDefaultSharedPreferences(this)
                 .unregisterOnSharedPreferenceChangeListener(this);
         stopService(new Intent(this, ApplicationManager.class));
+        mAppWidgetHost.stopListening();
     }
 
     @Override
@@ -260,5 +290,13 @@ public class LauncherActivity extends BaseActivity implements
 
     public void setCurrentId(final int id) {
         mCurrentId = id;
+    }
+
+    public AppWidgetManager appWidgetManager() {
+        return mAppWidgetManager;
+    }
+
+    public AppWidgetHost appWidgetHost() {
+        return mAppWidgetHost;
     }
 }

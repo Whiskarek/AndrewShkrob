@@ -25,11 +25,11 @@ import whiskarek.andrewshkrob.database.converter.IntentConverter;
 import whiskarek.andrewshkrob.database.dao.ApplicationDao;
 import whiskarek.andrewshkrob.database.dao.DesktopCellDao;
 import whiskarek.andrewshkrob.database.entity.ApplicationEntity;
-import whiskarek.andrewshkrob.database.entity.DesktopCellEntity;
+import whiskarek.andrewshkrob.database.entity.ShortcutEntity;
 
 import static whiskarek.andrewshkrob.InstalledApplicationsParser.isSystemApp;
 
-@Database(entities = {ApplicationEntity.class}, version = 1)
+@Database(entities = {ApplicationEntity.class, ShortcutEntity.class}, version = 1)
 @TypeConverters({IntentConverter.class, DrawableConverter.class})
 public abstract class LauncherDatabase extends RoomDatabase {
 
@@ -237,11 +237,11 @@ public abstract class LauncherDatabase extends RoomDatabase {
         final ApplicationEntity gallery =
                 applicationDao().getAppWithPackage("com.miui.gallery");
 
-        final DesktopCellEntity galleryCell = new DesktopCellEntity(
+        final ShortcutEntity galleryCell = new ShortcutEntity(
                 gallery.getId(),
+                2,
                 1,
-                1,
-                DesktopCellEntity.CellType.APP, null
+                ShortcutEntity.ShortcutType.APP, null
         );
 
         desktopCellDao().insert(galleryCell);

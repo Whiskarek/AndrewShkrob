@@ -12,9 +12,6 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import whiskarek.andrewshkrob.LauncherApplication;
@@ -22,12 +19,10 @@ import whiskarek.andrewshkrob.LauncherExecutors;
 import whiskarek.andrewshkrob.R;
 import whiskarek.andrewshkrob.Sort;
 import whiskarek.andrewshkrob.database.entity.ApplicationEntity;
-import whiskarek.andrewshkrob.database.entity.DesktopCellEntity;
 
 public class ApplicationViewModel extends AndroidViewModel {
 
     private final MediatorLiveData<List<ApplicationEntity>> mObservableAppInfoList;
-    private final MediatorLiveData<List<DesktopCellEntity>> mObservableDesktopCellList;
     private final MutableLiveData<Integer> mSortType;
     private final MutableLiveData<Boolean> mSolidModel;
 
@@ -36,9 +31,6 @@ public class ApplicationViewModel extends AndroidViewModel {
 
         mObservableAppInfoList = new MediatorLiveData<>();
         mObservableAppInfoList.setValue(null);
-
-        mObservableDesktopCellList = new MediatorLiveData<>();
-        mObservableDesktopCellList.setValue(null);
 
         mSortType = new MutableLiveData<>();
         initSortType(application.getApplicationContext());
@@ -76,21 +68,6 @@ public class ApplicationViewModel extends AndroidViewModel {
                         mObservableAppInfoList.postValue(appInfoList);
                     }
                 }
-            }
-        });
-
-        final LiveData<List<DesktopCellEntity>> desktopCellListLiveData =
-                ((LauncherApplication) application).getDatabase().desktopCellDao().loadAll();
-
-        mObservableDesktopCellList.addSource(desktopCellListLiveData, new Observer<List<DesktopCellEntity>>() {
-            @Override
-            public void onChanged(@Nullable final List<DesktopCellEntity> desktopCellEntities) {
-                LauncherExecutors.getInstance().databaseIO().execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        mObservableDesktopCellList.postValue(desktopCellEntities);
-                    }
-                });
             }
         });
 
@@ -135,28 +112,5 @@ public class ApplicationViewModel extends AndroidViewModel {
         mSolidModel.setValue(solid);
     }
 
-    public List<DesktopCellEntity> getShortcutsForScreen(final int screen) {
-        List<DesktopCellEntity> shortcuts = new ArrayList<>();
-
-        if (mObservableDesktopCellList.getValue() == null) {
-            return shortcuts;
-        }
-
-        for (DesktopCellEntity s : mObservableDesktopCellList.getValue()) {
-            if (s.getScreen() == screen) {
-                shortcuts.add(s);
-            }
-        }
-
-        Collections.sort(shortcuts, new Comparator<DesktopCellEntity>() {
-            @Override
-            public int compare(DesktopCellEntity o1, DesktopCellEntity o2) {
-                return (o1.getPosition() < o2.getPosition() ? -1 :
-                        (o1.getPosition() == o2.getPosition() ? 0 : 1));
-            }
-        });
-
-        return shortcuts;
-    }
 
 }

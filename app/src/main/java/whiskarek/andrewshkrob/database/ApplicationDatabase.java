@@ -1,6 +1,6 @@
 package whiskarek.andrewshkrob.database;
 
-public final class ApplicationsDatabase {
+public final class ApplicationDatabase {
 
     public static final String NAME = "Applications";
 

@@ -9,8 +9,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.util.Random;
+
+import whiskarek.andrewshkrob.LauncherExecutors;
 import whiskarek.andrewshkrob.R;
+import whiskarek.andrewshkrob.database.LauncherDatabase;
 import whiskarek.andrewshkrob.database.entity.ApplicationEntity;
+import whiskarek.andrewshkrob.database.entity.ShortcutEntity;
 
 public class ContextMenuListener implements
         View.OnCreateContextMenuListener,
@@ -71,6 +76,14 @@ public class ContextMenuListener implements
             }
 
             case R.id.context_menu_app_add_to_desktop: {
+                LauncherExecutors.getInstance().databaseIO().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        final Random random = new Random();
+                        ShortcutEntity shortcut = new ShortcutEntity(mAppInfo.getId(), random.nextInt(25), 1, ShortcutEntity.ShortcutType.APP, null);
+                        LauncherDatabase.getInstance(mContext).desktopCellDao().insert(shortcut);
+                    }
+                });
 
                 break;
             }

@@ -1,4 +1,4 @@
-package whiskarek.andrewshkrob.model;
+package whiskarek.andrewshkrob.model.viewholder;
 
 import android.widget.ImageView;
 import android.widget.TextView;

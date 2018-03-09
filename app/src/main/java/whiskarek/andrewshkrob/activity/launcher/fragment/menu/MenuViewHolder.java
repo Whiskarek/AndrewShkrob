@@ -1,24 +1,29 @@
 package whiskarek.andrewshkrob.activity.launcher.fragment.menu;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import whiskarek.andrewshkrob.R;
-import whiskarek.andrewshkrob.model.MenuViewHolderModel;
+import whiskarek.andrewshkrob.dragndrop.ItemTouchHelperViewHolder;
+import whiskarek.andrewshkrob.model.viewholder.MenuViewHolderModel;
 
-public class MenuViewHolder extends RecyclerView.ViewHolder implements MenuViewHolderModel{
+public class MenuViewHolder extends RecyclerView.ViewHolder
+        implements MenuViewHolderModel, ItemTouchHelperViewHolder {
 
     public final static int GRID_LAYOUT = 1;
     public final static int LIST_LAYOUT = 2;
 
+    private final View mRootView;
     private final ImageView mAppIcon;
     private final TextView mAppName;
     private final TextView mAppPackageName;
 
     public MenuViewHolder(final View view, final int layoutType) {
         super(view);
+        mRootView = view;
         mAppIcon = view.findViewById(R.id.launcher_app_icon);
         mAppName = view.findViewById(R.id.launcher_app_name);
         if (layoutType == LIST_LAYOUT) {
@@ -44,4 +49,13 @@ public class MenuViewHolder extends RecyclerView.ViewHolder implements MenuViewH
         return mAppPackageName;
     }
 
+    @Override
+    public void onItemSelected() {
+        mRootView.setBackgroundColor(Color.LTGRAY);
+    }
+
+    @Override
+    public void onItemClear() {
+        mRootView.setBackgroundColor(0);
+    }
 }

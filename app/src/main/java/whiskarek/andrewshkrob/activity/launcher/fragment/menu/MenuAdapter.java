@@ -2,15 +2,18 @@ package whiskarek.andrewshkrob.activity.launcher.fragment.menu;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.view.MotionEventCompat;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import whiskarek.andrewshkrob.LauncherApplication;
@@ -18,18 +21,24 @@ import whiskarek.andrewshkrob.LauncherExecutors;
 import whiskarek.andrewshkrob.R;
 import whiskarek.andrewshkrob.database.dao.ApplicationDao;
 import whiskarek.andrewshkrob.database.entity.ApplicationEntity;
+import whiskarek.andrewshkrob.dragndrop.ItemTouchHelperAdapter;
+import whiskarek.andrewshkrob.dragndrop.OnStartDragListener;
 
-public class MenuAdapter extends RecyclerView.Adapter<MenuViewHolder>{
+public class MenuAdapter extends RecyclerView.Adapter<MenuViewHolder>
+        implements ItemTouchHelperAdapter {
 
     private final Context mContext;
     private final int mLayoutType;
+    private final OnStartDragListener mOnStartDragListener;
     private List<ApplicationEntity> mAppInfoList;
 
-    public MenuAdapter(final Context context, final int layoutType)
+    public MenuAdapter(final Context context, final int layoutType,
+                       final OnStartDragListener onStartDragListener)
     {
         mContext = context;
         mLayoutType = layoutType;
         mAppInfoList = new ArrayList<>();
+        mOnStartDragListener = onStartDragListener;
     }
 
     @Override
@@ -72,6 +81,20 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuViewHolder>{
             }
         });
 
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(final View v, final MotionEvent event) {
+                final int adapterPosition = viewHolder.getAdapterPosition();
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
+                        mOnStartDragListener.onStartDrag(viewHolder);
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+
         return viewHolder;
     }
 
@@ -108,6 +131,29 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuViewHolder>{
         return mAppInfoList == null ? 0 : mAppInfoList.size();
     }
 
+    @Override
+    public boolean onItemMove(final int fromPosition, final int toPosition) {
+        if (fromPosition < mAppInfoList.size() && toPosition < mAppInfoList.size()) {
+            if (fromPosition < toPosition) {
+                for (int i = fromPosition; i < toPosition; i++) {
+                    Collections.swap(mAppInfoList, i, i + 1);
+                }
+            } else {
+                for (int i = fromPosition; i > toPosition; i--) {
+                    Collections.swap(mAppInfoList, i, i - 1);
+                }
+            }
+            notifyItemMoved(fromPosition, toPosition);
+        }
+        return true;
+    }
+
+    @Override
+    public void onItemDismiss(final int position) {
+        mAppInfoList.remove(position);
+        notifyItemRemoved(position);
+    }
+
     public void updateList(final List<ApplicationEntity> appInfoList) {
         if (mAppInfoList == null || mAppInfoList.size() == 0) {
             mAppInfoList = appInfoList;
@@ -140,7 +186,6 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuViewHolder>{
             });
             mAppInfoList = appInfoList;
             result.dispatchUpdatesTo(this);
-            //notifyDataSetChanged();
         }
     }
 }

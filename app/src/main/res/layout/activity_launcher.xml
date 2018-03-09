@@ -14,43 +14,16 @@
         android:layout_height="match_parent"
         tools:context=".activity.launcher.LauncherActivity">
 
-        <android.support.design.widget.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
-            android:theme="@style/AppThemeLight.AppBarOverlay">
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                android:fitsSystemWindows="true"
-                app:popupTheme="@style/AppThemeLight.PopupOverlay" />
-
-        </android.support.design.widget.AppBarLayout>
-
-        <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
+        <whiskarek.andrewshkrob.view.viewpager.VerticalViewPager
+            android:id="@+id/launcher_screen"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipToPadding="false"
             android:fitsSystemWindows="true"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:context=".activity.launcher.LauncherActivity">
-
-            <whiskarek.andrewshkrob.view.viewpager.VerticalViewPager
-                android:id="@+id/launcher_screen"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:fitsSystemWindows="true"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-        </android.support.constraint.ConstraintLayout>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
     </android.support.design.widget.CoordinatorLayout>
 

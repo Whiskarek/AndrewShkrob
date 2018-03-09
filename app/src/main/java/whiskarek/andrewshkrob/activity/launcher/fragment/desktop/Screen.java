@@ -1,24 +1,27 @@
 package whiskarek.andrewshkrob.activity.launcher.fragment.desktop;
 
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.Random;
+import java.util.Map;
 
 import whiskarek.andrewshkrob.R;
-import whiskarek.andrewshkrob.viewmodel.ApplicationViewModel;
+import whiskarek.andrewshkrob.database.entity.ApplicationEntity;
+import whiskarek.andrewshkrob.viewmodel.ShortcutViewModel;
 
 public class Screen extends Fragment {
 
-    private int mPage;
-    private ApplicationViewModel mViewModel;
+    private int mScreenNum;
+    private ShortcutViewModel mShortcutViewModel;
+    private RecyclerView mRecyclerView;
 
     public static Screen getScreen(final int page) {
         final Screen screen = new Screen();
@@ -34,7 +37,7 @@ public class Screen extends Fragment {
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mPage = getArguments().getInt("page", 1);
+        mScreenNum = getArguments().getInt("page", 1);
     }
 
     @Nullable
@@ -45,10 +48,20 @@ public class Screen extends Fragment {
         final View view =
                 inflater.inflate(R.layout.fragment_desktop_screen, container, false);
 
-        final RecyclerView recyclerView = view.findViewById(R.id.desktop_screen_item_container);
+        mRecyclerView = view.findViewById(R.id.desktop_screen_item_container);
 
-        final Random rand = new Random();
-        view.setBackgroundColor(Color.rgb(rand.nextInt(255), rand.nextInt(255), rand.nextInt(255)));
+        final GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 4) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+
+        mRecyclerView.setLayoutManager(gridLayoutManager);
+        mRecyclerView.setAdapter(new ScreenAdapter(getContext()));
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setNestedScrollingEnabled(false);
+
 
         return view;
     }
@@ -57,6 +70,15 @@ public class Screen extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mViewModel = ViewModelProviders.of(getActivity()).get(ApplicationViewModel.class);
+        mShortcutViewModel = ViewModelProviders.of(getActivity()).get(ShortcutViewModel.class);
+        mShortcutViewModel.getShortcutList().observe(this, new Observer<Map<Integer, ApplicationEntity>>() {
+            @Override
+            public void onChanged(@Nullable final Map<Integer, ApplicationEntity> integerApplicationEntityMap) {
+                if (integerApplicationEntityMap == null) {
+                    return;
+                }
+                ((ScreenAdapter) mRecyclerView.getAdapter()).setData(integerApplicationEntityMap);
+            }
+        });
     }
 }

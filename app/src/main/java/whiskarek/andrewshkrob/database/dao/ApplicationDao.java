@@ -8,7 +8,7 @@ import android.arch.persistence.room.Query;
 
 import java.util.List;
 
-import whiskarek.andrewshkrob.database.ApplicationsDatabase;
+import whiskarek.andrewshkrob.database.ApplicationDatabase;
 import whiskarek.andrewshkrob.database.entity.ApplicationEntity;
 
 @Dao
@@ -16,36 +16,41 @@ public interface ApplicationDao {
 
     //----------------------------------------------------------------------------------------------
 
-    @Query("SELECT COUNT(*) FROM " + ApplicationsDatabase.NAME)
+    @Query("SELECT COUNT(*) FROM " + ApplicationDatabase.NAME)
     long count();
 
     //----------------------------------------------------------------------------------------------
 
-    @Query("SELECT * FROM " + ApplicationsDatabase.NAME)
+    @Query("SELECT * FROM " + ApplicationDatabase.NAME)
     LiveData<List<ApplicationEntity>> loadAllApplications();
 
-    @Query("SELECT " + ApplicationsDatabase.ROW_PACKAGE_NAME +
-            " FROM " + ApplicationsDatabase.NAME)
+    @Query("SELECT * FROM " + ApplicationDatabase.NAME +
+            " ORDER BY " + ApplicationDatabase.ROW_LAUNCH_AMOUNT +
+            " DESC LIMIT :amount")
+    LiveData<List<ApplicationEntity>> loadMostUsed(final int amount);
+
+    @Query("SELECT " + ApplicationDatabase.ROW_PACKAGE_NAME +
+            " FROM " + ApplicationDatabase.NAME)
     List<String> loadAllPackages();
 
-    @Query("SELECT " + ApplicationsDatabase.ROW_PACKAGE_NAME +
-            " FROM " + ApplicationsDatabase.NAME +
-            " WHERE " + ApplicationsDatabase.ROW_PACKAGE_NAME + " LIKE :packageName LIMIT 1")
+    @Query("SELECT " + ApplicationDatabase.ROW_PACKAGE_NAME +
+            " FROM " + ApplicationDatabase.NAME +
+            " WHERE " + ApplicationDatabase.ROW_PACKAGE_NAME + " LIKE :packageName LIMIT 1")
     String getIconPath(final String packageName);
 
-    @Query("SELECT * FROM " + ApplicationsDatabase.NAME +
-            " WHERE " + ApplicationsDatabase.ROW_ID + " LIKE :id")
+    @Query("SELECT * FROM " + ApplicationDatabase.NAME +
+            " WHERE " + ApplicationDatabase.ROW_ID + " LIKE :id")
     ApplicationEntity getAppWithId(final int id);
 
-    @Query("SELECT * FROM " + ApplicationsDatabase.NAME +
-            " WHERE " + ApplicationsDatabase.ROW_PACKAGE_NAME + " LIKE :packageName")
+    @Query("SELECT * FROM " + ApplicationDatabase.NAME +
+            " WHERE " + ApplicationDatabase.ROW_PACKAGE_NAME + " LIKE :packageName")
     ApplicationEntity getAppWithPackage(final String packageName);
 
     //----------------------------------------------------------------------------------------------
 
-    @Query("UPDATE " + ApplicationsDatabase.NAME +
-            " SET " + ApplicationsDatabase.ROW_PACKAGE_NAME + " = :launchAmount" +
-            " WHERE " + ApplicationsDatabase.ROW_PACKAGE_NAME + " LIKE :packageName")
+    @Query("UPDATE " + ApplicationDatabase.NAME +
+            " SET " + ApplicationDatabase.ROW_LAUNCH_AMOUNT + " = :launchAmount" +
+            " WHERE " + ApplicationDatabase.ROW_PACKAGE_NAME + " LIKE :packageName")
     void setLaunchAmount(final String packageName, final int launchAmount);
 
     //------------------------------------INSERT----------------------------------------------------
@@ -55,8 +60,8 @@ public interface ApplicationDao {
 
     //------------------------------------DELETE----------------------------------------------------
 
-    @Query("DELETE FROM " + ApplicationsDatabase.NAME +
-            " WHERE " + ApplicationsDatabase.ROW_PACKAGE_NAME + " LIKE :packageName")
+    @Query("DELETE FROM " + ApplicationDatabase.NAME +
+            " WHERE " + ApplicationDatabase.ROW_PACKAGE_NAME + " LIKE :packageName")
     void delete(final String packageName);
 
 }

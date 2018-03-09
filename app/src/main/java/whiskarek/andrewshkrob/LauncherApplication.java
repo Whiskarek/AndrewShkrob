@@ -1,6 +1,8 @@
 package whiskarek.andrewshkrob;
 
 import android.app.Application;
+import android.appwidget.AppWidgetHost;
+import android.appwidget.AppWidgetManager;
 import android.os.Environment;
 import android.os.StrictMode;
 
@@ -17,23 +19,12 @@ public class LauncherApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        /*
-        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-                .detectAll()   // or .detectAll() for all detectable problems
-                .penaltyLog()
-                .build());
-        StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-                .detectAll()
-                .penaltyLog()
-                .build());
-        */
+
         // Инициализация AppMetrica SDK
         YandexMetrica.activate(getApplicationContext(), API_key);
         // Отслеживание активности пользователей
         YandexMetrica.enableActivityAutoTracking(this);
-
         YandexMetricaPush.init(getApplicationContext());
-
         YandexMetrica.reportEvent("Application.onCreate()");
 
         Stetho.initializeWithDefaults(this);

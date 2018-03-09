@@ -1,4 +1,4 @@
-package whiskarek.andrewshkrob.model;
+package whiskarek.andrewshkrob.model.entity;
 
 import android.content.Intent;
 
@@ -10,7 +10,7 @@ public interface DesktopCellModel {
 
     int getScreen();
 
-    int getCellType();
+    int getShortcutType();
 
     Intent getIntent();
 }

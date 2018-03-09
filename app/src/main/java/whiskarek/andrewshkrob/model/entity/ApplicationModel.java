@@ -1,4 +1,4 @@
-package whiskarek.andrewshkrob.model;
+package whiskarek.andrewshkrob.model.entity;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;

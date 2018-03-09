@@ -3,11 +3,13 @@ package whiskarek.andrewshkrob.activity.launcher.fragment.menu.list;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +21,15 @@ import whiskarek.andrewshkrob.activity.launcher.fragment.menu.MenuAdapter;
 import whiskarek.andrewshkrob.activity.launcher.fragment.menu.MenuScreenFragment;
 import whiskarek.andrewshkrob.activity.launcher.fragment.menu.MenuViewHolder;
 import whiskarek.andrewshkrob.database.entity.ApplicationEntity;
+import whiskarek.andrewshkrob.dragndrop.EditItemTouchHelperCallback;
+import whiskarek.andrewshkrob.dragndrop.OnStartDragListener;
 import whiskarek.andrewshkrob.view.decoration.OffsetItemDecoration;
 import whiskarek.andrewshkrob.viewmodel.ApplicationViewModel;
 
-public class ListFragment extends MenuScreenFragment {
+public class ListFragment extends MenuScreenFragment implements OnStartDragListener{
 
     private ApplicationViewModel mViewModel;
+    private ItemTouchHelper mItemTouchHelper;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container,
@@ -41,11 +46,21 @@ public class ListFragment extends MenuScreenFragment {
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         getRecyclerView().setLayoutManager(linearLayoutManager);
         // Create ListAdapter
-        MenuAdapter menuAdapter = new MenuAdapter(getContext(), MenuViewHolder.LIST_LAYOUT);
+        MenuAdapter menuAdapter = new MenuAdapter(getContext(), MenuViewHolder.LIST_LAYOUT, this);
+
+        final ItemTouchHelper.Callback callback = new EditItemTouchHelperCallback(menuAdapter);
+        mItemTouchHelper = new ItemTouchHelper(callback);
+        mItemTouchHelper.attachToRecyclerView(getRecyclerView());
+
         getRecyclerView().setAdapter(menuAdapter);
 
         //------------------------------------------------------------------------------------------
         return view;
+    }
+
+    @Override
+    public void onStartDrag(final RecyclerView.ViewHolder viewHolder) {
+        mItemTouchHelper.startDrag(viewHolder);
     }
 
     @Override

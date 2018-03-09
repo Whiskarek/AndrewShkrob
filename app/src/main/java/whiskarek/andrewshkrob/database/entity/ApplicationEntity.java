@@ -9,38 +9,38 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 
-import whiskarek.andrewshkrob.database.ApplicationsDatabase;
-import whiskarek.andrewshkrob.model.ApplicationModel;
+import whiskarek.andrewshkrob.database.ApplicationDatabase;
+import whiskarek.andrewshkrob.model.entity.ApplicationModel;
 
-@Entity(tableName = ApplicationsDatabase.NAME,
-        indices = {@Index(value = ApplicationsDatabase.ROW_INTENT, unique = true),
-                   @Index(value = ApplicationsDatabase.ROW_ID, unique = true)})
+@Entity(tableName = ApplicationDatabase.NAME,
+        indices = {@Index(value = ApplicationDatabase.ROW_INTENT, unique = true),
+                   @Index(value = ApplicationDatabase.ROW_ID, unique = true)})
 public class ApplicationEntity implements ApplicationModel {
 
-    @ColumnInfo(name = ApplicationsDatabase.ROW_ID)
+    @ColumnInfo(name = ApplicationDatabase.ROW_ID)
     @PrimaryKey(autoGenerate = true)
     @NonNull
     private int mId;
 
-    @ColumnInfo(name = ApplicationsDatabase.ROW_PACKAGE_NAME)
+    @ColumnInfo(name = ApplicationDatabase.ROW_PACKAGE_NAME)
     private String mPackageName;
 
-    @ColumnInfo(name = ApplicationsDatabase.ROW_INSTALL_TIME)
+    @ColumnInfo(name = ApplicationDatabase.ROW_INSTALL_TIME)
     private long mInstallTime;
 
-    @ColumnInfo(name = ApplicationsDatabase.ROW_LAUNCH_AMOUNT)
+    @ColumnInfo(name = ApplicationDatabase.ROW_LAUNCH_AMOUNT)
     private int mLaunchAmount;
 
-    @ColumnInfo(name = ApplicationsDatabase.ROW_IS_SYSTEM)
+    @ColumnInfo(name = ApplicationDatabase.ROW_IS_SYSTEM)
     private boolean mSystem;
 
-    @ColumnInfo(name = ApplicationsDatabase.ROW_INTENT)
+    @ColumnInfo(name = ApplicationDatabase.ROW_INTENT)
     private Intent mIntent;
 
-    @ColumnInfo(name = ApplicationsDatabase.ROW_ICON_PATH)
+    @ColumnInfo(name = ApplicationDatabase.ROW_ICON_PATH)
     private Drawable mIcon;
 
-    @ColumnInfo(name = ApplicationsDatabase.ROW_APP_NAME)
+    @ColumnInfo(name = ApplicationDatabase.ROW_APP_NAME)
     private String mLabel;
 
     public ApplicationEntity(final int id, final String packageName, final long installTime,
