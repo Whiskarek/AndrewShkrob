@@ -56,7 +56,7 @@ public class ScreenAdapter extends RecyclerView.Adapter<ScreenViewHolder> {
                                                 .getDatabase()
                                                 .applicationDao();
                                 appDao.setLaunchAmount(
-                                        mShortcutList.get(adapterPosition).getPackageName(),
+                                        mShortcutList.get(adapterPosition).getIntent(),
                                         mShortcutList.get(adapterPosition).getLaunchAmount() + 1
                                 );
                             }

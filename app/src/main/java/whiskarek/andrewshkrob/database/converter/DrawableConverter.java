@@ -106,6 +106,7 @@ public class DrawableConverter {
         );
     }
 
+    @NonNull
     private static String createFileName(final File path) {
         File[] files = path.listFiles();
 

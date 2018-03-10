@@ -5,6 +5,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
+import android.content.Intent;
 
 import java.util.List;
 
@@ -50,8 +51,8 @@ public interface ApplicationDao {
 
     @Query("UPDATE " + ApplicationDatabase.NAME +
             " SET " + ApplicationDatabase.ROW_LAUNCH_AMOUNT + " = :launchAmount" +
-            " WHERE " + ApplicationDatabase.ROW_PACKAGE_NAME + " LIKE :packageName")
-    void setLaunchAmount(final String packageName, final int launchAmount);
+            " WHERE " + ApplicationDatabase.ROW_INTENT + " LIKE :intent")
+    void setLaunchAmount(final Intent intent, final int launchAmount);
 
     //------------------------------------INSERT----------------------------------------------------
 

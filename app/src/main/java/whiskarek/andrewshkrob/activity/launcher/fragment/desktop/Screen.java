@@ -11,17 +11,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.Map;
+import java.util.List;
 
 import whiskarek.andrewshkrob.R;
-import whiskarek.andrewshkrob.database.entity.ApplicationEntity;
+import whiskarek.andrewshkrob.database.entity.ShortcutEntity;
+import whiskarek.andrewshkrob.viewmodel.ApplicationViewModel;
 import whiskarek.andrewshkrob.viewmodel.ShortcutViewModel;
 
 public class Screen extends Fragment {
 
     private int mScreenNum;
-    private ShortcutViewModel mShortcutViewModel;
     private RecyclerView mRecyclerView;
+    private ApplicationViewModel mAppViewModel;
+    private ShortcutViewModel mShortcutViewModel;
 
     public static Screen getScreen(final int page) {
         final Screen screen = new Screen();
@@ -38,6 +40,8 @@ public class Screen extends Fragment {
         super.onCreate(savedInstanceState);
 
         mScreenNum = getArguments().getInt("page", 1);
+        mAppViewModel = ViewModelProviders.of(getActivity()).get(ApplicationViewModel.class);
+        mShortcutViewModel = ViewModelProviders.of(getActivity()).get(ShortcutViewModel.class);
     }
 
     @Nullable
@@ -60,8 +64,6 @@ public class Screen extends Fragment {
         mRecyclerView.setLayoutManager(gridLayoutManager);
         mRecyclerView.setAdapter(new ScreenAdapter(getContext()));
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setNestedScrollingEnabled(false);
-
 
         return view;
     }
@@ -70,14 +72,14 @@ public class Screen extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mShortcutViewModel = ViewModelProviders.of(getActivity()).get(ShortcutViewModel.class);
-        mShortcutViewModel.getShortcutList().observe(this, new Observer<Map<Integer, ApplicationEntity>>() {
+        mShortcutViewModel.getShortcutList().observe(this, new Observer<List<ShortcutEntity>>() {
             @Override
-            public void onChanged(@Nullable final Map<Integer, ApplicationEntity> integerApplicationEntityMap) {
-                if (integerApplicationEntityMap == null) {
+            public void onChanged(@Nullable final List<ShortcutEntity> shortcutEntities) {
+                if (shortcutEntities == null) {
                     return;
                 }
-                ((ScreenAdapter) mRecyclerView.getAdapter()).setData(integerApplicationEntityMap);
+
+                ((ScreenAdapter) mRecyclerView.getAdapter()).setData(mAppViewModel.getShortcuts(shortcutEntities));
             }
         });
     }

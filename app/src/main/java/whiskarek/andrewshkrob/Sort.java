@@ -1,5 +1,6 @@
 package whiskarek.andrewshkrob;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -91,6 +92,16 @@ public class Sort {
                 break;
             }
         }
+    }
+
+    public static List<ApplicationEntity> getMostUsed(final List<ApplicationEntity> apps) {
+        final List<ApplicationEntity> sorted = new ArrayList<>(apps);
+
+        Collections.sort(sorted, mSortByLaunchAmountDown);
+
+        sorted.subList(5, sorted.size()).clear();
+
+        return sorted;
     }
 
 }

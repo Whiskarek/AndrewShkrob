@@ -22,7 +22,7 @@
             android:layout_margin="@dimen/offset"
             android:layout_gravity="center"
             android:elevation="2dp"
-            android:src="@drawable/photo1"
+            android:src="@drawable/photo_circle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

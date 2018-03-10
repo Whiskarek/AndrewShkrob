@@ -35,10 +35,6 @@ public class DesktopFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_desktop, container, false);
 
         final SearchWidget searchWidget = view.findViewById(R.id.desktop_screen_search_widget);
-        searchWidget.setUpWidget(loadWidget(
-                ((LauncherActivity) getActivity()).appWidgetManager(),
-                ((LauncherActivity) getActivity()).appWidgetHost()
-        ));
 
         LauncherExecutors.getInstance().networkIO().execute(new Runnable() {
             @Override
@@ -58,7 +54,7 @@ public class DesktopFragment extends Fragment {
         });
 
         final ViewPager viewPager = view.findViewById(R.id.desktop_screen_holder);
-        viewPager.setAdapter(new MenuViewPagerAdapter(getFragmentManager(), Arrays.asList((Fragment) Screen.getScreen(1), Screen.getScreen(2))));
+        viewPager.setAdapter(new MenuViewPagerAdapter(getFragmentManager(), Arrays.asList((Fragment) Screen.getScreen(1))));
 
         return view;
     }

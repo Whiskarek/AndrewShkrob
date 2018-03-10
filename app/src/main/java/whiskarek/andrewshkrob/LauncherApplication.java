@@ -1,10 +1,6 @@
 package whiskarek.andrewshkrob;
 
 import android.app.Application;
-import android.appwidget.AppWidgetHost;
-import android.appwidget.AppWidgetManager;
-import android.os.Environment;
-import android.os.StrictMode;
 
 import com.facebook.stetho.Stetho;
 import com.yandex.metrica.YandexMetrica;

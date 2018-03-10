@@ -10,27 +10,30 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v4.util.ArrayMap;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import whiskarek.andrewshkrob.LauncherApplication;
 import whiskarek.andrewshkrob.LauncherExecutors;
 import whiskarek.andrewshkrob.R;
 import whiskarek.andrewshkrob.Sort;
 import whiskarek.andrewshkrob.database.entity.ApplicationEntity;
+import whiskarek.andrewshkrob.database.entity.ShortcutEntity;
 
 public class ApplicationViewModel extends AndroidViewModel {
 
-    private final MediatorLiveData<List<ApplicationEntity>> mObservableAppInfoList;
+    private final MediatorLiveData<List<ApplicationEntity>> mAppList;
     private final MutableLiveData<Integer> mSortType;
     private final MutableLiveData<Boolean> mSolidModel;
 
     public ApplicationViewModel(final Application application) {
         super(application);
 
-        mObservableAppInfoList = new MediatorLiveData<>();
-        mObservableAppInfoList.setValue(null);
+        mAppList = new MediatorLiveData<>();
+        mAppList.setValue(null);
 
         mSortType = new MutableLiveData<>();
         initSortType(application.getApplicationContext());
@@ -43,29 +46,29 @@ public class ApplicationViewModel extends AndroidViewModel {
                 .applicationDao()
                 .loadAllApplications();
 
-        mObservableAppInfoList.addSource(appListLiveData, new Observer<List<ApplicationEntity>>() {
+        mAppList.addSource(appListLiveData, new Observer<List<ApplicationEntity>>() {
             @Override
             public void onChanged(@Nullable final List<ApplicationEntity> applicationInfoEntities) {
                 LauncherExecutors.getInstance().databaseIO().execute(new Runnable() {
                     @Override
                     public void run() {
                         Sort.sort(applicationInfoEntities, mSortType.getValue());
-                        mObservableAppInfoList.postValue(applicationInfoEntities);
+                        mAppList.postValue(applicationInfoEntities);
                     }
                 });
             }
         });
 
-        mObservableAppInfoList.addSource(mSortType, new Observer<Integer>() {
+        mAppList.addSource(mSortType, new Observer<Integer>() {
             @Override
             public void onChanged(final @Nullable Integer sortType) {
-                if (mObservableAppInfoList.getValue() != null) {
+                if (mAppList.getValue() != null) {
                     final List<ApplicationEntity> appInfoList =
-                            new ArrayList<>(mObservableAppInfoList.getValue());
+                            new ArrayList<>(mAppList.getValue());
                     if (appInfoList != null) {
                         Sort.sort(appInfoList, sortType);
 
-                        mObservableAppInfoList.postValue(appInfoList);
+                        mAppList.postValue(appInfoList);
                     }
                 }
             }
@@ -97,7 +100,7 @@ public class ApplicationViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<ApplicationEntity>> getApplications() {
-        return mObservableAppInfoList;
+        return mAppList;
     }
 
     public LiveData<Boolean> getModelType() {
@@ -112,5 +115,23 @@ public class ApplicationViewModel extends AndroidViewModel {
         mSolidModel.setValue(solid);
     }
 
+    public Map<Integer, ApplicationEntity> getShortcuts(final List<ShortcutEntity> shortcutList) {
+        final Map<Integer, ApplicationEntity> apps = new ArrayMap<>();
 
+        final List<ApplicationEntity> appList = mAppList.getValue();
+
+        for (ShortcutEntity s : shortcutList) {
+            ApplicationEntity app = null;
+            for (ApplicationEntity a : appList) {
+                if (s.getAppId() == a.getId()) {
+                    app = a;
+                    break;
+                }
+            }
+
+            apps.put(s.getAppId(), app);
+        }
+
+        return apps;
+    }
 }
