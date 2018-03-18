@@ -120,6 +120,10 @@ public class ApplicationViewModel extends AndroidViewModel {
 
         final List<ApplicationEntity> appList = mAppList.getValue();
 
+        if (appList == null) {
+            return apps;
+        }
+
         for (ShortcutEntity s : shortcutList) {
             ApplicationEntity app = null;
             for (ApplicationEntity a : appList) {

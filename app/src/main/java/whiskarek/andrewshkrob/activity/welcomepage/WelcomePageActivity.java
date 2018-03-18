@@ -19,16 +19,21 @@ import whiskarek.andrewshkrob.activity.welcomepage.fragments.AboutFragment;
 import whiskarek.andrewshkrob.activity.welcomepage.fragments.ModelTypeFragment;
 import whiskarek.andrewshkrob.activity.welcomepage.fragments.ThemeFragment;
 import whiskarek.andrewshkrob.activity.welcomepage.fragments.WelcomeFragment;
+import whiskarek.andrewshkrob.database.LauncherDatabase;
+import whiskarek.andrewshkrob.view.PageIndicatorView;
 import whiskarek.andrewshkrob.view.adapter.WelcomePageFragmentAdapter;
 
 public class WelcomePageActivity extends BaseActivity implements View.OnClickListener {
 
     private ViewPager mViewPager;
+    private PageIndicatorView mPageIndicator;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_page);
+
+        mPageIndicator = findViewById(R.id.welcome_page_indicator);
 
         final List<Fragment> pages = new ArrayList<>();
         pages.add(new WelcomeFragment());
@@ -39,8 +44,39 @@ public class WelcomePageActivity extends BaseActivity implements View.OnClickLis
         mViewPager = findViewById(R.id.welcome_page_view_pager);
         mViewPager.setAdapter(new WelcomePageFragmentAdapter(getSupportFragmentManager(), pages));
 
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                mPageIndicator.setCurrentPage(position + 1);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        mPageIndicator.setPageCount(pages.size());
+        if (savedInstanceState != null) {
+            mPageIndicator.setCurrentPage(savedInstanceState.getInt("cur_page", 1), false);
+        } else {
+            mPageIndicator.setCurrentPage(1, false);
+        }
+
         final FloatingActionButton fab = findViewById(R.id.welcome_page_fab_next);
         fab.setOnClickListener(this);
+
+        LauncherDatabase.getInstance(getApplicationContext());
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -48,6 +84,7 @@ public class WelcomePageActivity extends BaseActivity implements View.OnClickLis
         final int viewPagerTabNum = mViewPager.getCurrentItem();
         if (viewPagerTabNum < 3) {
             mViewPager.setCurrentItem(viewPagerTabNum + 1, true);
+            mPageIndicator.setCurrentPage(mViewPager.getCurrentItem() + 1);
         } else if (viewPagerTabNum == 3) {
             final SharedPreferences sharedPreferences = PreferenceManager
                     .getDefaultSharedPreferences(this);
@@ -65,6 +102,7 @@ public class WelcomePageActivity extends BaseActivity implements View.OnClickLis
         final int viewPagerTabNum = mViewPager.getCurrentItem();
         if (viewPagerTabNum > 0) {
             mViewPager.setCurrentItem(viewPagerTabNum - 1);
+            mPageIndicator.setCurrentPage(mViewPager.getCurrentItem() + 1);
         }
     }
 }

@@ -5,19 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.welcomepage.WelcomePageActivity">
-<!--
-    <FrameLayout
-        android:id="@+id/welcome_page_frame"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </FrameLayout>
--->
-
 
     <android.support.v4.view.ViewPager
         android:id="@+id/welcome_page_view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginBottom="38dp"
+        />
+
+    <whiskarek.andrewshkrob.view.PageIndicatorView
+        android:id="@+id/welcome_page_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_margin="30dp" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/welcome_page_fab_next"

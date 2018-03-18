@@ -25,7 +25,7 @@
         <activity
             android:name=".activity.launcher.LauncherActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="locked"
+            android:screenOrientation="portrait"
             android:stateNotNeeded="true"
             android:theme="@style/AppThemeLight">
             <intent-filter>
