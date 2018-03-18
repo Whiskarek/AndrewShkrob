@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:elevation="@dimen/offset"
+    android:gravity="center_horizontal"
+    android:orientation="horizontal">
+
+    <include
+        android:id="@+id/most_used_app_1"
+        layout="@layout/grid_item"
+        android:layout_width="56dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/offset" />
+
+    <include
+        android:id="@+id/most_used_app_2"
+        layout="@layout/grid_item"
+        android:layout_width="56dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/offset" />
+
+    <include
+        android:id="@+id/most_used_app_3"
+        layout="@layout/grid_item"
+        android:layout_width="56dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/offset" />
+
+    <include
+        android:id="@+id/most_used_app_4"
+        layout="@layout/grid_item"
+        android:layout_width="56dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/offset" />
+
+    <include
+        android:id="@+id/most_used_app_5"
+        layout="@layout/grid_item"
+        android:layout_width="56dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/offset" />
+
+</LinearLayout>

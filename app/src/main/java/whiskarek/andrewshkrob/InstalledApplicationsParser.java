@@ -13,7 +13,7 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import whiskarek.andrewshkrob.database.entity.ApplicationInfoEntity;
+import whiskarek.andrewshkrob.database.entity.ApplicationEntity;
 
 public class InstalledApplicationsParser {
 
@@ -34,57 +34,7 @@ public class InstalledApplicationsParser {
     }
 
     @NonNull
-    public static AppInfo newAppInfo(final PackageManager manager, final String packageName) {
-        final Intent intent = manager.getLaunchIntentForPackage(packageName);
-        final ResolveInfo info = manager.resolveActivity(intent, 0);
-        final int launchAmount = 0;
-        long installTime;
-        try {
-            installTime = manager.getPackageInfo(packageName, 0).firstInstallTime;
-        } catch (PackageManager.NameNotFoundException e) {
-            installTime = System.currentTimeMillis();
-            Log.e("Launcher", e.toString());
-        }
-
-        final boolean systemApp = isSystemApp(manager, packageName);
-
-        final Drawable applicationIcon = info.loadIcon(manager);
-        final String applicationName = info.loadLabel(manager).toString();
-
-        return new AppInfo(
-                packageName,
-                applicationName,
-                installTime,
-                launchAmount,
-                systemApp,
-                applicationIcon,
-                intent
-        );
-    }
-
-    public static List<AppInfo> getInstalledApplications(final Context context) {
-        final PackageManager manager = context.getPackageManager();
-        final Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        final List<ResolveInfo> appResolveInfos =
-                manager.queryIntentActivities(intent, PackageManager.GET_META_DATA);
-
-        final List<AppInfo> appInfos = new ArrayList<>();
-
-        for (ResolveInfo appInfo : appResolveInfos) {
-            if (appInfo.activityInfo.packageName.equals(context.getPackageName())) {
-                continue;
-            }
-
-            appInfos.add(newAppInfo(manager, appInfo.activityInfo.packageName));
-
-        }
-
-        return appInfos;
-    }
-
-    @NonNull
-    public static ApplicationInfoEntity getApplicationInfoEntity(
+    public static ApplicationEntity getApplicationInfoEntity(
             final PackageManager packageManager,
             final ResolveInfo appInfo) {
 
@@ -109,24 +59,28 @@ public class InstalledApplicationsParser {
         }
 
         final boolean systemApp = isSystemApp(packageManager, appInfo.activityInfo.packageName);
+        final Drawable icon = appInfo.loadIcon(packageManager);
+        final String label = appInfo.loadLabel(packageManager).toString();
 
-        return new ApplicationInfoEntity(
+        return new ApplicationEntity(
                 appInfo.activityInfo.packageName,
                 installTime,
                 launchAmount,
                 systemApp,
-                appIntent
+                appIntent,
+                icon,
+                label
         );
     }
 
-    public static List<ApplicationInfoEntity> getInstalled(final Context context) {
+    public static List<ApplicationEntity> getInstalled(final Context context) {
         final PackageManager manager = context.getPackageManager();
         final Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
         final List<ResolveInfo> appResolveInfos =
                 manager.queryIntentActivities(intent, PackageManager.GET_META_DATA);
 
-        final List<ApplicationInfoEntity> appInfoList = new ArrayList<>();
+        final List<ApplicationEntity> appInfoList = new ArrayList<>();
 
         for (ResolveInfo appInfo : appResolveInfos) {
             if (appInfo.activityInfo.packageName.equals(context.getPackageName())) {
@@ -139,4 +93,23 @@ public class InstalledApplicationsParser {
         return appInfoList;
     }
 
+    public static List<String> getInstalledPackages(final Context context) {
+        final PackageManager manager = context.getPackageManager();
+        final Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        final List<ResolveInfo> appResolveInfoList =
+                manager.queryIntentActivities(intent, PackageManager.GET_META_DATA);
+
+        final List<String> appInfoList = new ArrayList<>();
+
+        for (ResolveInfo appInfo : appResolveInfoList) {
+            if (appInfo.activityInfo.packageName.equals(context.getPackageName())) {
+                continue;
+            }
+
+            appInfoList.add(appInfo.activityInfo.packageName);
+        }
+
+        return appInfoList;
+    }
 }

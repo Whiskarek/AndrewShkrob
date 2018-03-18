@@ -6,9 +6,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import whiskarek.andrewshkrob.R;
-import whiskarek.andrewshkrob.model.MenuViewHolderModel;
+import whiskarek.andrewshkrob.model.viewholder.MenuViewHolderModel;
 
-public class MenuViewHolder extends RecyclerView.ViewHolder implements MenuViewHolderModel{
+public class MenuViewHolder extends RecyclerView.ViewHolder implements MenuViewHolderModel {
 
     public final static int GRID_LAYOUT = 1;
     public final static int LIST_LAYOUT = 2;
@@ -19,10 +19,10 @@ public class MenuViewHolder extends RecyclerView.ViewHolder implements MenuViewH
 
     public MenuViewHolder(final View view, final int layoutType) {
         super(view);
-        mAppIcon = (ImageView) view.findViewById(R.id.launcher_app_icon);
-        mAppName = (TextView) view.findViewById(R.id.launcher_app_name);
+        mAppIcon = view.findViewById(R.id.launcher_app_icon);
+        mAppName = view.findViewById(R.id.launcher_app_name);
         if (layoutType == LIST_LAYOUT) {
-            mAppPackageName = (TextView) view.findViewById(R.id.launcher_app_package_name);
+            mAppPackageName = view.findViewById(R.id.launcher_app_package_name);
         } else {
             mAppPackageName = null;
         }
@@ -43,5 +43,4 @@ public class MenuViewHolder extends RecyclerView.ViewHolder implements MenuViewH
     public TextView getAppPackageName() {
         return mAppPackageName;
     }
-
 }

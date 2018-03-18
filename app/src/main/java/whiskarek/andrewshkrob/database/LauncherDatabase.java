@@ -10,68 +10,73 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import whiskarek.andrewshkrob.InstalledApplicationsParser;
 import whiskarek.andrewshkrob.LauncherExecutors;
+import whiskarek.andrewshkrob.database.converter.DrawableConverter;
 import whiskarek.andrewshkrob.database.converter.IntentConverter;
-import whiskarek.andrewshkrob.database.dao.ApplicationInfoDao;
-import whiskarek.andrewshkrob.database.entity.ApplicationInfoEntity;
+import whiskarek.andrewshkrob.database.dao.ApplicationDao;
+import whiskarek.andrewshkrob.database.dao.DesktopCellDao;
+import whiskarek.andrewshkrob.database.entity.ApplicationEntity;
+import whiskarek.andrewshkrob.database.entity.ShortcutEntity;
 
 import static whiskarek.andrewshkrob.InstalledApplicationsParser.isSystemApp;
 
-@Database(entities = {ApplicationInfoEntity.class}, version = 1)
-@TypeConverters({IntentConverter.class})
+@Database(entities = {ApplicationEntity.class, ShortcutEntity.class}, version = 1)
+@TypeConverters({IntentConverter.class, DrawableConverter.class})
 public abstract class LauncherDatabase extends RoomDatabase {
 
-    public static final String DATABASE_NAME = "Launcher.db";
-    public static final String DATABASE_APPS_NAME = "Applications";
+    private static final String DATABASE_NAME = "Launcher.db";
 
-    public static final String DATABASE_ROW_PACKAGE_NAME = "PackageName";
-    public static final String DATABASE_ROW_INSTALL_TIME = "InstallTime";
-    public static final String DATABASE_ROW_LAUNCH_AMOUNT = "LaunchAmount";
-    public static final String DATABASE_ROW_IS_SYSTEM = "IsSystem";
-    public static final String DATABASE_ROW_INTENT = "Intent";
+    private static boolean mFirstLaunch = false;
 
     private static LauncherDatabase sInstance;
 
-    public abstract ApplicationInfoDao applicationInfoDao();
+    public abstract ApplicationDao applicationDao();
+    public abstract DesktopCellDao desktopCellDao();
 
     public static LauncherDatabase getInstance(final Context context) {
         if (sInstance == null) {
             synchronized (LauncherDatabase.class) {
                 if (sInstance == null) {
+                    new DrawableConverter(context.getResources(), context.getFilesDir().toString());
                     sInstance = Room.databaseBuilder(
                             context,
                             LauncherDatabase.class,
                             DATABASE_NAME
                     ).addCallback(new Callback() {
                         @Override
-                        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+                        public void onCreate(@NonNull final SupportSQLiteDatabase db) {
                             super.onCreate(db);
-
-                            LauncherExecutors.getInstance().diskIO().execute(new Runnable() {
+                            mFirstLaunch = true;
+                            LauncherExecutors.getInstance().databaseIO().execute(new Runnable() {
                                 @Override
                                 public void run() {
                                     LauncherDatabase.getInstance(context).firstLoad(context);
+                                    LauncherDatabase.getInstance(context).createFirstScreen();
                                 }
                             });
                         }
 
                         @Override
-                        public void onOpen(@NonNull SupportSQLiteDatabase db) {
-                            LauncherExecutors.getInstance().diskIO().execute(new Runnable() {
+                        public void onOpen(@NonNull final SupportSQLiteDatabase db) {
+                            if (mFirstLaunch) {
+                                return;
+                            }
+                            LauncherExecutors.getInstance().databaseIO().execute(new Runnable() {
                                 @Override
                                 public void run() {
                                     LauncherDatabase.getInstance(context)
                                             .updateDatabase(context);
                                 }
                             });
-                            Log.d("Launcher", "OK");
 
                             super.onOpen(db);
                         }
@@ -84,7 +89,7 @@ public abstract class LauncherDatabase extends RoomDatabase {
     }
 
     private void updateDatabase(final Context context) {
-        if (applicationInfoDao().count() == 0) {
+        if (applicationDao().count() == 0) {
             firstLoad(context);
         } else {
             generateUpToDateInformation(context);
@@ -92,74 +97,91 @@ public abstract class LauncherDatabase extends RoomDatabase {
     }
 
     private void generateUpToDateInformation(final Context context) {
-        final List<ApplicationInfoEntity> appsFromSystem =
-                InstalledApplicationsParser.getInstalled(context);
-        final List<ApplicationInfoEntity> appsFromDatabase = applicationInfoDao().loadAll();
+        final List<String> appsFromSystem =
+                InstalledApplicationsParser.getInstalledPackages(context);
+        final List<String> appsFromDatabase = applicationDao().loadAllPackages();
 
-        final List<ApplicationInfoEntity> uninstalledAppList = getUninstalledAppList(
+        final List<String> uninstalledPackageList = getUninstalledPackageList(
                 appsFromSystem,
                 appsFromDatabase
         );
 
-        applicationInfoDao().delete(uninstalledAppList);
+        for (final String packageName : uninstalledPackageList) {
+            final String iconPath = applicationDao().getIconPath(packageName);
+            new File(context.getFilesDir().toString() +
+                    File.separator + DrawableConverter.ICON_FOLDER_NAME +
+                    File.separator + iconPath
+            ).delete();
+            applicationDao().delete(packageName);
+        }
 
-        final List<ApplicationInfoEntity> installedAppList = getInstalledAppList(
+        //FIXME Instead of packages need to check intents
+        final List<String> installedPackageList = getInstalledPackageList(
                 appsFromSystem,
                 appsFromDatabase
         );
 
-        applicationInfoDao().insert(installedAppList);
+        for (String packageName : installedPackageList) {
+            final PackageManager packageManager = context.getPackageManager();
+            final Intent intent = new Intent();
+            intent.setPackage(packageName);
+            intent.addCategory(Intent.CATEGORY_LAUNCHER);
+            final ResolveInfo resolveInfo = packageManager.resolveActivity(intent, 0);
+
+            final ApplicationEntity app = InstalledApplicationsParser
+                    .getApplicationInfoEntity(packageManager, resolveInfo);
+
+            applicationDao().insert(app);
+        }
 
     }
 
-    private static List<ApplicationInfoEntity> getUninstalledAppList(
-            final List<ApplicationInfoEntity> appsFromSystem,
-            final List<ApplicationInfoEntity> appsFromDatabase) {
+    private static List<String> getUninstalledPackageList(
+            final List<String> appsFromSystem,
+            final List<String> appsFromDatabase) {
 
-        final List<ApplicationInfoEntity> uninstalledIntentList = new ArrayList<>(appsFromDatabase);
+        final List<String> uninstalledAppList = new ArrayList<>(appsFromDatabase);
 
-        for (ApplicationInfoEntity app : appsFromDatabase) {
+        for (String databaseApp : appsFromDatabase) {
             boolean installed = false;
             for (int i = 0; i < appsFromSystem.size(); i++) {
-                if (app.getPackageName().equals(appsFromSystem.get(i).getPackageName())) {
+                if (databaseApp.equals(appsFromSystem.get(i))) {
                     installed = true;
                     break;
                 }
             }
 
             if (installed) {
-                uninstalledIntentList.remove(app);
+                uninstalledAppList.remove(databaseApp);
             }
         }
 
-        return uninstalledIntentList;
+        return uninstalledAppList;
     }
 
-    private static List<ApplicationInfoEntity> getInstalledAppList(
-            final List<ApplicationInfoEntity> appsFromSystem,
-            final List<ApplicationInfoEntity> appsFromDatabase) {
+    private static List<String> getInstalledPackageList(
+            final List<String> appsFromSystem,
+            final List<String> appsFromDatabase) {
+        final List<String> installedPackageList = new ArrayList<>(appsFromSystem);
 
-        final List<ApplicationInfoEntity> installedAppList = new ArrayList<>(appsFromSystem);
-
-        for (ApplicationInfoEntity app : appsFromDatabase) {
+        for (String app : appsFromDatabase) {
             boolean deleted = false;
-            final Intent databseAppIntent = app.getIntent();
             for (int i = 0; i < appsFromSystem.size(); i++) {
-                final Intent systemAppIntent = appsFromSystem.get(i).getIntent();
-                if (!databseAppIntent.equals(systemAppIntent)) {
+                if (!app.equals(appsFromSystem.get(i))) {
                     deleted = true;
                     break;
                 }
             }
             if (deleted) {
-                installedAppList.remove(app);
+                installedPackageList.remove(app);
             }
         }
 
-        return installedAppList;
+        return installedPackageList;
     }
 
     private void firstLoad(final Context context) {
+        final long start = System.currentTimeMillis();
         final PackageManager packageManager = context.getPackageManager();
         final Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -192,14 +214,37 @@ public abstract class LauncherDatabase extends RoomDatabase {
 
             final boolean systemApp = isSystemApp(packageManager, appInfo.activityInfo.packageName);
 
-            applicationInfoDao().insert(new ApplicationInfoEntity(
+            final Drawable icon = appInfo.loadIcon(packageManager);
+            final String label = appInfo.loadLabel(packageManager).toString();
+
+            applicationDao().insert(new ApplicationEntity(
                     appInfo.activityInfo.packageName,
                     installTime,
                     launchAmount,
                     systemApp,
-                    appIntent
+                    appIntent,
+                    icon,
+                    label
             ));
+
         }
+        final long end = System.currentTimeMillis();
+
+        Log.d("Launcher", "First load: " + (end - start));
+    }
+
+    private void createFirstScreen() {
+        final ApplicationEntity gallery =
+                applicationDao().getAppWithPackage("com.miui.gallery");
+
+        final ShortcutEntity galleryCell = new ShortcutEntity(
+                gallery.getId(),
+                2,
+                1,
+                ShortcutEntity.ShortcutType.APP, null
+        );
+
+        desktopCellDao().insert(galleryCell);
     }
 
 }
