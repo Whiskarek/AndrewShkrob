@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">Andrew Shkrob</string>
 
     <string name="developer_name">Andrew Shkrob</string>
 
@@ -16,8 +15,8 @@
     <string name="context_menu_app_info">信息</string>
 
     <!-- Navigation Drawer Menu -->
-    <string name="nav_drawer_launcher_grid">網</string>
-    <string name="nav_drawer_launcher_list">清單</string>
+    <string name="nav_drawer_grid">網</string>
+    <string name="nav_drawer_list">清單</string>
     <string name="nav_drawer_title_options">參數</string>
     <string name="nav_drawer_settings">設置</string>
 

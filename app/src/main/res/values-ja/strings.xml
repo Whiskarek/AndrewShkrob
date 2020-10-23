@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">Andrew Shkrob</string>
 
     <string name="developer_name">Andrew Shkrob</string>
 
@@ -16,8 +15,8 @@
     <string name="context_menu_app_info">情報</string>
 
     <!-- Navigation Drawer Menu -->
-    <string name="nav_drawer_launcher_grid">グリッド</string>
-    <string name="nav_drawer_launcher_list">リスト</string>
+    <string name="nav_drawer_grid">グリッド</string>
+    <string name="nav_drawer_list">リスト</string>
     <string name="nav_drawer_title_options">パラメータ</string>
     <string name="nav_drawer_settings">設定</string>
 

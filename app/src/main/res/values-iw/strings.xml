@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">Andrew Shkrob</string>
 
     <string name="developer_name">Andrew Shkrob</string>
 
@@ -16,8 +15,8 @@
     <string name="context_menu_app_info">מידע</string>
 
     <!-- Navigation Drawer Menu -->
-    <string name="nav_drawer_launcher_grid">רשת</string>
-    <string name="nav_drawer_launcher_list">רשימה של</string>
+    <string name="nav_drawer_grid">רשת</string>
+    <string name="nav_drawer_list">רשימה של</string>
     <string name="nav_drawer_title_options">פרמטרים</string>
     <string name="nav_drawer_settings">הגדרות</string>
 

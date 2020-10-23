@@ -16,12 +16,13 @@
         android:layout_gravity="center">
 
         <whiskarek.andrewshkrob.view.CircleImageView
+            android:id="@+id/circle_image_view"
             android:layout_width="@dimen/welcome_page_photo"
             android:layout_height="@dimen/welcome_page_photo"
             android:layout_margin="@dimen/offset"
             android:layout_gravity="center"
             android:elevation="2dp"
-            android:src="@drawable/photo1"
+            android:src="@drawable/photo_circle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

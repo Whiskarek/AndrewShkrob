@@ -2,9 +2,7 @@
 .gradle
 /local.properties
 /.idea/*
-/reports/findbugs/*
-/reports/lint/*
-/reports/pmd/*
+/reports/*
 .DS_Store
 /build
 /captures

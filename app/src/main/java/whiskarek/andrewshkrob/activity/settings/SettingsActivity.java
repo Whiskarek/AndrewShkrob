@@ -1,23 +1,21 @@
 package whiskarek.andrewshkrob.activity.settings;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceFragmentCompat;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.preference.PreferenceScreen;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import whiskarek.andrewshkrob.R;
-import whiskarek.andrewshkrob.activity.main.MainActivity;
-import whiskarek.andrewshkrob.activity.settings.fragments.SettingsFragment;
+import whiskarek.andrewshkrob.activity.BaseActivity;
 
-public class SettingsActivity extends AppCompatActivity implements PreferenceFragmentCompat.OnPreferenceStartScreenCallback {
+public class SettingsActivity extends BaseActivity
+        implements PreferenceFragmentCompat.OnPreferenceStartScreenCallback {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -27,6 +25,7 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle(getResources().getString(R.string.nav_drawer_settings));
 
         final FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment_settings, new SettingsFragment());
@@ -37,18 +36,11 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == android.R.id.home) {
-            startActivity(new Intent(this, MainActivity.class));
             finish();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onBackPressed() {
-        startActivity(new Intent(this, MainActivity.class));
-        finish();
     }
 
     @Override
@@ -79,6 +71,4 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
         ft.commit();
         return true;
     }
-
-
 }

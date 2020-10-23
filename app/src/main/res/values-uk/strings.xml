@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">Андрей Шкроб</string>
 
     <string name="developer_name">Андрей Шкроб</string>
 
@@ -16,8 +15,8 @@
     <string name="context_menu_app_info">Iнформація</string>
 
     <!-- Navigation Drawer Menu -->
-    <string name="nav_drawer_launcher_grid">Сітка</string>
-    <string name="nav_drawer_launcher_list">Перелік</string>
+    <string name="nav_drawer_grid">Сітка</string>
+    <string name="nav_drawer_list">Перелік</string>
     <string name="nav_drawer_title_options">Параметри</string>
     <string name="nav_drawer_settings">Налаштування</string>
 

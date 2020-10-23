@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/list_item_main_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="@dimen/offset"
@@ -26,8 +27,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/offset"
-            android:textSize="@dimen/text_size_header"
-            android:lines="@integer/text_lines_default"
+            android:gravity="center_vertical|left"
+            android:theme="@style/IconText"
             tools:text="Hello"/>
 
         <TextView
@@ -35,8 +36,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/offset"
+            android:gravity="center_vertical|left"
             android:textSize="@dimen/text_size_default"
             android:lines="@integer/fragment_list_text_lines_body"
+            android:theme="@style/IconText"
             tools:text="Hello"/>
 
         <View

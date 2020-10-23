@@ -5,24 +5,26 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_drawer_launcher_grid"
-            android:icon="@drawable/ic_nav_drawer_launcher_grid"
-            android:title="@string/nav_drawer_launcher_grid" />
+            android:id="@+id/nav_drawer_desktop"
+            android:icon="@drawable/ic_nav_drawer_launcher_desktop"
+            android:title="@string/nav_drawer_desktop" />
         <item
-            android:id="@+id/nav_drawer_launcher_list"
+            android:id="@+id/nav_drawer_grid"
+            android:icon="@drawable/ic_nav_drawer_launcher_grid"
+            android:title="@string/nav_drawer_grid" />
+        <item
+            android:id="@+id/nav_drawer_list"
             android:icon="@drawable/ic_nav_drawer_launcher_list"
-            android:title="@string/nav_drawer_launcher_list" />
+            android:title="@string/nav_drawer_list" />
     </group>
 
 
     <item android:title="@string/nav_drawer_title_options">
         <menu>
-            <group android:checkableBehavior="single">
-                <item
-                    android:id="@+id/nav_drawer_settings"
-                    android:icon="@drawable/ic_nav_drawer_settings"
-                    android:title="@string/nav_drawer_settings" />
-            </group>
+            <item
+                android:id="@+id/nav_drawer_settings"
+                android:icon="@drawable/ic_nav_drawer_settings"
+                android:title="@string/nav_drawer_settings" />
         </menu>
     </item>
 </menu>

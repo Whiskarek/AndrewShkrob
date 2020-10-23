@@ -96,6 +96,38 @@
             android:layout_marginLeft="56dp"
             android:background="@android:color/darker_gray" />
 
+        <LinearLayout
+            android:id="@+id/silent_notification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/offset"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_margin="@dimen/offset"
+                android:tint="@color/colorAccent"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_info_outline" />
+
+            <TextView
+                android:id="@+id/silent_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/offset"/>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/silent_notification_del"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/fragment_strip_detach_thickness"
+            android:layout_marginLeft="56dp"
+            android:background="@android:color/darker_gray"
+            android:visibility="gone"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name">Andrew Shkrob</string>
 
     <string name="developer_name">Andrew Shkrob</string>
 
@@ -16,8 +15,8 @@
     <string name="context_menu_app_info">Informacija</string>
 
     <!-- Navigation Drawer Menu -->
-    <string name="nav_drawer_launcher_grid">Tinklelis</string>
-    <string name="nav_drawer_launcher_list">Sąrašas</string>
+    <string name="nav_drawer_grid">Tinklelis</string>
+    <string name="nav_drawer_list">Sąrašas</string>
     <string name="nav_drawer_title_options">Parametrai</string>
     <string name="nav_drawer_settings">Nustatymai</string>
 
